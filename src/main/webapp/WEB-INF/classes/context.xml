@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.2.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages" />
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="${db.url}" />
+        <property name="username" value="${db.user}" />
+        <property name="password" value="${db.password}" />
+    </bean>
+
+    <bean id="dataBaseConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:/database.properties"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" isolation="READ_COMMITTED" rollback-for="java.lang.Throwable"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="transactionOperation" expression="execution(* com.scrumers.service..*ServiceImpl.*(..))"/>
+        <aop:advisor pointcut-ref="transactionOperation" advice-ref="txAdvice"/>
+    </aop:config>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
+
+    <bean id="roleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.scrumers.storage.mapper.RoleMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
+
+<!--    <bean id="makeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.storage.mapper.RoleMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="modelMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.storage.mapper.ModelMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>-->
+
+<!--    <bean id="makeDao" class="com.storage.dao.MakeDaoImpl"/>
+
+    <bean id="modelDao" class="com.storage.dao.ModelDaoImpl"/>
+
+    <bean id="makeService" class="com.service.MakeServiceImpl"/>
+
+    <bean id="modelService" class="com.service.ModelServiceImpl"/>-->
+
+    <bean id="config" class="org.apache.commons.configuration.DatabaseConfiguration">
+        <constructor-arg index="0" ref="dataSource" />
+        <constructor-arg index="1" value="${conf.table}" />
+        <constructor-arg index="2" value="${conf.key}" />
+        <constructor-arg index="3" value="${conf.value}" />
+        <property name="delimiterParsingDisabled" value="true" />
+    </bean>
+
+    <bean id="dao" abstract="true" class="org.mybatis.spring.support.SqlSessionDaoSupport">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="userDao" class="com.scrumers.storage.dao.UserDaoImpl" parent="dao" />
+    <bean id="roleDao" class="com.scrumers.storage.dao.RoleDaoImpl" parent="dao" />
+    <bean id="productDao" class="com.scrumers.storage.dao.ProductDaoImpl" parent="dao" />
+    <bean id="teamDao" class="com.scrumers.storage.dao.TeamDaoImpl" parent="dao" />
+    <bean id="iterationDao" class="com.scrumers.storage.dao.IterationDaoImpl" parent="dao" />
+    <bean id="taskDao" class="com.scrumers.storage.dao.TaskDaoImpl" parent="dao" />
+    <bean id="organizationDao" class="com.scrumers.storage.dao.OrganizationDaoImpl" parent="dao" />
+    <bean id="storyDao" class="com.scrumers.storage.dao.StoryDaoImpl" parent="dao" />
+
+    <bean id="userService" class="com.scrumers.service.UserServiceImpl">
+        <property name="iterationDao" ref="iterationDao" />
+        <property name="userDao" ref="userDao" />
+        <property name="roleDao" ref="roleDao" />
+        <property name="productDao" ref="productDao" />
+        <property name="organizationDao" ref="organizationDao" />
+        <property name="prefixAvatar" value="${prefixAvatars}" />
+        <property name="conf" ref="config" />
+    </bean>
+
+    <bean id="productService" class="com.scrumers.service.ProductServiceImpl">
+        <property name="teamDao" ref="teamDao" />
+        <property name="productDao" ref="productDao" />
+        <property name="organizationDao" ref="organizationDao" />
+    </bean>
+
+    <bean id="iterationService" class="com.scrumers.service.IterationServiceImpl">
+        <property name="iterationDao" ref="iterationDao" />
+        <property name="productDao" ref="productDao" />
+    </bean>
+
+    <bean id="organizationService" class="com.scrumers.service.OrganizationServiceImpl">
+        <property name="organizationDao" ref="organizationDao" />
+        <property name="teamDao" ref="teamDao" />
+        <property name="userDao" ref="userDao" />
+    </bean>
+
+    <bean id="storyService" class="com.scrumers.service.StoryServiceImpl">
+        <property name="productDao" ref="productDao" />
+        <property name="iterationDao" ref="iterationDao" />
+        <property name="storyDao" ref="storyDao" />
+    </bean>
+
+    <bean id="teamService" class="com.scrumers.service.TeamServiceImpl">
+        <property name="teamDao" ref="teamDao" />
+        <property name="userDao" ref="userDao" />
+        <property name="organizationDao" ref="organizationDao" />
+    </bean>
+
+    <bean id="taskService" class="com.scrumers.service.TaskServiceImpl">
+        <property name="taskDao" ref="taskDao" />
+        <property name="storyDao" ref="storyDao" />
+    </bean>
+
+    <aop:aspectj-autoproxy />
+
+    <bean class="com.scrumers.util.ImageUtils" id="imageUtil">
+        <property name="conf" ref="config"></property>
+    </bean>
+</beans>

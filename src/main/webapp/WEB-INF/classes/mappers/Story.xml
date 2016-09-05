@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Story">
+
+    <resultMap id="storyMap" type="Story">
+        <id property="id" column="id" />
+        <result property="storyId" column="story_id"/>
+        <result property="name" column="name"/>
+        <result property="descr" column="descr"/>
+        <result property="storyPoints" column="story_points"/>
+        <result property="estimate" column="estimate"/>
+        <result property="assignee" column="assignee"/>
+        <result property="howToDemo" column="how_to_demo"/>
+        <result property="track" column="track"/>
+        <result property="statusId" column="status_id"/>
+        <result property="idCreator" column="user_id"/>
+        <result property="added" column="added"/>
+        <result property="modified" column="modified"/>
+        <result property="del" column="del"/>
+        <result property="isDone" column="done"/>
+        <result property="devName" column="devName"/>
+        <result property="allTasks" column="allTasks"/>
+        <result property="doneTasks" column="doneTasks"/>
+    </resultMap>
+
+    <resultMap id="commentMap" type="Comment">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id"/>
+        <result property="text" column="comment"/>
+        <result property="name" column="name"/>
+        <result property="login" column="login"/>
+        <result property="dateComment" column="dateComment"/>
+    </resultMap>
+
+    <select id="selectId" resultType="java.lang.Long">
+        SELECT nextval('story_id_seq')
+    </select>
+
+    <insert id="create">
+        <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
+            SELECT nextval('story_id_seq')
+        </selectKey>
+        INSERT INTO story (id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified) 
+            VALUES (#{id}, #{storyId}, #{name}, #{descr}, #{storyPoints}, #{estimate}, #{assignee}, #{howToDemo}, #{track}, #{statusId}, #{idCreator}, now(), now())
+    </insert>
+
+    <insert id="createWithId">
+        INSERT INTO story (id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified) 
+            VALUES (#{id}, (select count(*) from product_story where product_id=#{pid}) + 1,
+                     #{name}, #{descr}, #{storyPoints}, #{estimate}, #{assignee}, #{howToDemo}, #{track}, #{statusId}, #{idCreator}, now(), now())
+    </insert>
+
+    <select id="read" resultMap="storyMap">
+        SELECT id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified, del, done 
+        FROM story 
+        WHERE id = #{id}
+    </select>
+
+    <select id="readAll" resultMap="storyMap">
+        SELECT id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified, del, done 
+        FROM story
+    </select>
+
+    <select id="readByTaskId" resultMap="storyMap">
+        SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo, s.track, s.status_id, s.user_id, s.added, s.modified, s.del, s.done
+        FROM story s INNER JOIN story_tasks st ON s.id = st.story_id
+        WHERE st.task_id = #{tid} AND s.del=false
+    </select>
+
+    <select id="readByProductId" resultMap="storyMap">
+        SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo, s.track,
+               s.status_id, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
+               (SELECT COUNT(*) FROM story_tasks st INNER JOIN story ss ON ss.id = st.story_id 
+                      WHERE s.id = ss.id AND s.del = false) as allTasks, 
+               (SELECT COUNT(*) FROM story_tasks st INNER JOIN story ss ON s.id = st.story_id 
+                  INNER JOIN task t ON t.id = st.task_id                
+                      WHERE s.id = ss.id AND s.del = false AND t.status_id = 4) as doneTasks
+        FROM story s INNER JOIN product_story pt ON s.id = pt.story_id
+                     LEFT JOIN users u ON u.id = s.assignee 
+        WHERE pt.product_id = #{pid} AND s.del=false
+        ORDER BY pt.priority
+    </select>
+
+    <select id="readByIterationId" resultMap="storyMap">
+        SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo,s.track, 
+               s.status_id, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
+               (SELECT COUNT(*) FROM story_tasks st INNER JOIN story ss ON ss.id = st.story_id 
+                      WHERE s.id = ss.id AND s.del = false) as allTasks, 
+               (SELECT COUNT(*) FROM story_tasks st INNER JOIN story ss ON s.id = st.story_id 
+                  INNER JOIN task t ON t.id = st.task_id                
+                      WHERE s.id = ss.id AND s.del = false AND t.status_id = 4) as doneTasks
+        FROM story s INNER JOIN iteration_story its ON s.id = its.story_id
+                 LEFT JOIN users u ON u.id = s.assignee 
+        WHERE its.iteration_id = #{iid} AND s.del=false
+        ORDER BY its.priority
+    </select>
+
+    <select id="readUnusedStoriesFromBacklog" resultMap="storyMap">
+        SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo, s.track,
+               s.status_id, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
+               (SELECT COUNT(*) FROM story_tasks st INNER JOIN story ss ON ss.id = st.story_id 
+                       WHERE s.id = ss.id AND s.del = false) as allTasks, 
+               (SELECT COUNT(*) FROM story_tasks st INNER JOIN story ss ON s.id = st.story_id 
+                      INNER JOIN task t ON t.id = st.task_id                
+                      WHERE s.id = ss.id AND s.del = false AND t.status_id = 4) as doneTasks
+        FROM story s INNER JOIN product_story ps ON s.id = ps.story_id
+                     LEFT JOIN users u ON u.id = s.assignee 
+        WHERE s.del=false AND ps.product_id = #{pid} AND s.id not in
+        (SELECT s.id
+        FROM story s INNER JOIN iteration_story its ON s.id = its.story_id
+                 INNER JOIN product_iteration pi ON pi.iteration_id = its.iteration_id
+        WHERE s.del=false AND pi.product_id = #{pid} )
+        
+        ORDER BY ps.priority 
+    </select>
+
+    <select id="readPrioritiesOfUnusedStoriesFromBacklog" resultType="java.lang.Long">
+        SELECT ps.priority 
+        FROM story s INNER JOIN product_story ps ON s.id = ps.story_id
+        WHERE s.del=false AND ps.product_id = #{pid} AND s.id not in
+        
+        
+        (SELECT s.id
+        FROM story s INNER JOIN iteration_story its ON s.id = its.story_id
+                 INNER JOIN product_iteration pi ON pi.iteration_id = its.iteration_id
+        WHERE s.del=false AND pi.product_id = #{pid} )
+        
+        ORDER BY ps.priority 
+    </select>
+
+    <select id="readPriorities" resultType="java.lang.Long">
+        SELECT its.priority 
+        FROM story s INNER JOIN iteration_story its ON s.id = its.story_id
+        WHERE its.iteration_id = #{iid} AND s.del=false AND s.status_id = #{stat_id}
+        ORDER BY its.priority 
+    </select>
+
+    <select id="readCommentsByStoryId" resultMap="commentMap">
+        SELECT 
+            suc.id, suc.user_id, u.login, u.fname || ' ' || u.sname AS name, suc.comment AS text, suc.dateComment
+        FROM 
+            story s RIGHT JOIN storys_users_comments suc ON s.id = suc.story_id 
+                   LEFT JOIN users u ON u.id = suc.user_id
+        WHERE s.id = #{sid} and suc.del=false
+        ORDER BY suc.id DESC
+    </select>
+
+
+    <update id="update">
+        UPDATE story
+        SET story_id = #{storyId}, name = #{name}, descr = #{descr}, story_points = #{storyPoints}, estimate = #{estimate}, assignee=#{assignee}, how_to_demo = #{howToDemo}, track = #{track}, status_id=#{statusId}, user_id = #{idCreator},  del = #{del}, done = #{isDone}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE story
+        SET status_id=#{stid}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE story
+        SET del = 'TRUE', modified = now()
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteFromIterationStory">
+        DELETE FROM iteration_story WHERE story_id = #{id}
+    </delete>
+
+    <insert id="addTaskToAStory">
+        INSERT INTO story_tasks (story_id, task_id, priority) VALUES (#{sid}, #{tid},
+        (SELECT COUNT(*) FROM story_tasks WHERE story_id = #{sid}) + 1)
+    </insert>
+
+    <insert id="addUserToAStory">
+        INSERT INTO story_users (story_id, user_id) VALUES (#{sid}, #{uid})
+    </insert>
+
+    <select id="findCommentsByStoryId" parameterType="int" resultMap="commentMap">
+        SELECT 
+            suc.id, suc.user_id, u.login, u.fname || ' ' || u.sname AS name, suc.comment AS text, suc.dateComment
+        FROM 
+            story s RIGHT JOIN storys_users_comments suc ON s.id = suc.story_id 
+                   LEFT JOIN users u ON u.id = suc.user_id
+        WHERE s.id = #{id} and suc.del=false
+        ORDER BY suc.id DESC
+    </select>
+    
+    <insert id="commentStory">
+        INSERT INTO storys_users_comments (user_id, story_id, comment, dateComment) VALUES (#{uid}, #{sid}, #{comment}, now())
+    </insert>
+
+    <update id="deleteComment">
+        UPDATE storys_users_comments SET del=true
+        WHERE id = #{cid} and user_id = #{uid}
+    </update>
+
+    <select id="findCommentById" resultMap="commentMap">
+        SELECT 
+            suc.id, suc.user_id, u.login, u.fname || ' ' || u.sname AS name, suc.comment AS text, suc.dateComment
+        FROM 
+            story s RIGHT JOIN storys_users_comments suc ON s.id = suc.story_id 
+                   LEFT JOIN users u ON u.id = suc.user_id
+        WHERE suc.id=#{cid} and suc.del=false
+    </select>
+</mapper>

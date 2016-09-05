@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Product">
+
+    <resultMap id="productMap" type="Product">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="descr" column="descr"/>
+        <result property="owner" column="owner"/>
+        <result property="idCreator" column="user_id"/>
+        <result property="added" column="added"/>
+        <result property="modified" column="modified"/>
+        <result property="del" column="del"/>
+        <result property="isDone" column="done"/>
+    </resultMap>
+
+    <resultMap id="productViewMap" type="ProductView">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="descr" column="descr"/>
+        <result property="owner" column="owner"/>
+        <result property="ownerName" column="ownerName"/>
+        <result property="idCreator" column="user_id"/>
+        <result property="added" column="added"/>
+        <result property="modified" column="modified"/>
+        <result property="del" column="del"/>
+        <result property="isDone" column="done"/>
+    </resultMap>
+
+    <resultMap id="plotMap" type="PlotData">
+        <id property="id" column="id" />
+        <result property="hours" column="hours"/>
+        <result property="delHours" column="delHours"/>
+        <result property="date" column="date"/>
+    </resultMap>
+
+    <select id="readProductDiadgramData1" resultMap="plotMap">
+        SELECT (SELECT COUNT(*) FROM story ss 
+                 INNER JOIN product_story ps ON ps.story_id=ss.id
+                 WHERE ps.product_id = #{pid} AND ss.del=false AND to_char(ss.added , 'YYYY-MM-DD') like to_char(s.modified , 'YYYY-MM-DD')) as hours, 
+             
+         to_char(s.modified , 'YYYY-MM-DD') as date, 
+        
+            (SELECT COUNT(*) FROM story ss 
+                INNER JOIN product_story ps ON ps.story_id=ss.id
+                WHERE ps.product_id = #{pid} AND ss.del=true  AND to_char(ss.modified , 'YYYY-MM-DD') like to_char(s.modified , 'YYYY-MM-DD')) as delHours
+                
+        FROM story s INNER JOIN product_story ps ON ps.story_id=s.id
+        WHERE ps.product_id = #{pid}
+
+        GROUP BY s.modified
+        ORDER BY s.modified
+    </select>
+
+    <select id="readProductDiadgramData2" resultMap="plotMap">
+        SELECT COUNT(*) as hours, pi.added as date
+        FROM story s
+        INNER JOIN plot_iteration pi ON pi.story_id = s.id
+        INNER JOIN product_iteration pii ON pii.iteration_id = pi.iteration_id 
+        WHERE pii.product_id = #{pid} AND s.del = false AND pi.del = false
+        GROUP BY pi.added
+        ORDER BY pi.added 
+    </select>
+
+    <select id="readAllDelHoursForToday" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM plot_iteration pi
+        INNER JOIN story s ON s.id = pi.story_id
+        INNER JOIN product_iteration pii ON pii.iteration_id = pi.iteration_id
+        WHERE pii.product_id = #{pid} AND to_char(pi.added,'YYYY-MM-DD') 
+              LIKE to_char(now(),'YYYY-MM-DD') AND pi.del = true
+    </select>
+
+    <select id="readIterationDoneHours" resultMap="plotMap">
+      SELECT COUNT(*) as hours, pi.added as date
+        FROM story s
+        INNER JOIN plot_iteration pi ON pi.story_id = s.id
+        INNER JOIN product_iteration pii ON pii.iteration_id = pi.iteration_id
+        WHERE pii.product_id = #{pid} AND s.del = false AND pi.del = false
+        GROUP BY pi.added
+        ORDER BY pi.added 
+    </select>
+
+    <select id="selectId" resultType="java.lang.Long">
+        SELECT nextval('product_id_seq')
+    </select>
+
+
+    <insert id="create">
+        <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
+            SELECT nextval('product_id_seq')
+        </selectKey>
+        INSERT INTO product (id, name, descr, owner, user_id, added) 
+            VALUES (#{id}, #{name}, #{descr}, #{owner}, #{idCreator}, now());
+    </insert>
+
+    <insert id="createWithUserId">
+        INSERT INTO product (id, name, descr, owner, user_id, added) 
+            VALUES (#{id}, #{name}, #{descr}, #{owner}, #{idCreator}, now());
+    </insert>
+
+    <select id="read" resultMap="productMap">
+        SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN users u ON u.id = p.owner
+        WHERE p.id = #{id} AND p.del = false
+    </select>
+
+    <select id="readView" resultMap="productViewMap">
+        SELECT p.id, p.name, p.descr, p.owner, u.fname || ' ' || u.sname AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN users u ON u.id = p.owner
+        WHERE p.id = #{id} AND p.del = false
+    </select>
+
+    <select id="readAll" resultMap="productMap">
+        SELECT id, name, descr, owner, user_id, added, modified, del, done 
+        FROM product
+        WHERE del = false
+    </select>
+
+    <select id="readAllView" resultMap="productViewMap">
+        SELECT p.id, p.name, p.descr, p.owner, u.fname || ' ' || u.sname AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN users u ON u.id = p.owner 
+        ORDER BY p.id
+    </select>
+
+    <select id="readByIterationId" resultMap="productMap">
+        SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done
+        FROM product p INNER JOIN product_iteration pi ON p.id = pi.product_id
+        WHERE pi.iteration_id = #{iid} AND p.del = false
+        ORDER BY p.id
+    </select>
+
+    <select id="readViewByIterationId" resultMap="productViewMap">
+        SELECT p.id, p.name, p.descr, p.owner, u.fname || ' ' || u.sname AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN product_iteration pi ON p.id = pi.product_id
+                       INNER JOIN users u ON u.id = p.owner
+        WHERE pi.iteration_id = #{iid} AND p.del = false
+        ORDER BY p.id
+    </select>
+
+    <select id="readByStoryId" resultMap="productMap">
+        SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done
+        FROM product p INNER JOIN product_story ps ON p.id = ps.product_id
+        WHERE ps.story_id = #{sid} AND p.del = false
+        ORDER BY p.id
+    </select>
+
+    <select id="readViewByStoryId" resultMap="productViewMap">
+        SELECT p.id, p.name, p.descr, p.owner, u.fname || ' ' || u.sname AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN product_story ps ON p.id = ps.product_id
+                       INNER JOIN users u ON u.id = p.owner
+        WHERE ps.story_id = #{sid} AND p.del = false
+        ORDER BY p.id
+    </select>
+
+    <select id="readAllByUserId" resultMap="productMap">
+        SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done
+        FROM product p INNER JOIN team_product tp ON p.id = tp.product_id
+                       INNER JOIN users_team ut ON ut.team_id = tp.team_id
+        WHERE ut.user_id = #{uid} AND p.del = false
+        ORDER BY p.id
+    </select>
+
+    <select id="readAllViewByUserId" resultMap="productViewMap">
+        SELECT p.id, p.name, p.descr, p.owner, u.fname || ' ' || u.sname AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN team_product tp ON p.id = tp.product_id
+                       INNER JOIN users_team ut ON ut.team_id = tp.team_id
+                       INNER JOIN users u ON u.id = ut.user_id
+        WHERE ut.user_id = #{uid} AND p.del = false
+        ORDER BY p.id
+    </select>
+
+    <select id="readByUserIdAndOrganizationId" resultMap="productMap">
+        SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN team_product tp ON p.id = tp.product_id
+                       INNER JOIN users_team ut ON ut.team_id = tp.team_id
+                       INNER JOIN organization_product op ON op.product_id = tp.product_id
+                       INNER JOIN team t ON t.id = tp.team_id
+        WHERE ut.user_id = #{uid} AND op.organization_id = #{oid} AND t.del = false
+        UNION 
+
+        SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN organization_product op ON op.product_id = p.id
+                       INNER JOIN users u ON u.id = p.user_id
+        WHERE u.id = #{uid} AND op.organization_id = #{oid} AND p.del = false
+    </select>
+
+    <select id="readViewByUserIdAndOrganizationId" resultMap="productViewMap">
+        (SELECT p.id, p.name, p.descr, p.owner, uo.login AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN team_product tp ON p.id = tp.product_id
+                       INNER JOIN users_team ut ON ut.team_id = tp.team_id
+                       INNER JOIN users u ON u.id = ut.user_id
+                       INNER JOIN users uo ON uo.id = p.owner
+                       INNER JOIN organization_product op ON op.product_id = tp.product_id
+                       INNER JOIN team t ON t.id = tp.team_id
+        WHERE ut.user_id = #{uid} AND op.organization_id = #{oid} AND p.del = false AND t.del = false
+        ORDER BY p.id)
+        
+        UNION 
+
+        (SELECT p.id, p.name, p.descr, p.owner, uo.login AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
+        FROM product p INNER JOIN organization_product op ON op.product_id = p.id
+                       INNER JOIN users u ON u.id = p.user_id
+                       INNER JOIN users uo ON uo.id = p.owner
+        WHERE u.id = #{uid} AND op.organization_id = #{oid} AND p.del = false
+        ORDER BY p.id)
+    </select>
+
+    <update id="update">
+        UPDATE product
+        SET name = #{name}, descr = #{descr}, owner = #{owner}, user_id = #{idCreator}, modified = now(), del = #{del}, done = #{isDone}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updatePriorityInPS">
+        UPDATE product_story SET priority = #{prid}  WHERE story_id = #{sid}; 
+    </update>
+
+    <update id="addedProductOwner">
+        UPDATE product SET owner = #{uid} WHERE id = #{pid}; 
+    </update>
+
+    <delete id="delete">
+        UPDATE product
+        SET del = 'TRUE', modified = now() 
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="addStoryToAProduct">
+        INSERT INTO product_story (product_id, story_id, priority) VALUES (#{pid}, #{sid}, 
+                    (select COUNT(*) from product_story where product_id=#{pid}) + 1)
+    </insert>
+
+    <insert id="addIterationToAProduct">
+        INSERT INTO product_iteration (product_id, iteration_id) VALUES (#{pid}, #{iid})
+    </insert>
+
+</mapper>

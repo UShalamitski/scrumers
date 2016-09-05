@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Task">
+
+    <resultMap id="taskMap" type="Task">
+        <id property="id" column="id" />
+        <result property="taskId" column="task_id"/>
+        <result property="summary" column="summary"/>
+        <result property="estimatePre" column="estimate_pre"/>
+        <result property="estimateReal" column="estimate_real"/>
+        <result property="assignee" column="assignee"/>
+        <result property="statusId" column="status_id"/>
+        <result property="idCreator" column="user_id"/>
+        <result property="added" column="added"/>
+        <result property="modified" column="modified"/>
+        <result property="del" column="del"/>
+        <result property="isDone" column="done"/>
+        <result property="devName" column="devName"/>
+    </resultMap>
+
+    <resultMap id="commentMap" type="Comment">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id"/>
+        <result property="text" column="comment"/>
+        <result property="name" column="name"/>
+        <result property="login" column="login"/>
+        <result property="dateComment" column="dateComment"/>
+    </resultMap>
+
+    <select id="selectId" resultType="java.lang.Long">
+        SELECT nextval('task_id_seq')
+    </select>
+
+    <insert id="create">
+        <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
+            SELECT nextval('task_id_seq')
+        </selectKey>
+        INSERT INTO task (id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added) 
+            VALUES (#{id}, #{taskId}, #{summary}, #{estimatePre}, #{estimateReal}, #{assignee}, #{statusId}, #{idCreator}, now())
+    </insert>
+
+    <insert id="createWithId">
+        INSERT INTO task (id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added) 
+            VALUES (#{id}, (select count(*) from story_tasks where story_id=#{sid}) + 1,
+                      #{summary}, #{estimatePre}, #{estimateReal}, #{assignee}, #{statusId}, #{idCreator}, now())
+    </insert>
+
+    <select id="read" resultMap="taskMap">
+        SELECT id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added, modified, del, done 
+        FROM task 
+        WHERE id = #{id}
+    </select>
+
+    <select id="readPriorities" resultType="java.lang.Long">
+        SELECT st.priority 
+        FROM task t INNER JOIN story_tasks st ON t.id = st.task_id
+        WHERE st.story_id = #{sid} AND t.del=false AND t.status_id=#{stat_id}
+        ORDER BY st.priority
+    </select>
+
+    <select id="readAll" resultMap="taskMap">
+        SELECT id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added, modified, del, done  
+        FROM task
+    </select>
+
+    <select id="readByStoryId" resultMap="taskMap">
+        SELECT t.id, t.task_id, t.summary, t.estimate_pre, t.estimate_real, t.assignee, t.status_id, t.user_id, t.added,
+               t.modified, t.del, t.done, u.fname || ' ' || u.sname as devName
+        FROM task t INNER JOIN story_tasks st ON t.id = st.task_id
+                    LEFT JOIN users u ON u.id = t.assignee 
+        WHERE st.story_id = #{sid} AND t.del = false 
+        ORDER BY st.priority
+    </select>
+
+    <select id="readCommentsByTaskId" resultMap="commentMap">
+        SELECT 
+            ct.id, ct.user_id, u.login, u.fname || ' ' || u.sname AS name, ct.comment AS text, ct.dateComment
+        FROM 
+            task t RIGHT JOIN comments_task ct ON t.id = ct.task_id 
+                   LEFT JOIN users u ON u.id = ct.user_id
+        WHERE t.id = #{tid} and ct.del=false
+        ORDER BY ct.id DESC
+    </select>
+
+    <update id="updatePriorityInST">
+        UPDATE story_tasks SET priority = #{priority}  WHERE task_id = #{tid}; 
+    </update>
+
+    <insert id="commentTask">
+        INSERT INTO comments_task (user_id, task_id, comment, dateComment) VALUES (#{uid}, #{tid}, #{comment}, now())
+    </insert>
+
+    <update id="deleteComment">
+        UPDATE comments_task SET del=true
+        WHERE id = #{cid}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE task
+        SET status_id=#{stid}
+        WHERE id = #{id}
+    </update>
+
+    <update id="update">
+        UPDATE task
+        SET task_id = #{taskId}, summary = #{summary}, estimate_pre = #{estimatePre}, estimate_real = #{estimateReal}, assignee = #{assignee}, status_id=#{statusId}, user_id = #{idCreator}, modified = now(), del = #{del}, done = #{isDone}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE task
+        SET del = 'TRUE'
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

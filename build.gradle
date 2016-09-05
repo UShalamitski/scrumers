@@ -1,0 +1,54 @@
+group = 'com.scrumers'
+version = 1.0
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'org.akhikhl.gretty'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework:spring-webmvc:${springVersion}"
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.springframework:spring-context-support:${springVersion}"
+    compile "org.springframework:spring-tx:${springVersion}"
+    compile "org.springframework:spring-jdbc:${springVersion}"
+    compile "org.springframework:spring-test:${springVersion}"
+    compile "org.springframework.security:spring-security-taglibs:${springSequrityVersion}"
+    compile "org.springframework.security:spring-security-core:${springSequrityVersion}"
+    compile "org.springframework.security:spring-security-web:${springSequrityVersion}"
+    compile "org.springframework.security:spring-security-config:${springSequrityVersion}"
+
+    compile "org.apache.commons:commons-lang3:${apacheCommonLangVersion}"
+    compile "org.apache.commons:commons-collections4:${apacheCommonCollectionsVersion}"
+    compile "org.apache.commons:commons-io:${apacheCommonIOVersion}"
+    compile "commons-fileupload:commons-fileupload:${apacheCommonFileUploadVersion}"
+    compile "commons-configuration:commons-configuration:${apacheCommonConfigurationVersion}"
+
+    compile "net.sourceforge.cobertura:cobertura:${coberturaVersion}"
+    compile "com.google.code.gson:gson:${gsonVersion}"
+    compile "org.aspectj:aspectjweaver:${aspectjVersion}"
+    compile "org.postgresql:postgresql:${jdbcPostgresqlVersion}"
+    compile "org.mybatis:mybatis:${myBatisVersion}"
+    compile "org.mybatis:mybatis-spring:${myBatisSpringVersion}"
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    compile "org.slf4j:slf4j-simple:${slf4jVersion}"
+
+    testCompile "org.easymock:easymock:${easymockVersion}"
+    testCompile "junit:junit:${junitVersion}"
+
+    compile "javax.servlet:javax.servlet-api:${servletApiVersion}"
+    runtime "jstl:jstl:${jstlVersion}"
+}
