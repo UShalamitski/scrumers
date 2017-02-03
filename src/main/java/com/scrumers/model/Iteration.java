@@ -1,5 +1,10 @@
 package com.scrumers.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.util.Date;
 
 public class Iteration extends AbstractEntity {
@@ -64,5 +69,51 @@ public class Iteration extends AbstractEntity {
 
     public void setDone(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("name", name)
+                .append("descr", descr)
+                .append("dateStart", dateStart)
+                .append("dateEnd", dateEnd)
+                .append("iterationNum", iterationNum)
+                .append("isDone", isDone)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Iteration)) {
+            return false;
+        }
+
+        Iteration iteration = (Iteration) o;
+
+        return new EqualsBuilder()
+                .append(iterationNum, iteration.iterationNum)
+                .append(isDone, iteration.isDone)
+                .append(name, iteration.name)
+                .append(descr, iteration.descr)
+                .append(dateStart, iteration.dateStart)
+                .append(dateEnd, iteration.dateEnd)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(name)
+                .append(descr)
+                .append(dateStart)
+                .append(dateEnd)
+                .append(iterationNum)
+                .append(isDone)
+                .toHashCode();
     }
 }

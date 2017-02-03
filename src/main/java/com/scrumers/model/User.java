@@ -1,5 +1,8 @@
 package com.scrumers.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class User extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
@@ -117,5 +120,49 @@ public class User extends AbstractEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof User)) {
+            return false;
+        }
+
+        User user = (User) o;
+
+        return new EqualsBuilder()
+                .append(isFirst, user.isFirst)
+                .append(login, user.login)
+                .append(passwd, user.passwd)
+                .append(fname, user.fname)
+                .append(Sname, user.Sname)
+                .append(avatar, user.avatar)
+                .append(email, user.email)
+                .append(phone, user.phone)
+                .append(actualOrganization, user.actualOrganization)
+                .append(actualProduct, user.actualProduct)
+                .append(actualIteration, user.actualIteration)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(login)
+                .append(passwd)
+                .append(fname)
+                .append(Sname)
+                .append(avatar)
+                .append(email)
+                .append(phone)
+                .append(actualOrganization)
+                .append(actualProduct)
+                .append(actualIteration)
+                .append(isFirst)
+                .toHashCode();
     }
 }

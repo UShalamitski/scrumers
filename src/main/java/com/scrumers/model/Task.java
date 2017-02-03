@@ -1,5 +1,10 @@
 package com.scrumers.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Task extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
@@ -84,4 +89,55 @@ public class Task extends AbstractEntity {
         this.devName = devName;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("taskId", taskId)
+                .append("summary", summary)
+                .append("estimatePre", estimatePre)
+                .append("estimateReal", estimateReal)
+                .append("assignee", assignee)
+                .append("statusId", statusId)
+                .append("isDone", isDone)
+                .append("devName", devName)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Task)) {
+            return false;
+        }
+
+        Task task = (Task) o;
+
+        return new EqualsBuilder()
+                .append(taskId, task.taskId)
+                .append(estimatePre, task.estimatePre)
+                .append(estimateReal, task.estimateReal)
+                .append(assignee, task.assignee)
+                .append(isDone, task.isDone)
+                .append(summary, task.summary)
+                .append(statusId, task.statusId)
+                .append(devName, task.devName)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(taskId)
+                .append(summary)
+                .append(estimatePre)
+                .append(estimateReal)
+                .append(assignee)
+                .append(statusId)
+                .append(isDone)
+                .append(devName)
+                .toHashCode();
+    }
 }

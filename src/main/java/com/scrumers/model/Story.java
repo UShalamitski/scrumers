@@ -1,5 +1,10 @@
 package com.scrumers.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Story extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
@@ -134,4 +139,70 @@ public class Story extends AbstractEntity {
         this.assignee = assignee;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("storyId", storyId)
+                .append("name", name)
+                .append("descr", descr)
+                .append("storyPoints", storyPoints)
+                .append("estimate", estimate)
+                .append("assignee", assignee)
+                .append("howToDemo", howToDemo)
+                .append("track", track)
+                .append("statusId", statusId)
+                .append("isDone", isDone)
+                .append("devName", devName)
+                .append("allTasks", allTasks)
+                .append("doneTasks", doneTasks)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Story)) {
+            return false;
+        }
+
+        Story story = (Story) o;
+
+        return new EqualsBuilder()
+                .append(storyId, story.storyId)
+                .append(estimate, story.estimate)
+                .append(assignee, story.assignee)
+                .append(isDone, story.isDone)
+                .append(name, story.name)
+                .append(descr, story.descr)
+                .append(storyPoints, story.storyPoints)
+                .append(howToDemo, story.howToDemo)
+                .append(track, story.track)
+                .append(statusId, story.statusId)
+                .append(devName, story.devName)
+                .append(allTasks, story.allTasks)
+                .append(doneTasks, story.doneTasks)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(storyId)
+                .append(name)
+                .append(descr)
+                .append(storyPoints)
+                .append(estimate)
+                .append(assignee)
+                .append(howToDemo)
+                .append(track)
+                .append(statusId)
+                .append(isDone)
+                .append(devName)
+                .append(allTasks)
+                .append(doneTasks)
+                .toHashCode();
+    }
 }

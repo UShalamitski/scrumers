@@ -1,5 +1,10 @@
 package com.scrumers.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Team extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
@@ -54,4 +59,46 @@ public class Team extends AbstractEntity {
         this.scrumMasterId = scrumMasterId;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("name", name)
+                .append("numOfUsers", numOfUsers)
+                .append("teamRole", teamRole)
+                .append("scrumMaster", scrumMaster)
+                .append("scrumMasterId", scrumMasterId)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Team)) {
+            return false;
+        }
+
+        Team team = (Team) o;
+
+        return new EqualsBuilder()
+                .append(name, team.name)
+                .append(numOfUsers, team.numOfUsers)
+                .append(teamRole, team.teamRole)
+                .append(scrumMaster, team.scrumMaster)
+                .append(scrumMasterId, team.scrumMasterId)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .append(numOfUsers)
+                .append(teamRole)
+                .append(scrumMaster)
+                .append(scrumMasterId)
+                .toHashCode();
+    }
 }

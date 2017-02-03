@@ -1,5 +1,10 @@
 package com.scrumers.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Role extends Entity {
 
     private static final long serialVersionUID = 1L;
@@ -14,8 +19,34 @@ public class Role extends Entity {
         this.name = name;
     }
 
-    public final String toString() {
-        return new StringBuilder("role: {id:").append(getId()).append(" name:")
-                .append(getName()).append("}").toString();
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("name", name)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Role)) {
+            return false;
+        }
+
+        Role role = (Role) o;
+
+        return new EqualsBuilder()
+                .append(name, role.name)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(name)
+                .toHashCode();
     }
 }

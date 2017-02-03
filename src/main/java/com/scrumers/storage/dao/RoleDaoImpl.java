@@ -1,16 +1,12 @@
 package com.scrumers.storage.dao;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.scrumers.api.dao.RoleDao;
+import com.scrumers.model.Role;
 import com.scrumers.storage.mapper.RoleMapper;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import com.scrumers.api.dao.RoleDao;
-import com.scrumers.model.Role;
-
 import javax.annotation.Resource;
+import java.util.List;
 
 public class RoleDaoImpl extends SqlSessionDaoSupport implements RoleDao {
 

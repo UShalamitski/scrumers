@@ -50,21 +50,16 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public void deleteStory(Long[] id) {
-        if (id != null)
+        if (id != null) {
             for (Long i : id) {
-                // storyDao.deleteFromProductStory(i);
-                // storyDao.deleteFromIterationStory(i);
-                // storyDao.deleteFromStoryTasks(i);
-                storyDao.delete(i);
+                deleteStory(i);
             }
+        }
     }
 
     @Override
     public void deleteStory(Long sid) {
         if (sid != null) {
-            // storyDao.deleteFromProductStory(id);
-            // storyDao.deleteFromIterationStory(id);
-            // storyDao.deleteFromStoryTasks(id);
             storyDao.delete(sid);
         }
     }
@@ -72,9 +67,6 @@ public class StoryServiceImpl implements StoryService {
     @Override
     public void deleteStory(Long sid, Long iid) {
         if (sid != null) {
-            // storyDao.deleteFromProductStory(id);
-            // storyDao.deleteFromIterationStory(id);
-            // storyDao.deleteFromStoryTasks(id);
             storyDao.delete(sid);
             iterationDao.deleteFromPlotIteration(iid, sid);
         }
