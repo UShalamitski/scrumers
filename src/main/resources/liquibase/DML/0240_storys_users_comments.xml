@@ -1,0 +1,140 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Inserts data into table 'storys_users_comments'</comment>
+
+        <sql>
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (1,1, 'Правда или вымысел — какая разница? Все станет правдой со временем, любая фигня!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (1,2, 'Никогда не отдавай приказ, если не уверен, что его выполнят!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (1,3, 'Почему, черт подери, ничего не изменилось в этом мире после моей смерти? Как это может быть, что солнце по-прежнему всходит и заходит и даже не споткнется? Почему, о мать моя, воскресенье осталось воскресеньем, а жара той же несносной жарой, что и при мне?', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (1,4, 'И он принял генерала Сатурно Сантоса к себе на службу, сделал своим гуардаэспальдасом, с тем, однако, условием, чтобы тот никогда не стоял у него за спиной.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (1,5, 'Приказываю в течение сорока восьми часов найти Деметрио Алдоуса живым и доставить его ко мне, если же он будет найден мертвым, то ко мне он должен быть доставлен живым, а если он вообще не будет найден, вы все равно обязаны доставить его ко мне.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (2,7, 'Жизнь трудна и быстротечна, но другой нет.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (2,2, 'Каждый из них в отдельности боялся президента, а президент боялся любого из них в паре с другим, так как двое – это уже заговор.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (2,1, '“Зачем ты лезешь в это дело, черт подери? Во имя чего ты хочешь умереть?” – на что молодой чужеземец без запинки отвечал: “Во славу своего отечества, ваше превосходительство! Во имя родины! Умереть за нее – высшее счастье!” И он, жалея молодого человека и улыбаясь ему грустной улыбкой, сказал: “Не будь дураком, парень, жизнь – это и есть родина!” И, разжав левый кулак, он показал молодому человеку лежащий на ладони стеклянный шарик: “Вот эта вещь, видишь? Она либо есть, либо ее нет, и только тот обладает ею, у кого она есть, парень! Так обстоит дело и с жизнью, и с родиной!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (3,1, 'Прошел циклон, в связи с чем была объявлена амнистия политическим заключенным, а изгнанникам было разрешено вернуться на родину – всем, кроме интеллектуалов, разумеется, – “Этим я никогда не разрешу вернуться, у них постоянный жар в перьевых стержнях, как у породистых петухов, когда они оперяются. Они ни к чему не пригодны, даже если годятся на что-нибудь”', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (3,2, 'Размышляя о будущем, он был осенен догадкой, волшебным озарением, которое явило ему причину всех бед страны, а именно – у людей слишком много свободного времени для всяких там размышлений, поэтому надо чем-то занять это время; с этой целью он возобновил мартовские поэтические состязания и ежегодные конкурсы красавиц, оспаривающих титул королевы красоты, построил самый большой в карибских странах крытый стадион с прекрасной гандбольной площадкой, обязав нашу команду играть под девизом “Победа или смерть”; в каждой провинции он основал бесплатную школу метельщиц, ученицы которой, фанатично преданные ему за бесплатную науку девицы, рьяно подметали не только в домах, но и на улицах, а затем принялись подметать дороги – проселочные и шоссейные, все подряд, так что кучи мусора возили из одной провинции в другую и обратно, не зная, что с ним делать, и каждая вывозка мусора сопровождалась демонстрацией под сенью государственных флагов и пламенных транспарантов: “Храни Господь апостола целомудрия, заботящегося о чистоте нации!”', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (3,3, 'Когда трое офицеров предстали перед ним и доложили о выполнении приказа, он сперва повысил их в звании сразу на два чина и наградил медалью за верную службу, а затем приказал расстрелять, как обыкновенных уголовников. “Потому что существуют приказы, которые можно отдавать, но выполнять их преступно, черт подери!”', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (3,4, 'Единственный достойный документ, могущий удостоверить личность свергнутого президента, – это свидетельство о его смерти.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (3,1, 'А беднякам снова ничего не достанется. Такое у них везение: если бы дерьмо хоть что-нибудь стоило, бедняки стали бы рождаться без задниц.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (4,1, 'Надо бы передаать', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (4,2, 'Все работает!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (4,1, 'Ниче не работает!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (4,2, 'Работает, тебе надо ты и перелывай', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (4,1, 'Я все маме расскажу!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (5,1, 'Самой долгой и деятельной жизни хватает лишь на то, чтобы научиться жить – в самом конце.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (5,4, 'Жажда власти порождает лишь неутомимую жажду власти, […] насытиться властью невозможно не только до конца нашего света, но и до конца всех иных миров', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (36,4, 'Каждый из них в отдельности боялся президента, а президент боялся любого из них в паре с другим, так как двое – это уже заговор.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (36,5, '...нет для человека наказания более унизительного и в то же время более справедливого, чем измена собственной сущности, одряхление собственного тела и памяти...', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (36,1, 'Никогда не отдавай приказа, если не уверен, что его выполнят!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (36,2, 'Оп, мизантроп!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (37,3, 'Рассказывали в тавернах анекдот о том, как однажды государственному совету сообщили, что президент умер, и все министры стали испуганно переглядываться и со страхом спрашивать друг у друга, кто же пойдет и доложит ему об этом', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (37,1, 'Жажда власти порождает лишь неутолимую жажду власти', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (37,5, 'Страх перед смертью - это горячий уголь счастья жизни', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (37,1, '«Бросим монету, — сказал он, — и ежели выпадет „орел“ — умрешь ты, ежели „решка“ — я». Но Патрисио Арагонес возразил на это, что умереть придется обоим, ибо, сколько ни кидай монету, всегда будет ничья: «Разве вы забыли, мой генерал, что президентский профиль отчеканен с обеих сторон?»Всё это он проделал в глубокой тоске, охваченный чувством безмерного одиночества, понимая, что стал отныне самым одиноким существом на всём белом свете.Он был ему даже благодарен за острое ощущение и спросил: «Сколько ты хочешь за этого красного петуха?», — на что Дионисио Игуаран робко ответил: «Этот петух ваш, господин генерал, возьмите его»; толпа наградила Дионисио рукоплесканиями, когда он, сопровождаемый грохотом музыки и взрывами петард, отправился домой, показывая всем шесть прекрасных породистых петухов, подаренных ему взамен непобедимого красного; но той же ночью Дионисио Игуаран заперся в своей спальне, выпил целую бутыль тростникового самодельного рома и повесился на веревке от гамака, бедняга, потому что слишком хорошо знал, какие бесчисленные беды и несчастья подстерегают отмеченного высокой милостью человека.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (38,2, 'была объявлена амнистия политическим заключённым, а изгнанникам было разрешено вернуться на родину - всем, кроме интеллектуалов, разумеется.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (39,3, 'Пару месяцев он привечал вновь прибывшего в президентском дворце, играя с ним в домино до пор, пока бывший диктатор не проигрывал нашему генералу последний сентаво, и тогда в один прекрасный день генерал подводил его к окну с видомна море, заводил душеспасительную беседу, сетуя на быстротечность жизни, которая, увы, направлена только в одну сторону и никого не может удовлетворить, не жизнь, а сплошной онанизм, уверяю вас!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (38,4, 'Сердце - это третье яичко, мой генерал!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (39,5, 'Прокомментируйте кто-нибудь', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (39,1, 'No.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (39,2, 'Нет', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (39,3, 'Сам комментируй!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (40,4, 'Мой генерал, генерал Нарсисо Лопес, не в силах больше выносить свою позорную склонность к гомосексуализму, воткнул себе в одно место заряд динамита и разнёс себя в клочья!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (40,5, 'Он никогда не знал отца, как многие другие самые выдающиеся деспоты, а знал одну-единственную свою родительницу, свою матушку Бендисьон Альварадо.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (40,1, 'Нет, сеньор, это не портативный унитаз, не ночной горшок, - это амфора, её подняли со дна морского.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (40,2, 'Речь о том, мой генерал, что никакой вы не президент... никто не считает вас законным президентом...', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (40,3, 'Он даже не подозревал, что лишь в порту взрыв патриотического восторга произошел стихийно, а все последующие были организованы службой безопасности, дабы ублажать его без риска.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (41,4, 'Лучше жить среди коров, чем среди людей, готовых допустить, чтобы человек умер без достоинтсва', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (41,7, 'Ложь удобней сомнений, полезнее любви, долговечнее правды', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (41,1, 'Жизнь трудна и быстротечна, но другой нет.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (42,2, 'только знающий правду найдет в себе смелость для обмана.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (42,3, 'есть такие люди, со дня рождения меченные клеймом одиночества', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (42,4, 'В годы желтого листопада своей осени он убедился, что никогда не будет хозяином всей своей власти, никогда не охватит всей жизни, ибо обречен на познание лишь одной ее тыльной стороны, обречен на разглядывание швов, на распутывание нитей основы и развязывание узелков гобелена иллюзий, гобелена мнимой реальности; он и не подозревал, не понял даже в самом конце, что настоящая жизнь, подлинная жизнь была у всех на виду; но мы видели эту жизнь совсем с другой стороны, мой генерал, – со стороны обездоленных, мы видели ее изнутри бесконечных лет нашего горя и наших страданий, видели сквозь годы и годы желтого листопада вашей нескончаемой осени, несмотря на которую мы все-таки жили, и наша беда была бедой, а мгновения счастья – счастьем; мы знали, что наша любовь заражена вирусами смерти, но она была настоящей любовью, любовью до конца, мой генерал!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (42,5, 'Прочитав бумажку и ничего в ней не поняв, он свернул ее в трубочку, положил на место и забормотал молитву: «Отче наш, чудодейственный наставник небесный, Ты, Кто удерживает аэропланы в воздухе и корабли на глади морской…»', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (43,1, 'С ним обошлись так дурно, что если он и не был врагом, то стал им.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (43,2, 'Ему было в ту пору не больше трех лет, но он, кроме того, был столь хрупок и нежен, что казался девочкой, одетой в расшитый золотом парадный военный мундир.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (43,3, 'Он вернул все запрещенные оккупантами развлечения простых людей, как бы испытывая на отмене этих запретов могущество своей власти, а когда убедился, что никто ему не перечит, что власть и впрямь принадлежит теперь ему, то поменял чередование цветных полос на национальном флаге, перенес верхнюю полосу вниз, а нижнюю вверх, убрал из государственного герба фригийский колпак и приказал заменить его изображением поверженного дракона.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (44,4, 'Поправьте отступы', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (44,5, 'Сделано', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (45,1, 'Он лично проверял, сколько надоено, и распоряжался выдачей молока с той самой поры, когда водворился в президентском дворце.', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (45,7, 'Чёрт подери, как это может быть, чтобы этот индеец написал такую прекрасную вещь той же рукой, которой он подтирается?', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (45,3, 'Сердце - это третье яичко', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (45,1, 'де рыцарь? Где он? О, горе, горе… Поднимись на башню, чтобы увидеть его возвращение, и ты увидишь, что он уже вернулся — в обитом бархатом гробу! О, скорбь, о горе!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (46,5, 'привет, как дила ))))))))', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (46,1, 'Забаньте вы этого дурачка', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (46,2, 'Ох, лол', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (46,3, 'Он занял мое парковочное место, вот $%@%!', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (47,4, 'comment:13 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (47,5, 'comment:13 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (47,1, 'comment:14 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (47,2, 'comment:14 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (47,3, 'comment:14 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (47,4, 'comment:14 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (14,5, 'comment:14 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (15,1, 'comment:15 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (15,2, 'comment:15 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (15,3, 'comment:15 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (15,4, 'comment:15 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (15,5, 'comment:15 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (16,1, 'comment:16 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (16,2, 'comment:16 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (16,3, 'comment:16 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (16,4, 'comment:16 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (16,5, 'comment:16 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (17,1, 'comment:17 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (17,2, 'comment:17 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (17,3, 'comment:17 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (17,4, 'comment:17 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (17,5, 'comment:17 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (18,1, 'comment:18 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (18,2, 'comment:18 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (18,3, 'comment:18 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (18,4, 'comment:18 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (18,5, 'comment:18 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (19,1, 'comment:19 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (19,2, 'comment:19 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (19,3, 'comment:19 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (19,4, 'comment:19 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (19,5, 'comment:19 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (20,1, 'comment:20 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (20,2, 'comment:20 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (20,3, 'comment:20 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (20,4, 'comment:20 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (20,5, 'comment:20 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (21,1, 'comment:21 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (21,2, 'comment:21 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (21,3, 'comment:21 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (21,4, 'comment:21 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (21,5, 'comment:21 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (22,1, 'comment:22 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (22,2, 'comment:22 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (22,3, 'comment:22 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (22,4, 'comment:22 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (22,5, 'comment:22 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (23,1, 'comment:23 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (23,2, 'comment:23 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (23,3, 'comment:23 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (23,4, 'comment:23 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (23,5, 'comment:23 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (24,1, 'comment:24 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (24,2, 'comment:24 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (24,3, 'comment:24 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (24,4, 'comment:24 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (24,5, 'comment:24 5', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (25,1, 'comment:25 1', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (25,2, 'comment:25 2', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (25,3, 'comment:25 3', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (25,4, 'comment:25 4', now());
+            INSERT INTO application.storys_users_comments (story_id, user_id, comment, dateComment) VALUES (25,5, 'comment:25 5', now());
+        </sql>
+        <rollback>
+            DELETE FROM application.storys_users_comments
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

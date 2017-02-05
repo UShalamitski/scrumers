@@ -1,0 +1,37 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Creates table 'users'</comment>
+        <sql>
+            CREATE TABLE application.users(
+                id bigserial NOT NULL,
+                login character varying unique NOT NULL,
+                passwd character(32) NOT NULL,
+                avatar character varying,
+                fname character varying,
+                sname character varying,
+                email character varying NULL,
+                phone character varying NULL,
+                actual_organization bigint NULL,
+                actual_product bigint NULL,
+                actual_iteration bigint NULL,
+                is_first boolean default true,
+
+                user_id bigint NOT NULL,
+                added timestamp NULL,
+                modified timestamp NULL,
+                del boolean default false,
+                CONSTRAINT users_pk PRIMARY KEY (id)
+            )
+        </sql>
+        <rollback>
+            DELETE TABLE application.users
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

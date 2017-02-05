@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Inserts data into table 'organization'</comment>
+
+        <sql>
+            INSERT INTO application.organization (name, user_id, added) VALUES ('organization1', 0, now ());
+            INSERT INTO application.organization (name, user_id, added) VALUES ('organization2', 0, now ());
+            INSERT INTO application.organization (name, user_id, added) VALUES ('organization3', 0, now ());
+        </sql>
+        <rollback>
+            DELETE FROM application.organization
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

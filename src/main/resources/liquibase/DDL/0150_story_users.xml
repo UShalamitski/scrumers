@@ -1,0 +1,29 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Creates table 'story_users'</comment>
+        <sql>
+            CREATE TABLE application.story_users(
+                story_id bigint NOT NULL,
+                user_id bigint NOT NULL,
+
+                CONSTRAINT su_pk PRIMARY KEY (story_id, user_id),
+                CONSTRAINT su_story_fk FOREIGN KEY (story_id)
+                    REFERENCES application.story (id) MATCH SIMPLE
+                    ON UPDATE NO ACTION ON DELETE NO ACTION,
+                CONSTRAINT su_users_fk FOREIGN KEY (user_id)
+                    REFERENCES application.users (id) MATCH SIMPLE
+                    ON UPDATE NO ACTION ON DELETE NO ACTION
+            )
+        </sql>
+        <rollback>
+            DELETE TABLE application.story_users
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

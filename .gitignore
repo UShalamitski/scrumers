@@ -1,4 +1,10 @@
-build/
+# IntelliJ project files 
+*.iml
+*.iws
+*.ipr
+.idea
+=======
 
-.gradle/
- 
+build
+.gradle
+bin

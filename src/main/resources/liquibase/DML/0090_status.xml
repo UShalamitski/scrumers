@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Inserts data into table 'status'</comment>
+
+        <sql>
+            INSERT INTO application.status (name) VALUES ('Todo');
+            INSERT INTO application.status (name) VALUES ('Doing');
+            INSERT INTO application.status (name) VALUES ('Reviewing');
+            INSERT INTO application.status (name) VALUES ('Done');
+        </sql>
+        <rollback>
+            DELETE FROM application.status
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

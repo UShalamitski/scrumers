@@ -1,0 +1,32 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Creates table 'comments_task'</comment>
+        <sql>
+            CREATE TABLE application.comments_task(
+                id bigserial NOT NULL,
+                user_id bigint NOT NULL,
+                task_id  bigint NOT NULL,
+                comment text NOT NULL,
+                dateComment timestamp NOT NULL,
+                del boolean NOT NULL default false,
+
+                CONSTRAINT ct_task_fk FOREIGN KEY (task_id)
+                    REFERENCES application.task (id) MATCH SIMPLE
+                    ON UPDATE NO ACTION ON DELETE NO ACTION,
+                CONSTRAINT ct_user_fk FOREIGN KEY (user_id)
+                    REFERENCES application.users (id) MATCH SIMPLE
+                    ON UPDATE NO ACTION ON DELETE NO ACTION
+            )
+        </sql>
+        <rollback>
+            DELETE TABLE application.comments_task
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

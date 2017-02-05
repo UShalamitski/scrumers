@@ -1,0 +1,18 @@
+import org.gradle.api.tasks.compile.GroovyCompile
+
+//NOTE: this options don't affect java files, if you add them to buildSrc
+tasks.withType(GroovyCompile) {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+    options.compilerArgs = [
+            '-Xlint:deprecation',
+            '-Xlint:finally',
+            '-Xlint:overrides',
+            '-Xlint:path',
+            '-Xlint:processing',
+            '-Xlint:rawtypes',
+            '-Xlint:varargs',
+            '-Xlint:unchecked'
+    ]
+}

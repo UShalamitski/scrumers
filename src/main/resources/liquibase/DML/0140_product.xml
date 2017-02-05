@@ -1,0 +1,25 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Inserts data into table 'product'</comment>
+
+        <sql>
+            INSERT INTO application.product (name, descr, owner, user_id, added) VALUES ('prduct1', 'this is product number 1', 51, 2, now ());
+            INSERT INTO application.product (name, descr, owner, user_id, added) VALUES ('prduct2', 'this is product number 2', 52, 10, now ());
+            INSERT INTO application.product (name, descr, owner, user_id, added) VALUES ('prduct3', 'this is product number 3', 53, 17, now ());
+            INSERT INTO application.product (name, descr, owner, user_id, added) VALUES ('prduct4', 'this is product number 4', 54, 23, now ());
+            INSERT INTO application.product (name, descr, owner, user_id, added) VALUES ('prduct5', 'this is product number 5', 55, 31, now ());
+            INSERT INTO application.product (name, descr, owner, user_id, added) VALUES ('prduct6', 'this is product number 6', 56, 38, now ());
+            INSERT INTO application.product (name, descr, owner, user_id, added) VALUES ('prduct7', 'this is product number 7', 57, 47, now ());
+        </sql>
+        <rollback>
+            DELETE FROM application.product
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

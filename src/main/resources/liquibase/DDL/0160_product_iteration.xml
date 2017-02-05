@@ -1,0 +1,29 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Creates table 'product_iteration'</comment>
+        <sql>
+            CREATE TABLE application.product_iteration(
+                product_id bigserial NOT NULL,
+                iteration_id bigserial NOT NULL,
+
+                CONSTRAINT product_iteration_pk PRIMARY KEY (product_id, iteration_id),
+                CONSTRAINT pi_product_fk FOREIGN KEY (product_id)
+                    REFERENCES application.product (id) MATCH SIMPLE
+                    ON UPDATE NO ACTION ON DELETE NO ACTION,
+                CONSTRAINT pi_iteration_fk FOREIGN KEY (iteration_id)
+                    REFERENCES application.iteration (id) MATCH SIMPLE
+                    ON UPDATE NO ACTION ON DELETE NO ACTION
+            )
+        </sql>
+        <rollback>
+            DELETE TABLE application.product_iteration
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

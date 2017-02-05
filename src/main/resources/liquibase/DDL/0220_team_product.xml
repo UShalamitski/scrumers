@@ -1,0 +1,29 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2017-02-03-01" author="ushalamitski">
+        <comment>Creates table 'team_product'</comment>
+        <sql>
+            CREATE TABLE application.team_product(
+            team_id bigint NOT NULL,
+            product_id bigint NOT NULL,
+
+            CONSTRAINT tp_pk PRIMARY KEY (team_id, product_id),
+            CONSTRAINT tp_team_fk FOREIGN KEY (team_id)
+                REFERENCES application.team (id) MATCH SIMPLE
+                ON UPDATE NO ACTION ON DELETE NO ACTION,
+            CONSTRAINT tp_product_fk FOREIGN KEY (product_id)
+                REFERENCES application.product (id) MATCH SIMPLE
+                ON UPDATE NO ACTION ON DELETE NO ACTION
+            )
+        </sql>
+        <rollback>
+            DELETE TABLE application.team_product
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
