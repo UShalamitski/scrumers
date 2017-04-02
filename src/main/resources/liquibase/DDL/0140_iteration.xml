@@ -33,4 +33,18 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="2017-04-01" author="ushalamitski">
+        <comment>Adds field 'product_id'</comment>
+        <sql>
+            ALTER TABLE application.iteration ADD COLUMN product_id bigint;
+            ALTER TABLE application.iteration ADD CONSTRAINT iteration_product_fk FOREIGN KEY (product_id)
+                REFERENCES application.product (id) MATCH SIMPLE
+                ON UPDATE NO ACTION ON DELETE NO ACTION
+        </sql>
+        <rollback>
+            ALTER TABLE application.iteration DROP COLUMN product_id bigint;
+            ALTER TABLE application.iteration DROP CONSTRAINT iteration_product_fk;
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>
