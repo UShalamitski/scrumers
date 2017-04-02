@@ -156,11 +156,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addIterationToAProduct(Long pid, Long iid) {
-        productDao.addIterationToAProduct(pid, iid);
-    }
-
-    @Override
     public void updatePriorityInPS(Long[] ids) {
         Long n = 0L;
         for (Long id : ids) {

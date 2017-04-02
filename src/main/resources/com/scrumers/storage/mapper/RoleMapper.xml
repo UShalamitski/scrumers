@@ -10,25 +10,27 @@
     </resultMap>
 
     <select id="findAll" resultMap="roleMap">
-        SELECT * FROM roles
+        SELECT * FROM ${schema}.roles
     </select>
 
     <select id="findAllTeamRoles" resultMap="roleMap">
-        SELECT * FROM roles_team
+        SELECT * FROM ${schema}.roles_team
     </select>
 
     <select id="findByUserId" resultMap="roleMap">
         SELECT r.id, r.name 
-        FROM users u JOIN users_roles ur ON u.id = ur.user_id JOIN roles r ON r.id = ur.role_id 
+        FROM ${schema}.users u
+            INNER JOIN ${schema}.users_roles ur ON u.id = ur.user_id
+            INNER JOIN ${schema}.roles r ON r.id = ur.role_id
         WHERE u.id = #{id} 
         ORDER BY r.name
     </select>
 
     <insert id="add">
-        INSERT INTO users_roles (user_id, role_id) VALUES (#{uid}, #{rid})
+        INSERT INTO ${schema}.users_roles (user_id, role_id) VALUES (#{uid}, #{rid})
     </insert>
 
     <delete id="delete">
-        DELETE FROM users_roles WHERE user_id = #{uid}
+        DELETE FROM ${schema}.users_roles WHERE user_id = #{uid}
     </delete>
 </mapper>

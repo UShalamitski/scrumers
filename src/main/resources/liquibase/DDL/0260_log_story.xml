@@ -25,7 +25,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.log_story
+            DROP TABLE application.log_story
         </rollback>
     </changeSet>
 

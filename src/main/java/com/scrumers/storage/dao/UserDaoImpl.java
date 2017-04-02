@@ -74,7 +74,7 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 
     @Override
     public List<Role> findAllTeamRoles() {
-        return getSqlSession().selectList("Role.findAllTeamRoles");
+        return getSqlSession().selectList("com.scrumers.storage.mapper.RoleMapper.findAllTeamRoles");
     }
 
     @Override

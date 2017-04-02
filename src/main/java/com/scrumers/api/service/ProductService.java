@@ -49,8 +49,6 @@ public interface ProductService {
 
     void addStoryToAProduct(Long pid, Long sid);
 
-    void addIterationToAProduct(Long pid, Long iid);
-
     void addNewTeam(Long pid, Long tid);
 
     List<ProductView> getProductsView();

@@ -29,7 +29,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.iteration
+            DROP TABLE application.iteration
         </rollback>
     </changeSet>
 
@@ -42,8 +42,7 @@
                 ON UPDATE NO ACTION ON DELETE NO ACTION
         </sql>
         <rollback>
-            ALTER TABLE application.iteration DROP COLUMN product_id bigint;
-            ALTER TABLE application.iteration DROP CONSTRAINT iteration_product_fk;
+            ALTER TABLE application.iteration DROP COLUMN product_id;
         </rollback>
     </changeSet>
 

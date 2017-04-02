@@ -22,7 +22,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.organization_product
+            DROP TABLE application.organization_product
         </rollback>
     </changeSet>
 

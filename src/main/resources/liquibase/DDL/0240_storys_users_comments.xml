@@ -25,7 +25,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.storys_users_comments
+            DROP TABLE application.storys_users_comments
         </rollback>
     </changeSet>
 

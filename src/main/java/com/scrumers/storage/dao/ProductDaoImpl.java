@@ -106,14 +106,6 @@ public class ProductDaoImpl extends SqlSessionDaoSupport implements ProductDao {
     }
 
     @Override
-    public void addIterationToAProduct(Long pid, Long iid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("pid", pid);
-        map.put("iid", iid);
-        getSqlSession().insert("Product.addIterationToAProduct", map);
-    }
-
-    @Override
     public Long selectId() {
         return getSqlSession().selectOne("Product.selectId");
     }

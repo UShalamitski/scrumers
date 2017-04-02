@@ -7,8 +7,6 @@ import com.scrumers.model.PlotData;
 
 public interface IterationDao extends GenericDao<Long, Iteration> {
 
-    Long selectId();
-
     Long readIterationHours(Long iid);
 
     Long readAllHoursForToday(Long iid);
@@ -23,13 +21,9 @@ public interface IterationDao extends GenericDao<Long, Iteration> {
 
     void updatePriorityInIS(Long sid, Long priority);
 
-    void createWithId(Iteration s);
-
     List<Iteration> readAll();
 
     List<Iteration> readByProductId(Long pid);
-
-    void deleteFromProductIteration(Long id);
 
     void deleteFromPlotIteration(Long iid, Long sid);
 

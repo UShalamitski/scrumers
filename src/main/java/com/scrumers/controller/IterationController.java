@@ -1,12 +1,12 @@
 package com.scrumers.controller;
 
-import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
+import com.scrumers.api.service.IterationService;
+import com.scrumers.api.service.ProductService;
+import com.scrumers.api.service.StoryService;
+import com.scrumers.api.service.UserService;
+import com.scrumers.model.Iteration;
+import com.scrumers.model.Story;
+import com.scrumers.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.scrumers.model.Iteration;
-import com.scrumers.model.Story;
-import com.scrumers.model.User;
-import com.scrumers.api.service.IterationService;
-import com.scrumers.api.service.ProductService;
-import com.scrumers.api.service.StoryService;
-import com.scrumers.api.service.UserService;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 public class IterationController {
@@ -113,11 +111,11 @@ public class IterationController {
 
     @RequestMapping("/iteration_save")
     public String saveIteration(final Principal p, HttpSession session,
-            @ModelAttribute("iterationModel") final Iteration iteration,
-            final BindingResult result, Model model,
-            @RequestParam("sdate") String sdate,
-            @RequestParam("edate") String edate,
-            @RequestParam(value = "table", required = false) final boolean table) {
+                                @ModelAttribute("iterationModel") final Iteration iteration,
+                                final BindingResult result, Model model,
+                                @RequestParam("sdate") String sdate,
+                                @RequestParam("edate") String edate,
+                                @RequestParam(value = "table", required = false) final boolean table) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date s_date = null;
         java.util.Date e_date = null;
@@ -134,6 +132,7 @@ public class IterationController {
         iteration.setDateEnd(e_date);
         iteration.setDateStart(s_date);
         iteration.setIdCreator(u.getId());
+        iteration.setProductId(u.getActualProduct());
 
         iterationValidator.validate(iteration, result); // validation
 
@@ -147,7 +146,7 @@ public class IterationController {
             return "iteration/iteration";
         } // end validation
 
-        iterationSrv.saveIteration(iteration, u.getActualProduct());
+        iterationSrv.saveIteration(iteration);
 
         if (!table) {
             return "redirect:iterations.html?iid=" + u.getActualIteration();

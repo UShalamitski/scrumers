@@ -24,7 +24,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.organization
+            DROP TABLE application.organization
         </rollback>
     </changeSet>
 

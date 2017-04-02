@@ -10,6 +10,7 @@
         <result property="dateStart" column="date_start"/>
         <result property="dateEnd" column="date_end"/>
         <result property="iterationNum" column="iteration_num"/>
+        <result property="productId" column="product_id"/>
         <result property="idCreator" column="user_id"/>
         <result property="added" column="added"/>
         <result property="modified" column="modified"/>
@@ -24,120 +25,105 @@
         <result property="date" column="date"/>
     </resultMap>
 
-    <select id="selectId" resultType="java.lang.Long">
-        SELECT nextval('iteration_id_seq')
-    </select>
-
     <insert id="create">
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
-            SELECT nextval('iteration_id_seq')
+            SELECT nextval('${schema}.iteration_id_seq')
         </selectKey>
-        INSERT INTO iteration (id, name, descr, date_start, date_end, iteration_num, user_id, added) 
-            VALUES (#{id}, #{name}, #{descr}, #{dateStart}, #{dateEnd}, #{iterationNum}, #{idCreator}, now())
-    </insert>
-
-    <insert id="createWithId">
-        INSERT INTO iteration (id, name, descr, date_start, date_end, iteration_num, user_id, added) 
-            VALUES (#{id}, #{name}, #{descr}, #{dateStart}, #{dateEnd}, #{iterationNum}, #{idCreator}, now())
+        INSERT INTO ${schema}.iteration (id, name, descr, date_start, date_end, iteration_num, product_id, user_id, added)
+            VALUES (#{id}, #{name}, #{descr}, #{dateStart}, #{dateEnd}, #{iterationNum}, #{productId}, #{idCreator}, now())
     </insert>
 
     <select id="read" resultMap="iterationMap">
         SELECT id, name, descr, date_start, date_end, iteration_num, user_id, added, modified, del, done 
-        FROM iteration 
+        FROM ${schema}.iteration
         WHERE id = #{id}
     </select>
 
     <select id="readAll" resultMap="iterationMap">
         SELECT id, name, descr, date_start, date_end, iteration_num, user_id, added, modified, del, done 
-        FROM iteration
+        FROM ${schema}.iteration
     </select>
 
     <select id="readByProductId" resultMap="iterationMap">
         SELECT i.id, i.name, i.descr, i.date_start, i.date_end, i.iteration_num, i.user_id, i.added, i.modified, i.del, i.done 
-        FROM iteration i INNER JOIN product_iteration pi ON i.id = pi.iteration_id
-        WHERE pi.product_id = #{pid}
+        FROM ${schema}.iteration i
+        WHERE i.product_id = #{pid} AND i.del = false
     </select>
 
     <select id="readIterationHours" resultType="java.lang.Long">
         SELECT SUM(s.estimate)
-        FROM story s
-        INNER JOIN iteration_story its ON its.story_id = s.id
+        FROM ${schema}.story s
+        INNER JOIN ${schema}.iteration_story its ON its.story_id = s.id
         WHERE its.iteration_id = #{iid} AND s.del = false 
     </select>
 
     <select id="readIterationDoneHours" resultMap="plotMap">
         SELECT SUM(estimate) as hours, pi.added as date
-        FROM story s
-        INNER JOIN plot_iteration pi ON pi.story_id = s.id
+        FROM ${schema}.story s
+        INNER JOIN ${schema}.plot_iteration pi ON pi.story_id = s.id
         WHERE pi.iteration_id = #{iid} AND s.del = false AND pi.del = false
         GROUP BY pi.added
         ORDER BY pi.added 
     </select>
 
     <update id="update">
-        UPDATE iteration
+        UPDATE ${schema}.iteration
         SET name = #{name}, descr = #{descr}, date_start = #{dateStart}, date_end = #{dateEnd}, iteration_num = #{iterationNum}, user_id = #{idCreator}, modified = now(), del = #{del}, done = #{isDone}
         WHERE id = #{id}
     </update>
 
     <update id="updatePriorityInIS">
-        UPDATE iteration_story SET priority = #{priority}  WHERE story_id = #{sid}; 
+        UPDATE ${schema}.iteration_story SET priority = #{priority}  WHERE story_id = #{sid};
     </update>
 
     <delete id="delete">
-        UPDATE iteration
+        UPDATE ${schema}.iteration
         SET del = 'TRUE'
         WHERE id = #{id}
     </delete>
 
-    <delete id="deleteFromProductIteration">
-        DELETE FROM product_iteration WHERE iteration_id = #{id}
-    </delete>
-
     <insert id="addStoryToAnIteration">
-        INSERT INTO iteration_story (iteration_id, story_id, priority) VALUES (#{iid}, #{sid},
+        INSERT INTO ${schema}.iteration_story (iteration_id, story_id, priority) VALUES (#{iid}, #{sid},
             (SELECT COUNT(*) FROM iteration_story WHERE iteration_id = #{iid}) + 1)
     </insert>
 
     <insert id="addStoryToADone">
-        INSERT INTO plot_iteration (iteration_id, story_id, added) VALUES (#{iid}, #{sid}, now());
+        INSERT INTO ${schema}.plot_iteration (iteration_id, story_id, added) VALUES (#{iid}, #{sid}, now());
     </insert>
 
     <insert id="addDelStoryToADone">
-        INSERT INTO plot_iteration (iteration_id, story_id, added, del) VALUES (#{iid}, #{sid}, now(), true);
+        INSERT INTO ${schema}.plot_iteration (iteration_id, story_id, added, del) VALUES (#{iid}, #{sid}, now(), true);
     </insert>
 
-    <select id="readIterationStoryIsDone" resultType="java.lang.Long">
+    <select id="readIterationStoryDone" resultType="java.lang.Long">
         SELECT pi.id
-        FROM plot_iteration pi
+        FROM ${schema}.plot_iteration pi
         WHERE pi.iteration_id = #{iid} AND pi.story_id=#{sid} AND to_char(pi.added,'YYYY-MM-DD') LIKE to_char(now(),'YYYY-MM-DD') AND pi.del = false
     </select>
 
     <select id="readAllHoursForToday" resultType="java.lang.Long">
         SELECT SUM(s.estimate)
-        FROM plot_iteration pi
-        INNER JOIN story s ON s.id = pi.story_id
+        FROM ${schema}.plot_iteration pi
+        INNER JOIN ${schema}.story s ON s.id = pi.story_id
         WHERE pi.iteration_id = #{iid} AND to_char(pi.added,'YYYY-MM-DD') LIKE to_char(now(),'YYYY-MM-DD') AND pi.del = false
     </select>
 
     <select id="readAllDelHoursForToday" resultType="java.lang.Long">
         SELECT SUM(s.estimate)
-        FROM plot_iteration pi
-        INNER JOIN story s ON s.id = pi.story_id
+        FROM ${schema}.plot_iteration pi
+        INNER JOIN ${schema}.story s ON s.id = pi.story_id
         WHERE pi.iteration_id = #{iid} AND to_char(pi.added,'YYYY-MM-DD') LIKE to_char(now(),'YYYY-MM-DD') AND pi.del = true
     </select>
 
     <select id="readStoryHoursForToday" resultType="java.lang.Long">
         SELECT SUM(s.estimate)
-        FROM plot_iteration pi
-        INNER JOIN story s ON s.id = pi.story_id
+        FROM ${schema}.plot_iteration pi
+        INNER JOIN ${schema}.story s ON s.id = pi.story_id
         WHERE pi.iteration_id = #{iid} AND pi.story_id = #{sid} AND to_char(pi.added,'YYYY-MM-DD') LIKE to_char(now(),'YYYY-MM-DD') AND pi.del = true
     </select>
 
-
-
     <delete id="deleteFromPlotIteration">
-        DELETE FROM plot_iteration
+        DELETE FROM ${schema}.plot_iteration
         WHERE iteration_id = #{iid} AND story_id=#{sid} AND to_char(added,'YYYY-MM-DD') LIKE to_char(now(),'YYYY-MM-DD')
     </delete>
 

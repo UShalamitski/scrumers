@@ -30,7 +30,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.users
+            DROP TABLE application.users
         </rollback>
     </changeSet>
 

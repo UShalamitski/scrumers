@@ -37,6 +37,7 @@ dependencies {
     compile "org.springframework.security:spring-security-web:${springSequrityVersion}"
     compile "org.springframework.security:spring-security-config:${springSequrityVersion}"
 
+    compile "com.google.guava:guava:${guavaVersion}"
     compile "org.apache.commons:commons-lang3:${apacheCommonLangVersion}"
     compile "org.apache.commons:commons-collections4:${apacheCommonCollectionsVersion}"
     compile "org.apache.commons:commons-io:${apacheCommonIOVersion}"

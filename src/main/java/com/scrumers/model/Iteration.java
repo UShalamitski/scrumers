@@ -12,15 +12,11 @@ public class Iteration extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     private String name;
-
     private String descr;
-
     private Date dateStart;
-
     private Date dateEnd;
-
     private long iterationNum;
-
+    private long productId;
     private boolean isDone;
 
     public String getName() {
@@ -71,6 +67,14 @@ public class Iteration extends AbstractEntity {
         this.isDone = isDone;
     }
 
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -80,6 +84,7 @@ public class Iteration extends AbstractEntity {
                 .append("dateEnd", dateEnd)
                 .append("iterationNum", iterationNum)
                 .append("isDone", isDone)
+                .append("productId", productId)
                 .toString();
     }
 
@@ -102,6 +107,7 @@ public class Iteration extends AbstractEntity {
                 .append(descr, iteration.descr)
                 .append(dateStart, iteration.dateStart)
                 .append(dateEnd, iteration.dateEnd)
+                .append(productId, iteration.productId)
                 .isEquals();
     }
 
@@ -114,6 +120,8 @@ public class Iteration extends AbstractEntity {
                 .append(dateEnd)
                 .append(iterationNum)
                 .append(isDone)
+                .append(productId)
                 .toHashCode();
     }
+
 }

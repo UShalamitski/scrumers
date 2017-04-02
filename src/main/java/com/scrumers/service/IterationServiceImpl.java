@@ -1,15 +1,15 @@
 package com.scrumers.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import com.scrumers.api.dao.IterationDao;
 import com.scrumers.api.dao.ProductDao;
 import com.scrumers.api.service.IterationService;
 import com.scrumers.model.Iteration;
 import com.scrumers.model.PlotData;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class IterationServiceImpl implements IterationService {
 
@@ -26,12 +26,9 @@ public class IterationServiceImpl implements IterationService {
     }
 
     @Override
-    public void saveIteration(Iteration i, Long pid) {
+    public void saveIteration(Iteration i) {
         if (i.getId() == null) {
-            Long iid = iterationDao.selectId();
-            i.setId(iid);
-            iterationDao.createWithId(i);
-            prouctDao.addIterationToAProduct(pid, iid);
+            iterationDao.create(i);
         } else {
             iterationDao.update(i);
         }
@@ -39,17 +36,14 @@ public class IterationServiceImpl implements IterationService {
 
     @Override
     public void deleteIteration(Long[] id) {
-        if (id != null)
-            for (Long i : id) {
-                iterationDao.deleteFromProductIteration(i);
-                iterationDao.delete(i);
-            }
+        for (long i : id) {
+            iterationDao.delete(i);
+        }
     }
 
     @Override
     public void deleteIteration(Long id) {
         if (id != null) {
-            iterationDao.deleteFromProductIteration(id);
             iterationDao.delete(id);
         }
     }
@@ -76,8 +70,8 @@ public class IterationServiceImpl implements IterationService {
 
     @Override
     public void updatePriorityInIS(Long[] ids) {
-        Long n = 0L;
-        for (Long id : ids) {
+        long n = 0L;
+        for (long id : ids) {
             iterationDao.updatePriorityInIS(id, ++n);
         }
     }

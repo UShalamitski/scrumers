@@ -25,7 +25,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.comments_task
+            DROP TABLE application.comments_task
         </rollback>
     </changeSet>
 

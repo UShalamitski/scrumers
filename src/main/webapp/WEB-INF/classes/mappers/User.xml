@@ -47,55 +47,61 @@
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
             SELECT nextval('users_id_seq')
         </selectKey>
-        INSERT INTO users (id, login, passwd, fname, sname, avatar, email, phone, actual_organization, actual_product, actual_iteration, user_id, added) VALUES (#{id}, #{login}, md5(#{passwd}), #{fname}, #{sname}, #{avatar}, #{email}, #{phone}, #{actualOrganization}, #{actualProduct}, #{actualIteration}, #{idCreator}, now())
+        INSERT INTO ${schema}.users (id, login, passwd, fname, sname, avatar, email, phone, actual_organization, actual_product, actual_iteration, user_id, added) VALUES (#{id}, #{login}, md5(#{passwd}), #{fname}, #{sname}, #{avatar}, #{email}, #{phone}, #{actualOrganization}, #{actualProduct}, #{actualIteration}, #{idCreator}, now())
     </insert>
 
     <select id="read" resultMap="userMap">
-        SELECT id, login, passwd, fname, sname, avatar, email, phone, actual_organization, actual_product, actual_iteration, is_first, user_id, added, modified, del  FROM users WHERE id = #{id}
+        SELECT id, login, passwd, fname, sname, avatar, email, phone, actual_organization, actual_product, actual_iteration, is_first, user_id, added, modified, del
+        FROM ${schema}.users
+        WHERE id = #{id}
     </select>
 
     <update id="update">
-        UPDATE users
+        UPDATE ${schema}.users
         SET login = #{login}, fname = #{fname}, sname = #{sname}, avatar = #{avatar}, email = #{email}, phone = #{phone}, actual_organization = #{actualOrganization}, actual_product=#{actualProduct}, actual_iteration=#{actualIteration}, is_first = #{isFirst}, user_id = #{idCreator}, modified = now()
         WHERE id = #{id}
     </update>
 
     <delete id="delete">
-        UPDATE users
+        UPDATE ${schema}.users
         SET del = 'TRUE'
         WHERE id = #{id}
     </delete>
 
     <select id="readByName" resultMap="userMap">
         SELECT u.id, u.login, u.passwd, u.fname, u.sname, u.avatar, u.email, u.phone, u.actual_organization, u.actual_product, u.actual_iteration, u.is_first, u.user_id, u.added, u.modified
-        FROM users u LEFT JOIN users uu ON uu.id = u.user_id
+        FROM ${schema}.users u
+            LEFT JOIN ${schema}.users uu ON uu.id = u.user_id
         WHERE u.login = #{u.login}
         ORDER BY u.login
     </select>
 
     <select id="findAll" resultMap="userMap">
         SELECT u.id, u.login, u.passwd, u.fname, u.sname, u.avatar, u.email, u.phone, u.actual_organization, u.actual_product, u.actual_iteration, u.is_first, u.user_id, u.added, u.modified
-        FROM users u LEFT JOIN users uu ON uu.id = u.user_id
-        WHERE '1' not in (SELECT ur.role_id FROM users_roles ur WHERE u.id = ur.user_id) 
-              AND u.id > 1 
-              AND u.del = 'FALSE'
+        FROM ${schema}.users u
+            LEFT ${schema}.JOIN users uu ON uu.id = u.user_id
+        WHERE '1' not in (SELECT ur.role_id FROM ${schema}.users_roles ur WHERE u.id = ur.user_id)
+            AND u.id > 1
+            AND u.del = 'FALSE'
         ORDER BY u.login
     </select>
 
     <select id="readUsersByProductId" resultMap="userMap">
         SELECT DISTINCT u.id, u.login, u.passwd, u.fname, u.sname, u.avatar, u.email, u.phone, u.actual_organization, u.actual_product, u.actual_iteration, u.is_first, u.user_id, u.added, u.modified
-        FROM users u INNER JOIN users_team ut ON ut.user_id = u.id
-                   INNER JOIN team_product tp ON tp.team_id = ut.team_id
+        FROM ${schema}.users u
+            INNER JOIN ${schema}.users_team ut ON ut.user_id = u.id
+            INNER JOIN ${schema}.team_product tp ON tp.team_id = ut.team_id
         WHERE tp.product_id = #{pid} AND u.id > 1 AND u.del = 'FALSE'
         ORDER BY u.login
     </select>
 
     <select id="findByName" resultMap="userMap">
         SELECT u.id, u.login, u.passwd, u.fname, u.sname, u.avatar, u.email, u.phone, u.actual_organization, u.actual_product, u.actual_iteration, u.is_first, u.user_id, u.added, u.modified
-        FROM users u LEFT JOIN users uu ON uu.id = u.user_id
+        FROM ${schema}.users u
+            LEFT JOIN ${schema}.users uu ON uu.id = u.user_id
         WHERE
             UPPER(u.login) LIKE UPPER(#{login})
-            AND '1' not in (SELECT ur.role_id FROM users_roles ur WHERE u.id = ur.user_id) 
+            AND '1' not in (SELECT ur.role_id FROM ${schema}.users_roles ur WHERE u.id = ur.user_id)
             AND u.id > 1 
             AND u.del = 'FALSE'
         ORDER BY u.login
@@ -103,46 +109,41 @@
 
     <select id="findByLogin" resultMap="userMap">
         SELECT * 
-        FROM users 
+        FROM ${schema}.users
         WHERE login=#{login}
     </select>
 
     <delete id="deleteUsersRoles">
-        DELETE FROM users_roles WHERE user_id = #{id}
+        DELETE FROM ${schema}.users_roles WHERE user_id = #{id}
     </delete>
 
     <update id="deleteActualOrganization">
-        UPDATE users
+        UPDATE ${schema}.users
         SET actual_organization = 4242, modified = now()
-        FROM users_team ut 
+        FROM ${schema}.users_team ut
         WHERE actual_organization = #{oid} and ut.user_id = id
     </update>
 
     <select id="findByIdAndPasswd" resultMap="userMap">
-        SELECT * FROM users WHERE passwd = md5(#{passwd}) AND id = #{id}
+        SELECT * FROM ${schema}.users WHERE passwd = md5(#{passwd}) AND id = #{id}
     </select>
 
     <select id="findByTeamId" resultMap="teamMemberMap">
-        SELECT
-         u.id, u.login, u.fname, u.sname, u.added, u.modified, u.del, u.email, u.phone, rt.id AS teamRoleId
-        FROM
-         users u 
-        LEFT JOIN
-         users_team ut ON u.id = ut.user_id
-        LEFT JOIN
-         roles_team rt ON ut.role_id = rt.id
-        WHERE
-         ut.team_id = #{tid} AND u.del != TRUE
+        SELECT u.id, u.login, u.fname, u.sname, u.added, u.modified, u.del, u.email, u.phone, rt.id AS teamRoleId
+        FROM ${schema}. users u
+            LEFT JOIN ${schema}.users_team ut ON u.id = ut.user_id
+            LEFT JOIN ${schema}.roles_team rt ON ut.role_id = rt.id
+        WHERE ut.team_id = #{tid} AND u.del != TRUE
     </select>
 
     <update id="updatePasswd">
-        UPDATE users
+        UPDATE ${schema}.users
         SET passwd = md5(#{passwd}), user_id = #{idCreator}, modified = now()
         WHERE id = #{id}
     </update>
 
     <update id="updateInfo">
-        UPDATE users
+        UPDATE ${schema}.users
         SET fname = #{fname}, sname = #{sname}, avatar = #{avatar}, user_id = #{id}, modified = now()
         WHERE id = #{id}
     </update>

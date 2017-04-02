@@ -38,8 +38,6 @@ public interface ProductDao extends GenericDao<Long, Product> {
 
     void addStoryToAProduct(Long pid, Long sid);
 
-    void addIterationToAProduct(Long pid, Long iid);
-
     void addedProductOwner(Long pid, Long uid);
 
     List<ProductView> readAllView();

@@ -36,7 +36,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.task
+            DROP TABLE application.task
         </rollback>
     </changeSet>
 

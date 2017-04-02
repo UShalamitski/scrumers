@@ -19,7 +19,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.team
+            DROP TABLE application.team
         </rollback>
     </changeSet>
 

@@ -11,7 +11,7 @@ public interface IterationService {
 
     void updatePriorityInIS(Long[] ids);
 
-    void saveIteration(Iteration i, Long pid);
+    void saveIteration(Iteration i);
 
     void deleteIteration(Long[] id);
 

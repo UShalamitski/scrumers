@@ -17,87 +17,91 @@
     </resultMap>
 
     <select id="selectId" resultType="java.lang.Long">
-        SELECT nextval('organization_id_seq')
+        SELECT nextval('${schema}.organization_id_seq')
     </select>
 
     <insert id="create">
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
-            SELECT nextval('organization_id_seq')
+            SELECT nextval('${schema}.organization_id_seq')
         </selectKey>
-        INSERT INTO organization (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now())
+        INSERT INTO ${schema}.organization (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now())
     </insert>
 
     <insert id="createWithUserId">
-        INSERT INTO organization (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now());
+        INSERT INTO ${schema}.organization (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now());
     </insert>
 
     <select id="read" resultMap="organizationMap">
         SELECT id, name, user_id, added, modified, del
-        FROM organization
+        FROM ${schema}.organization
         WHERE id = #{id}
     </select>
 
     <select id="readAll" resultMap="organizationMap">
         SELECT DISTINCT o.id, o.name, o.user_id, o.added, o.modified, o.del,
-                        (SELECT COUNT(*) from organization_product op WHERE op.organization_id = o.id) AS numOfProjects,
-                        (SELECT COUNT(*) from organization_team ot WHERE ot.organization_id = o.id) AS numOfTeams
-        FROM organization o INNER JOIN organization_team ot ON o.id = ot.organization_id
-                            INNER JOIN users_team ut ON ut.team_id = ot.team_id
+            (SELECT COUNT(*) from organization_product op WHERE op.organization_id = o.id) AS numOfProjects,
+            (SELECT COUNT(*) from organization_team ot WHERE ot.organization_id = o.id) AS numOfTeams
+        FROM ${schema}.organization o
+            INNER JOIN ${schema}.organization_team ot ON o.id = ot.organization_id
+            INNER JOIN ${schema}.users_team ut ON ut.team_id = ot.team_id
         WHERE o.del = false
         ORDER BY o.id 
     </select>
 
     <select id="readByProductId" resultMap="organizationMap">
         SELECT o.id, o.name, o.user_id, o.added, o.modified, o.del
-        FROM organization o INNER JOIN organization_product op ON o.id = op.organization_id
+        FROM ${schema}.organization o
+        INNER JOIN ${schema}.organization_product op ON o.id = op.organization_id
         WHERE op.product_id = #{pid} AND o.del = false
     </select>
 
     <select id="readByUserId" resultMap="organizationMap">
         SELECT DISTINCT o.id, o.name, o.user_id, o.added, o.modified, o.del,
-                        (SELECT COUNT(*) from organization_product op WHERE op.organization_id = o.id) AS numOfProjects,
-                        (SELECT COUNT(*) from organization_team ot WHERE ot.organization_id = o.id) AS numOfTeams
-        FROM organization o INNER JOIN organization_team ot ON o.id = ot.organization_id
-                            INNER JOIN users_team ut ON ut.team_id = ot.team_id
+            (SELECT COUNT(*) FROM ${schema}.organization_product op WHERE op.organization_id = o.id) AS numOfProjects,
+            (SELECT COUNT(*) FROM ${schema}.organization_team ot WHERE ot.organization_id = o.id) AS numOfTeams
+        FROM ${schema}.organization o
+            INNER JOIN ${schema}.organization_team ot ON o.id = ot.organization_id
+            INNER JOIN ${schema}.users_team ut ON ut.team_id = ot.team_id
         WHERE ut.user_id = #{uid} AND o.del = false
         ORDER BY o.id 
     </select>
 
     <select id="readByTeamId" resultMap="organizationMap">
         SELECT o.id, o.name, o.user_id, o.added, o.modified, o.del
-        FROM organization o INNER JOIN organization_team ot ON o.id = ot.organization_id
+        FROM ${schema}.organization o
+        INNER JOIN ${schema}.organization_team ot ON o.id = ot.organization_id
         WHERE ot.team_id = #{tid} AND o.del = false
     </select>
 
     <select id="readIds_UID_OID" resultType="java.lang.Long">
-        SELECT * FROM team t 
-        INNER JOIN organization_team ot ON ot.team_id = t.id
-        INNER JOIN users_team ut ON ut.team_id = ot.team_id
+        SELECT * FROM ${schema}.team t
+        INNER JOIN ${schema}.organization_team ot ON ot.team_id = t.id
+        INNER JOIN ${schema}.users_team ut ON ut.team_id = ot.team_id
         WHERE ut.user_id = #{uid} AND ot.organization_id = #{oid} 
     </select>
 
     <update id="update">
-        UPDATE organization
+        UPDATE ${schema}.organization
         SET name = #{name}, user_id = #{idCreator}, modified = now(), del = #{del}
         WHERE id = #{id}
     </update>
 
     <update id="updateActual">
-        UPDATE users SET actual_organization = #{oid} WHERE id=#{uid};
+        UPDATE ${schema}.users SET actual_organization = #{oid} WHERE id=#{uid};
     </update>
 
     <delete id="delete">
-        UPDATE organization
+        UPDATE ${schema}.organization
         SET del = 'TRUE'
         WHERE id = #{id}
     </delete>
 
     <insert id="addTeamToAnOrganization">
-        INSERT INTO organization_team (organization_id, team_id) VALUES (#{oid}, #{tid})
+        INSERT INTO ${schema}.organization_team (organization_id, team_id) VALUES (#{oid}, #{tid})
     </insert>
 
     <insert id="addProductToAnOrganization">
-        INSERT INTO organization_product (organization_id, product_id) VALUES (#{oid}, #{pid})
+        INSERT INTO ${schema}.organization_product (organization_id, product_id) VALUES (#{oid}, #{pid})
     </insert>
 
 </mapper>

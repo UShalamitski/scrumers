@@ -21,7 +21,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.users_roles
+            DROP TABLE application.users_roles
         </rollback>
     </changeSet>
 

@@ -36,7 +36,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.story
+            DROP TABLE application.story
         </rollback>
     </changeSet>
 

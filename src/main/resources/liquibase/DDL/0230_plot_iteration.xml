@@ -25,7 +25,7 @@
             )
         </sql>
         <rollback>
-            DELETE TABLE application.plot_iteration
+            DROP TABLE application.plot_iteration
         </rollback>
     </changeSet>
 

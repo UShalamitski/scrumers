@@ -21,20 +21,21 @@
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
             SELECT nextval('team_id_seq')
         </selectKey>
-        INSERT INTO team (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now())
+        INSERT INTO ${schema}.team (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now())
     </insert>
 
     <insert id="createWithId">
-        INSERT INTO team (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now())
+        INSERT INTO ${schema}.team (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now())
     </insert>
 
     <select id="read" resultMap="teamMap">
-        SELECT id, name, user_id, added, modified, del  FROM team WHERE id = #{id}
+        SELECT id, name, user_id, added, modified, del FROM ${schema}.team WHERE id = #{id}
     </select>
 
     <select id="readTeamRole" resultType="java.lang.String">
         SELECT rt.name
-        FROM roles_team rt JOIN users_team ut ON rt.id = ut.role_id
+        FROM ${schema}.roles_team rt
+            INNER JOIN ${schema}.users_team ut ON rt.id = ut.role_id
         WHERE ut.team_id = #{tid} AND ut.user_id = #{uid}
     </select>
 
@@ -44,88 +45,93 @@
 
     <select id="readByName" resultMap="teamMap">
         SELECT id, name, user_id, added, modified, del
-        FROM team
+        FROM ${schema}.team
         WHERE name LIKE #{name}
     </select>
 
     <select id="readByUserId" resultMap="teamMap">
-        SELECT t.id, t.name, ut.role_id AS teamRole, (SELECT COUNT(*) FROM users_team WHERE team_id=ut.team_id) AS numOfUsers, t.user_id, t.added, t.modified, t.del
-        FROM team t INNER JOIN users_team ut ON t.id = ut.team_id
+        SELECT t.id, t.name, ut.role_id AS teamRole, (SELECT COUNT(*) FROM ${schema}.users_team WHERE team_id=ut.team_id) AS numOfUsers, t.user_id, t.added, t.modified, t.del
+        FROM ${schema}.team t
+            INNER JOIN ${schema}.users_team ut ON t.id = ut.team_id
         WHERE ut.user_id = #{uid} AND t.del = false
     </select>
 
     <select id="readByUserIdAndOrganizationId" resultMap="teamMap">
-        SELECT t.id, t.name, ut.role_id AS teamRole, (SELECT COUNT(*) FROM users_team WHERE team_id=ut.team_id) AS numOfUsers, t.user_id, t.added, t.modified, t.del,
-            (SELECT us.fname||' '||us.sname FROM users us
-                INNER JOIN users_team utt ON us.id = utt.user_id
+        SELECT t.id, t.name, ut.role_id AS teamRole, (SELECT COUNT(*) FROM ${schema}.users_team WHERE team_id=ut.team_id) AS numOfUsers, t.user_id, t.added, t.modified, t.del,
+            (SELECT us.fname||' '||us.sname FROM ${schema}.users us
+                INNER JOIN ${schema}.users_team utt ON us.id = utt.user_id
                 WHERE utt.team_id = t.id AND utt.role_id = 1) AS scrumMaster, 
-            (SELECT us.id FROM users us
-                INNER JOIN users_team utt ON us.id = utt.user_id
+            (SELECT us.id FROM ${schema}.users us
+                INNER JOIN ${schema}.users_team utt ON us.id = utt.user_id
                 WHERE utt.team_id = t.id AND utt.role_id = 1) AS scrumMasterId
-        FROM team t INNER JOIN users_team ut ON t.id = ut.team_id
-                    INNER JOIN organization_team ot ON ot.team_id = ut.team_id
-                    INNER JOIN users u On u.id=ut.user_id 
+        FROM ${schema}.team t
+            INNER JOIN ${schema}.users_team ut ON t.id = ut.team_id
+            INNER JOIN ${schema}.organization_team ot ON ot.team_id = ut.team_id
+            INNER JOIN ${schema}.users u On u.id=ut.user_id
         WHERE ut.user_id = #{uid} AND ot.organization_id=#{oid} AND t.del = false
     </select>
 
     <select id="readByProductId" resultMap="teamMap">
-        SELECT DISTINCT  t.id, t.name, (SELECT COUNT(*) FROM users_team WHERE team_id=t.id) AS numOfUsers, t.user_id, t.added, t.modified, t.del, u.fname || ' ' || u.sname AS scrumMaster, u.id AS scrumMasterId
-        FROM team_product tp INNER JOIN team t ON t.id = tp.team_id
-            INNER JOIN users_team ut ON ut.team_id = t.id
-            INNER JOIN users u On u.id=ut.user_id 
+        SELECT DISTINCT  t.id, t.name, (SELECT COUNT(*) FROM ${schema}.users_team WHERE team_id=t.id) AS numOfUsers, t.user_id, t.added, t.modified, t.del, u.fname || ' ' || u.sname AS scrumMaster, u.id AS scrumMasterId
+        FROM ${schema}.team_product tp
+            INNER JOIN ${schema}.team t ON t.id = tp.team_id
+            INNER JOIN ${schema}.users_team ut ON ut.team_id = t.id
+            INNER JOIN ${schema}.users u On u.id=ut.user_id
         WHERE tp.product_id = #{pid} AND t.del = false AND ut.role_id = 1 
 
         UNION
 
-        SELECT DISTINCT  t.id, t.name, (SELECT COUNT(*) FROM users_team WHERE team_id=t.id) AS numOfUsers, t.user_id, t.added, t.modified, t.del, NULL AS scrumMaster, 0 AS scrumMasterId
-        FROM team_product tp INNER JOIN team t ON t.id = tp.team_id
+        SELECT DISTINCT  t.id, t.name, (SELECT COUNT(*) FROM ${schema}.users_team WHERE team_id=t.id) AS numOfUsers, t.user_id, t.added, t.modified, t.del, NULL AS scrumMaster, 0 AS scrumMasterId
+        FROM ${schema}.team_product tp
+            INNER JOIN ${schema}.team t ON t.id = tp.team_id
         WHERE tp.product_id = #{pid} AND t.del = false AND t.id not in (
             SELECT DISTINCT  t.id
-            FROM team_product tp INNER JOIN team t ON t.id = tp.team_id
-                    INNER JOIN users_team ut ON ut.team_id = t.id
-                    INNER JOIN users u On u.id=ut.user_id 
+            FROM ${schema}.team_product tp
+                INNER JOIN ${schema}.team t ON t.id = tp.team_id
+                INNER JOIN ${schema}.users_team ut ON ut.team_id = t.id
+                INNER JOIN ${schema}.users u On u.id=ut.user_id
             WHERE tp.product_id = #{pid} AND t.del = false AND ut.role_id = 1 
         )
     </select>
 
     <select id="readAll" resultMap="teamMap">
-        SELECT id, name, (SELECT COUNT(*) FROM users_team WHERE team_id=id) AS numOfUsers, user_id, added, modified, del  FROM team
+        SELECT id, name, (SELECT COUNT(*) FROM ${schema}.users_team WHERE team_id=id) AS numOfUsers, user_id, added, modified, del  FROM team
     </select>
 
     <update id="update">
-        UPDATE team
+        UPDATE ${schema}.team
         SET name = #{name}, user_id = #{idCreator}, modified = now(), del=#{del}
         WHERE id = #{id}
     </update>
 
     <delete id="delete">
-        UPDATE team
+        UPDATE ${schema}.team
         SET del = 'TRUE'
         WHERE id = #{id}
     </delete>
 
     <delete id="deleteFromUsersTeam">
-        DELETE FROM users_team WHERE user_id = #{uid} AND team_id=#{tid}
+        DELETE FROM ${schema}.users_team WHERE user_id = #{uid} AND team_id=#{tid}
     </delete>
 
     <delete id="deleteFromTeamProductByTeamIdAndProductId">
-        DELETE FROM team_product WHERE team_id = #{tid} AND product_id = #{pid}
+        DELETE FROM ${schema}.team_product WHERE team_id = #{tid} AND product_id = #{pid}
     </delete>
 
     <delete id="deleteMemberFromTeam">
-        DELETE FROM users_team WHERE user_id = #{uid} AND team_id = #{tid}
+        DELETE FROM ${schema}.users_team WHERE user_id = #{uid} AND team_id = #{tid}
     </delete> 
 
     <insert id="addUserToATeam">
-        INSERT INTO users_team (user_id, team_id, role_id) VALUES (#{uid}, #{tid}, #{rid})
+        INSERT INTO ${schema}.users_team (user_id, team_id, role_id) VALUES (#{uid}, #{tid}, #{rid})
     </insert>
 
     <insert id="addProductToATeam">
-        INSERT INTO team_product (team_id, product_id) VALUES (#{tid}, #{pid})
+        INSERT INTO ${schema}.team_product (team_id, product_id) VALUES (#{tid}, #{pid})
     </insert>
 
     <update id="updateMemberRole">
-        UPDATE users_team SET role_id = #{rid} WHERE user_id = #{uid} AND team_id = #{tid}
+        UPDATE ${schema}.users_team SET role_id = #{rid} WHERE user_id = #{uid} AND team_id = #{tid}
     </update>
 
 </mapper>
