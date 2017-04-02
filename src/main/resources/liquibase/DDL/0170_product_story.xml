@@ -8,22 +8,22 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'product_story'</comment>
         <sql>
-            CREATE TABLE application.product_story(
+            CREATE TABLE @schema@.product_story(
                 product_id bigserial NOT NULL,
                 story_id bigserial NOT NULL,
                 priority numeric NULL,
 
                 CONSTRAINT product_story_pk PRIMARY KEY (product_id, story_id),
                 CONSTRAINT ps_product_fk FOREIGN KEY (product_id)
-                    REFERENCES application.product (id) MATCH SIMPLE
+                    REFERENCES @schema@.product (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT ps_story_fk FOREIGN KEY (story_id)
-                    REFERENCES application.story (id) MATCH SIMPLE
+                    REFERENCES @schema@.story (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.product_story
+            DROP TABLE @schema@.product_story
         </rollback>
     </changeSet>
 

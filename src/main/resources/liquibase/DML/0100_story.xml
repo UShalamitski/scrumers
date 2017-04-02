@@ -9,105 +9,105 @@
         <comment>Inserts data into table 'story'</comment>
 
         <sql>
-            INSERT INTO application.story (id, story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (id, story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0, 1, 'Test data', 'Create DAO classes', 'XS', 20, 'how you want', 'track1', 3, 0, 0, '2015-05-15', '2015-05-15');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (1, 'DAO', 'Create DAO classes', 'XS', 20, 'how you want', 'track1', 3, 0, 0, '2015-05-15', '2015-05-15');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (2, 'Services', 'Create services', 'M', 20, 'how you want', 'track2', 2, 0, 0, '2015-05-15', '2015-05-15');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (3, 'SQL base', 'Create SQL base', 'S', 20, 'how you want', 'track3', 4, 0, 0, '2015-05-15', '2015-05-15');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (4, 'Ant script', 'Create ant-script', 'XL', 20, 'how you want', 'track4', 4, 0, 0,'2015-05-15', '2015-05-15');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (5, 'JUnit', 'Create JUnit tests', 'L', 20, 'how you want', 'track5', 1, 0, 0, '2015-05-16', '2015-05-15');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_6', 'this is story 6', 's', 20, 'how you want', 'track6', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_7', 'this is story 7', 's', 20, 'how you want', 'track7', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_8', 'this is story 8', 's', 20, 'how you want', 'track8', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_9', 'this is story 9', 's', 20, 'how you want', 'track9', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_10', 'this is story 10', 's', 20, 'how you want', 'track10', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_11', 'this is story 11', 's', 20, 'how you want', 'track11', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_12', 'this is story 12', 's', 20, 'how you want', 'track12', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_13', 'this is story 13', 's', 20, 'how you want', 'track13', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_14', 'this is story 14', 's', 20, 'how you want', 'track14', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_15', 'this is story 15', 's', 20, 'how you want', 'track15', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_16', 'this is story 16', 's', 20, 'how you want', 'track16', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_17', 'this is story 17', 's', 20, 'how you want', 'track17', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_18', 'this is story 18', 's', 20, 'how you want', 'track18', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_19', 'this is story 19', 's', 20, 'how you want', 'track19', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_20', 'this is story 20', 's', 20, 'how you want', 'track20', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_21', 'this is story 21', 's', 20, 'how you want', 'track21', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_22', 'this is story 22', 's', 20, 'how you want', 'track22', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_23', 'this is story 23', 's', 20, 'how you want', 'track23', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_24', 'this is story 24', 's', 20, 'how you want', 'track24', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_25', 'this is story 25', 's', 20, 'how you want', 'track25', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_26', 'this is story 26', 's', 20, 'how you want', 'track26', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_27', 'this is story 27', 's', 20, 'how you want', 'track27', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_28', 'this is story 28', 's', 20, 'how you want', 'track28', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_29', 'this is story 29', 's', 20, 'how you want', 'track29', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_30', 'this is story 30', 's', 20, 'how you want', 'track30', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_31', 'this is story 31', 's', 20, 'how you want', 'track31', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_32', 'this is story 32', 's', 20, 'how you want', 'track32', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_33', 'this is story 33', 's', 20, 'how you want', 'track33', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_34', 'this is story 34', 's', 20, 'how you want', 'track34', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (0010, 'story_35', 'this is story 35', 's', 20, 'how you want', 'track35', 1, 0, 0, now(), now());
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (6, 'Login page', 'Add login page with jQuery animations. More animations', 'S', 20, 'how you want', 'track36', 2, 7, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (7, 'Register page', 'Add register page with jQuery animations', 'XS', 20, 'how you want', 'track37', 1, 0, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (8, 'MyBatis', 'Create MyBatis xml files', 'M', 20, 'how you want', 'track38', 4, 2, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (9, 'Entities', 'Create Entities', 'XS', 20, 'how you want', 'track39', 2, 3, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (10, 'Add data to DB', 'Add data to DB', 'S', 20, 'how you want', 'track40', 4, 4, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (11, 'Options page', 'Create options page', 'M', 20, 'how you want', 'track41', 1, 5, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (12, 'Add EhCache', 'Add and tune EhCache', 'S', 20, 'how you want', 'track42', 1, 5, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (13, 'Create page Users', 'Create page Users', 'L', 20, 'how you want', 'track43', 1, 7, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (14, 'Create scrum board', 'Create scrum board', 'XL', 20, 'how you want', 'track44', 1, 8, 0, '2015-05-16', '2015-05-16');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (15, 'Add adding stories from backlog to iteration', 'Add adding stories from backlog to iteration', 'L', 20, 'how you want', 'track45', 1, 2, 0, '2015-05-17', '2015-05-17');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (16, 'Add validators to a conntrollers', 'Add validators to a conntrollers', 'M', 20, 'how you want', 'track46', 1, 3, 0, '2015-05-17', '2015-05-17');
-            INSERT INTO application.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
+            INSERT INTO @schema@.story (story_id, name, descr, story_points, estimate, how_to_demo, track, status_id, assignee, user_id, added, modified)
                 VALUES (17, 'New disiegn', 'New disiegn', 'XL', 20, 'how you want', 'track47', 1, 4, 0, '2015-05-17', '2015-05-17');
         </sql>
         <rollback>
-            DELETE FROM application.story
+            DELETE FROM @schema@.story
         </rollback>
 
     </changeSet>

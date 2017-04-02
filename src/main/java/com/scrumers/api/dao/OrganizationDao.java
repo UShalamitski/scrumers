@@ -23,6 +23,4 @@ public interface OrganizationDao extends GenericDao<Long, Organization> {
     List<Organization> readByTeamId(Long tid);
 
     void addTeamToAnOrganization(Long oid, Long tid);
-
-    void addProductToAnOrganization(Long oid, Long pid);
 }

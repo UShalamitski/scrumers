@@ -9,129 +9,129 @@
         <comment>Inserts data into table 'users'</comment>
 
         <sql>
-            INSERT INTO application.users(id, login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first,  user_id, added, modified, del)
+            INSERT INTO @schema@.users(id, login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first,  user_id, added, modified, del)
                 VALUES (0, 'system', md5('secret'), 'avatar0', '', 'system', null, null, null, null, null, false, 0, now(), null, false);
-            ALTER TABLE application.users ADD CONSTRAINT fk_id_creator FOREIGN KEY (user_id) REFERENCES application.users (id)
+            ALTER TABLE @schema@.users ADD CONSTRAINT fk_id_creator FOREIGN KEY (user_id) REFERENCES @schema@.users (id)
                 MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first,  user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first,  user_id, added, modified, del)
                 VALUES ('admin', md5('secret'), 'avatar', 'Админ', 'Админов', 'email.admin@gmain.com', '+375298429868', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user1', md5('secret'), 'avatar1', 'Валера', 'Игорев', 'email.user1@gmain.com', '+375298429869', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user2', md5('secret'), 'avatar2', 'Иннокентий', 'Варфоломеевич', 'email.user2@gmain.com', '+375298429869', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user3', md5('secret'), 'avatar3', 'Геннадий', 'Запорожный', 'email.user3@gmain.com', '+375298424869', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user4', md5('secret'), 'avatar4', 'Евгений', 'Жук', 'email.user4@gmain.com', '+375298429870', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user5', md5('secret'), 'avatar5', 'Сара', 'Коннор', 'email.user5@gmain.com', '+375298429169', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user6', md5('secret'), 'avatar6', 'Василий', 'Васюков', 'email.user6@gmain.com', '+375295229869', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user7', md5('secret'), 'avatar7', 'Никанор', 'Удмурфиевич', 'email.use71@gmain.com', '+375298429569', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user8', md5('secret'), 'avatar8', 'Микола', 'Задорожный', 'email.user8@gmain.com', '+375298429123', 1, 1, 1, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user9', md5('secret'), 'avatar9', 'Трисс', 'Меригольд', 'email.user9@gmain.com', '+375297829869', 1, 2, 2, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user10', md5('secret'), 'avatar10', 'Геннадий', 'Букин', 'email.user1@gmain.com', '+375298428869', 1, 2, 2, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user11', md5('secret'), 'avatar11', 'Сергей', 'Сергеев', 'email.user11@gmain.com', '+375298789869', 1, 2, 2, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user12', md5('secret'), 'avatar12', 'Андрей', 'Андреев', 'email.user12@gmain.com', '+375298429489', 1, 2, 2, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user13', md5('secret'), 'avatar13', 'Тим', 'Рот', 'email.user13@gmain.com', '+375298829869', 1, 2, 2, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user14', md5('secret'), 'avatar14', 'Вася', 'Пупкин', 'email.user14@gmain.com', '+375298424589', 1, 2, 2, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user15', md5('secret'), 'avatar15', 'Эмгыр', 'вар Эмрейс', 'email.user15@gmain.com', '+375278429869', 1, 2, 2, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user16', md5('secret'), 'avatar16', 'Владимир', 'Владимиров', 'email.user16@gmain.com', '+375298429823', 2, 3, 3, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user17', md5('secret'), 'avatar17', 'Алеся', 'Залесная', 'email.user17@gmain.com', '+375298427859', 2, 3, 3, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user18', md5('secret'), 'avatar18', 'Светлана', 'Светикова', 'email.user18@gmain.com', '+375298458269', 2, 3, 3, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user19', md5('secret'), 'avatar19', 'Геральт', 'из Ривии', 'email.user19@gmain.com', '+375298421299', 2, 3, 3, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user20', md5('secret'), 'avatar20', 'Тимур', 'Вяль', 'email.user20@gmain.com', '+375298429859', 2, 3, 3, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user21', md5('secret'), 'avatar21', 'Андрей', 'Дубовец', 'email.user21@gmain.com', '+375297429869', 2, 3, 3, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user22', md5('secret'), 'avatar22', 'Игорь', 'Обухов', 'email.user22@gmain.com', '+375295486869', 2, 3, 3, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user23', md5('secret'), 'avatar23', 'Егор', 'Шальной', 'email.user23@gmain.com', '+375298429865', 2, 4, 4, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user24', md5('secret'), 'avatar24', 'Йенифер', 'из Венгерберга', 'email.user24@gmain.com', '+375298445869', 2, 4, 4, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user25', md5('secret'), 'avatar25', 'Николай', 'Игорев', 'email.user25@gmain.com', '+375298424569', 2, 4, 4, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user26', md5('secret'), 'avatar26', 'Дждастин', 'Бибер', 'email.user26@gmain.com', '+375298449869', 2, 4, 4, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user27', md5('secret'), 'avatar27', 'fname27', 'sname27', 'email.user27@gmain.com', '+375298429269', 2, 4, 4, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user28', md5('secret'), 'avatar28', 'fname28', 'sname28', 'email.user28@gmain.com', '+375291229869', 2, 4, 4, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user29', md5('secret'), 'avatar29', 'fname29', 'sname29', 'email.user29@gmain.com', '+375298429369', 2, 4, 4, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user30', md5('secret'), 'avatar30', 'fname30', 'sname30', 'email.user30@gmain.com', '+375299429869', 2, 5, 5, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user31', md5('secret'), 'avatar31', 'fname31', 'sname31', 'email.user31@gmain.com', '+375298445869', 2, 5, 5, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user32', md5('secret'), 'avatar32', 'fname32', 'sname32', 'email.user32@gmain.com', '+375298429869', 2, 5, 5, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user33', md5('secret'), 'avatar33', 'fname33', 'sname33', 'email.user33@gmain.com', '+375298429869', 2, 5, 5, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user34', md5('secret'), 'avatar34', 'fname34', 'sname34', 'email.user34@gmain.com', '+375298429869', 2, 5, 5, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user35', md5('secret'), 'avatar35', 'fname35', 'sname35', 'email.user35@gmain.com', '+375298429869', 2, 5, 5, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user36', md5('secret'), 'avatar36', 'fname36', 'sname36', 'email.user36@gmain.com', '+375298429869', 2, 5, 5, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user37', md5('secret'), 'avatar37', 'fname37', 'sname37', 'email.user37@gmain.com', '+375298429869', 2, 6, 6, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user38', md5('secret'), 'avatar38', 'fname38', 'sname38', 'email.user38@gmain.com', '+375298429869', 2, 6, 6, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user39', md5('secret'), 'avatar39', 'fname39', 'sname39', 'email.user39@gmain.com', '+375298429869', 2, 6, 6, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user40', md5('secret'), 'avatar40', 'fname40', 'sname40', 'email.user40@gmain.com', '+375298429869', 2, 6, 6, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user41', md5('secret'), 'avatar41', 'fname41', 'sname41', 'email.user41@gmain.com', '+375298429869', 2, 6, 6, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user42', md5('secret'), 'avatar42', 'fname42', 'sname42', 'email.user42@gmain.com', '+375298429869', 2, 6, 6, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user43', md5('secret'), 'avatar43', 'fname43', 'sname43', 'email.user43@gmain.com', '+375298429869', 2, 6, 6, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user44', md5('secret'), 'avatar44', 'fname44', 'sname44', 'email.user44@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user45', md5('secret'), 'avatar45', 'fname45', 'sname45', 'email.user45@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user46', md5('secret'), 'avatar46', 'fname46', 'sname46', 'email.user46@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user47', md5('secret'), 'avatar47', 'fname47', 'sname47', 'email.user47@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user48', md5('secret'), 'avatar48', 'fname48', 'sname48', 'email.user48@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user49', md5('secret'), 'avatar49', 'fname49', 'sname49', 'email.user49@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user50', md5('secret'), 'avatar50', 'fname50', 'sname50', 'email.user50@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user51', md5('secret'), 'avatar51', 'fname51', 'sname51', 'email.user51@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user52', md5('secret'), 'avatar52', 'fname52', 'sname52', 'email.user52@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user53', md5('secret'), 'avatar53', 'fname53', 'sname53', 'email.user53@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user54', md5('secret'), 'avatar54', 'fname54', 'sname54', 'email.user54@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user55', md5('secret'), 'avatar55', 'fname55', 'sname55', 'email.user55@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user56', md5('secret'), 'avatar56', 'fname56', 'sname56', 'email.user56@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
-            INSERT INTO application.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
+            INSERT INTO @schema@.users(login, passwd, avatar, fname, sname, email, phone, actual_organization, actual_product, actual_iteration,  is_first, user_id, added, modified, del)
                 VALUES ('user57', md5('secret'), 'avatar57', 'fname57', 'sname57', 'email.user57@gmain.com', '+375298429869', 3, 7, 7, false, 0, now(), null, false);
         </sql>
         <rollback>
-            DELETE FROM application.users WHERE login in ('system', 'admin', 'user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8', 'user9', 'user10'
+            DELETE FROM @schema@.users WHERE login in ('system', 'admin', 'user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8', 'user9', 'user10'
             , 'user11', 'user12', 'user13', 'user14', 'user15', 'user16', 'user17', 'user18', 'user19', 'user20', 'user21', 'user22', 'user23', 'user24', 'user25'
             , 'user26', 'user27', 'user28', 'user29', 'user30', 'user31', 'user32', 'user33', 'user34', 'user35', 'user36', 'user37', 'user38', 'user39', 'user40'
             , 'user41', 'user42', 'user43', 'user44', 'user45', 'user46', 'user47', 'user48', 'user49', 'user50', 'user51', 'user52', 'user53', 'user54', 'user55', 'user56', 'user57');

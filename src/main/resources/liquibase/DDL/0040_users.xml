@@ -8,7 +8,7 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'users'</comment>
         <sql>
-            CREATE TABLE application.users(
+            CREATE TABLE @schema@.users(
                 id bigserial NOT NULL,
                 login character varying unique NOT NULL,
                 passwd character(32) NOT NULL,
@@ -30,7 +30,7 @@
             )
         </sql>
         <rollback>
-            DROP TABLE application.users
+            DROP TABLE @schema@.users
         </rollback>
     </changeSet>
 

@@ -8,14 +8,14 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'roles_team'</comment>
         <sql>
-            CREATE TABLE application.roles_team(
+            CREATE TABLE @schema@.roles_team(
                 id bigserial NOT NULL,
                 name character varying NOT NULL,
                 CONSTRAINT role_team_pk PRIMARY KEY (id)
             )
         </sql>
         <rollback>
-            DROP TABLE application.roles_team
+            DROP TABLE @schema@.roles_team
         </rollback>
     </changeSet>
 

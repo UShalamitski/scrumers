@@ -116,11 +116,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public void addProductToAnOrganization(Long oid, Long pid) {
-        organizationDao.addProductToAnOrganization(oid, pid);
-    }
-
-    @Override
     public void updateActual(Long uid, Long oid) {
         organizationDao.updateActual(uid, oid);
     }

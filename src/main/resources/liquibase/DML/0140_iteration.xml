@@ -34,16 +34,16 @@
     <changeSet id="2017-04-01-01" author="ushalamitski">
         <comment>Inserts data into field 'product_id'</comment>
         <sql>
-            UPDATE application.iteration SET product_id = 1 WHERE id = 1;
-            UPDATE application.iteration SET product_id = 2 WHERE id = 2;
-            UPDATE application.iteration SET product_id = 3 WHERE id = 3;
-            UPDATE application.iteration SET product_id = 4 WHERE id = 4;
-            UPDATE application.iteration SET product_id = 5 WHERE id = 5;
-            UPDATE application.iteration SET product_id = 6 WHERE id = 6;
-            UPDATE application.iteration SET product_id = 7 WHERE id = 7;
+            UPDATE @schema@.iteration SET product_id = 1 WHERE id = 1;
+            UPDATE @schema@.iteration SET product_id = 2 WHERE id = 2;
+            UPDATE @schema@.iteration SET product_id = 3 WHERE id = 3;
+            UPDATE @schema@.iteration SET product_id = 4 WHERE id = 4;
+            UPDATE @schema@.iteration SET product_id = 5 WHERE id = 5;
+            UPDATE @schema@.iteration SET product_id = 6 WHERE id = 6;
+            UPDATE @schema@.iteration SET product_id = 7 WHERE id = 7;
         </sql>
         <rollback>
-            UPDATE application.iteration SET product_id = null WHERE id in (1,2,3,4,5,6,7);
+            UPDATE @schema@.iteration SET product_id = null WHERE id in (1,2,3,4,5,6,7);
         </rollback>
     </changeSet>
 

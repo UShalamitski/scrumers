@@ -8,21 +8,21 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'story_users'</comment>
         <sql>
-            CREATE TABLE application.story_users(
+            CREATE TABLE @schema@.story_users(
                 story_id bigint NOT NULL,
                 user_id bigint NOT NULL,
 
                 CONSTRAINT su_pk PRIMARY KEY (story_id, user_id),
                 CONSTRAINT su_story_fk FOREIGN KEY (story_id)
-                    REFERENCES application.story (id) MATCH SIMPLE
+                    REFERENCES @schema@.story (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT su_users_fk FOREIGN KEY (user_id)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.story_users
+            DROP TABLE @schema@.story_users
         </rollback>
     </changeSet>
 

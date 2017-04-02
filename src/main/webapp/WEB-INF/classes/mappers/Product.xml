@@ -9,6 +9,7 @@
         <result property="name" column="name"/>
         <result property="descr" column="descr"/>
         <result property="owner" column="owner"/>
+        <result property="organizationId" column="organization_id"/>
         <result property="idCreator" column="user_id"/>
         <result property="added" column="added"/>
         <result property="modified" column="modified"/>
@@ -85,21 +86,15 @@
     </select>
 
     <select id="selectId" resultType="java.lang.Long">
-        SELECT nextval('product_id_seq')
+        SELECT nextval('${schema}.product_id_seq')
     </select>
-
 
     <insert id="create">
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
-            SELECT nextval('product_id_seq')
+            SELECT nextval('${schema}.product_id_seq')
         </selectKey>
-        INSERT INTO ${schema}.product (id, name, descr, owner, user_id, added)
-            VALUES (#{id}, #{name}, #{descr}, #{owner}, #{idCreator}, now());
-    </insert>
-
-    <insert id="createWithUserId">
-        INSERT INTO ${schema}.product (id, name, descr, owner, user_id, added)
-            VALUES (#{id}, #{name}, #{descr}, #{owner}, #{idCreator}, now());
+        INSERT INTO ${schema}.product (id, name, descr, owner, organization_id, user_id, added)
+            VALUES (#{id}, #{name}, #{descr}, #{owner}, #{organizationId}, #{idCreator}, now());
     </insert>
 
     <select id="read" resultMap="productMap">
@@ -182,43 +177,39 @@
         ORDER BY p.id
     </select>
 
-    <select id="readByUserIdAndOrganizationId" resultMap="productMap">
+    <select id="readByUserIdAndOrgId" resultMap="productMap">
         SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done 
         FROM ${schema}.product p
             INNER JOIN ${schema}.team_product tp ON p.id = tp.product_id
             INNER JOIN ${schema}.users_team ut ON ut.team_id = tp.team_id
-            INNER JOIN ${schema}.organization_product op ON op.product_id = tp.product_id
             INNER JOIN ${schema}.team t ON t.id = tp.team_id
 
         UNION 
 
         SELECT p.id, p.name, p.descr, p.owner, p.user_id, p.added, p.modified, p.del, p.done 
         FROM ${schema}.product p
-            INNER JOIN ${schema}.organization_product op ON op.product_id = p.id
             INNER JOIN ${schema}.users u ON u.id = p.user_id
-        WHERE u.id = #{uid} AND op.organization_id = #{oid} AND p.del = false
+        WHERE u.id = #{uid} AND p.organization_id = #{oid} AND p.del = false
     </select>
 
-    <select id="readViewByUserIdAndOrganizationId" resultMap="productViewMap">
+    <select id="readViewByUserIdAndOrgId" resultMap="productViewMap">
         (SELECT p.id, p.name, p.descr, p.owner, uo.login AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
         FROM ${schema}.product p
             INNER JOIN ${schema}.team_product tp ON p.id = tp.product_id
             INNER JOIN ${schema}.users_team ut ON ut.team_id = tp.team_id
             INNER JOIN ${schema}.users u ON u.id = ut.user_id
             INNER JOIN ${schema}.users uo ON uo.id = p.owner
-            INNER JOIN ${schema}.organization_product op ON op.product_id = tp.product_id
             INNER JOIN ${schema}.team t ON t.id = tp.team_id
-        WHERE ut.user_id = #{uid} AND op.organization_id = #{oid} AND p.del = false AND t.del = false
+        WHERE ut.user_id = #{uid} AND p.organization_id = #{oid} AND p.del = false AND t.del = false
         ORDER BY p.id)
         
         UNION 
 
         (SELECT p.id, p.name, p.descr, p.owner, uo.login AS ownerName, p.user_id, p.added, p.modified, p.del, p.done 
         FROM ${schema}.product p
-            INNER JOIN ${schema}.organization_product op ON op.product_id = p.id
             INNER JOIN ${schema}.users u ON u.id = p.user_id
             INNER JOIN ${schema}.users uo ON uo.id = p.owner
-        WHERE u.id = #{uid} AND op.organization_id = #{oid} AND p.del = false
+        WHERE u.id = #{uid} AND p.organization_id = #{oid} AND p.del = false
         ORDER BY p.id)
     </select>
 

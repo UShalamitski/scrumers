@@ -10,11 +10,9 @@ public class Product extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     private String name;
-
     private String descr;
-
     private long owner;
-
+    private long organizationId;
     private boolean isDone;
 
     public String getName() {
@@ -49,6 +47,14 @@ public class Product extends AbstractEntity {
         this.isDone = isDone;
     }
 
+    public long getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(long organizationId) {
+        this.organizationId = organizationId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -56,6 +62,7 @@ public class Product extends AbstractEntity {
                 .append("descr", descr)
                 .append("owner", owner)
                 .append("isDone", isDone)
+                .append("organizationId", organizationId)
                 .toString();
     }
 
@@ -76,6 +83,7 @@ public class Product extends AbstractEntity {
                 .append(isDone, product.isDone)
                 .append(name, product.name)
                 .append(descr, product.descr)
+                .append(organizationId, product.organizationId)
                 .isEquals();
     }
 
@@ -86,6 +94,7 @@ public class Product extends AbstractEntity {
                 .append(descr)
                 .append(owner)
                 .append(isDone)
+                .append(organizationId)
                 .toHashCode();
     }
 }

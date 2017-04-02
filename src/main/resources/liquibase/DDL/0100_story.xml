@@ -8,7 +8,7 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'story'</comment>
         <sql>
-            CREATE TABLE application.story(
+            CREATE TABLE @schema@.story(
                 id bigserial NOT NULL,
                 story_id bigint NOT NULL,
                 name character varying,
@@ -28,15 +28,15 @@
 
                 CONSTRAINT story_pk PRIMARY KEY (id),
                 CONSTRAINT story_user_fk FOREIGN KEY (user_id)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT story_status_fk FOREIGN KEY (status_id)
-                    REFERENCES application.status (id) MATCH SIMPLE
+                    REFERENCES @schema@.status (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.story
+            DROP TABLE @schema@.story
         </rollback>
     </changeSet>
 

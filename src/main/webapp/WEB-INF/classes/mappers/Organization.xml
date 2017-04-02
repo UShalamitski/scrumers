@@ -39,8 +39,8 @@
 
     <select id="readAll" resultMap="organizationMap">
         SELECT DISTINCT o.id, o.name, o.user_id, o.added, o.modified, o.del,
-            (SELECT COUNT(*) from organization_product op WHERE op.organization_id = o.id) AS numOfProjects,
-            (SELECT COUNT(*) from organization_team ot WHERE ot.organization_id = o.id) AS numOfTeams
+            (SELECT COUNT(*) from ${schema}.product prod WHERE prod.organization_id = o.id) AS numOfProjects,
+            (SELECT COUNT(*) from ${schema}.organization_team ot WHERE ot.organization_id = o.id) AS numOfTeams
         FROM ${schema}.organization o
             INNER JOIN ${schema}.organization_team ot ON o.id = ot.organization_id
             INNER JOIN ${schema}.users_team ut ON ut.team_id = ot.team_id
@@ -51,13 +51,13 @@
     <select id="readByProductId" resultMap="organizationMap">
         SELECT o.id, o.name, o.user_id, o.added, o.modified, o.del
         FROM ${schema}.organization o
-        INNER JOIN ${schema}.organization_product op ON o.id = op.organization_id
-        WHERE op.product_id = #{pid} AND o.del = false
+        INNER JOIN ${schema}.product prod ON o.id = prod.organization_id
+        WHERE prod.product_id = #{pid} AND o.del = false
     </select>
 
     <select id="readByUserId" resultMap="organizationMap">
         SELECT DISTINCT o.id, o.name, o.user_id, o.added, o.modified, o.del,
-            (SELECT COUNT(*) FROM ${schema}.organization_product op WHERE op.organization_id = o.id) AS numOfProjects,
+            (SELECT COUNT(*) FROM ${schema}.product prod WHERE prod.organization_id = o.id) AS numOfProjects,
             (SELECT COUNT(*) FROM ${schema}.organization_team ot WHERE ot.organization_id = o.id) AS numOfTeams
         FROM ${schema}.organization o
             INNER JOIN ${schema}.organization_team ot ON o.id = ot.organization_id
@@ -98,10 +98,6 @@
 
     <insert id="addTeamToAnOrganization">
         INSERT INTO ${schema}.organization_team (organization_id, team_id) VALUES (#{oid}, #{tid})
-    </insert>
-
-    <insert id="addProductToAnOrganization">
-        INSERT INTO ${schema}.organization_product (organization_id, product_id) VALUES (#{oid}, #{pid})
     </insert>
 
 </mapper>

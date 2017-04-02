@@ -9,12 +9,12 @@
         <comment>Inserts data in table 'roles'</comment>
 
         <sql>
-            INSERT INTO application.roles (name) VALUES ('admin');
-            INSERT INTO application.roles (name) VALUES ('user');
+            INSERT INTO @schema@.roles (name) VALUES ('admin');
+            INSERT INTO @schema@.roles (name) VALUES ('user');
         </sql>
         <rollback>
-            DELETE FROM application.roles WHERE name = 'admin';
-            DELETE FROM application.roles WHERE name = 'user';
+            DELETE FROM @schema@.roles WHERE name = 'admin';
+            DELETE FROM @schema@.roles WHERE name = 'user';
         </rollback>
 
     </changeSet>

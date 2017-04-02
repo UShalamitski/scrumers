@@ -8,21 +8,21 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'organization_team'</comment>
         <sql>
-            CREATE TABLE application.organization_team(
+            CREATE TABLE @schema@.organization_team(
                 organization_id bigserial NOT NULL,
                 team_id bigserial NOT NULL,
 
                 CONSTRAINT organization_team_pk PRIMARY KEY (organization_id, team_id),
                 CONSTRAINT ot_organization_fk FOREIGN KEY (organization_id)
-                    REFERENCES application.organization (id) MATCH SIMPLE
+                    REFERENCES @schema@.organization (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT ot_team_fk FOREIGN KEY (team_id)
-                    REFERENCES application.team (id) MATCH SIMPLE
+                    REFERENCES @schema@.team (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.organization_team
+            DROP TABLE @schema@.organization_team
         </rollback>
     </changeSet>
 

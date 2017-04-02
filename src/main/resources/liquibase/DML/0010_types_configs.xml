@@ -9,16 +9,16 @@
         <comment>Creates table 'types_configs'</comment>
 
         <sql>
-            INSERT INTO application.types_configs (name) VALUES ('crontab');
-            INSERT INTO application.types_configs (name) VALUES ('regexp');
-            INSERT INTO application.types_configs (name) VALUES ('count');
-            INSERT INTO application.types_configs (name) VALUES ('text');
+            INSERT INTO @schema@.types_configs (name) VALUES ('crontab');
+            INSERT INTO @schema@.types_configs (name) VALUES ('regexp');
+            INSERT INTO @schema@.types_configs (name) VALUES ('count');
+            INSERT INTO @schema@.types_configs (name) VALUES ('text');
         </sql>
         <rollback>
-            DELETE FROM application.types_configs WHERE name = 'crontab';
-            DELETE FROM application.types_configs WHERE name = 'regexp';
-            DELETE FROM application.types_configs WHERE name = 'count';
-            DELETE FROM application.types_configs WHERE name = 'text';
+            DELETE FROM @schema@.types_configs WHERE name = 'crontab';
+            DELETE FROM @schema@.types_configs WHERE name = 'regexp';
+            DELETE FROM @schema@.types_configs WHERE name = 'count';
+            DELETE FROM @schema@.types_configs WHERE name = 'text';
         </rollback>
 
     </changeSet>

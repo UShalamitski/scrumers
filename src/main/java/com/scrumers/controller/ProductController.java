@@ -243,8 +243,10 @@ public class ProductController {
             @ModelAttribute("product") final Product product,
             final BindingResult result, Model model,
             @RequestParam(value = "table", required = false) final boolean table) {
+
         User u = userSrv.getUser(p.getName());
         product.setIdCreator(u.getId());
+        product.setOrganizationId(u.getActualOrganization());
 
         validator.validate(product, result); // validation
         if (result.hasErrors()) {
@@ -253,7 +255,8 @@ public class ProductController {
             return "product/product";
         } // end validation
 
-        productSrv.saveProduct(product, u.getActualOrganization(), u.getId());
+        productSrv.saveProduct(product);
+
         if (session.getAttribute("mode").equals("my")) {
             if (!table) {
                 return "redirect:product_my.html";

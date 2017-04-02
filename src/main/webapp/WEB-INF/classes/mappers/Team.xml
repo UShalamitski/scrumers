@@ -19,7 +19,7 @@
 
     <insert id="create">
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
-            SELECT nextval('team_id_seq')
+            SELECT nextval('${schema}.team_id_seq')
         </selectKey>
         INSERT INTO ${schema}.team (id, name, user_id, added) VALUES (#{id}, #{name}, #{idCreator}, now())
     </insert>
@@ -40,7 +40,7 @@
     </select>
 
     <select id="selectId" resultType="java.lang.Long">
-        SELECT nextval('team_id_seq')
+        SELECT nextval('${schema}.team_id_seq')
     </select>
 
     <select id="readByName" resultMap="teamMap">

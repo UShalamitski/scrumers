@@ -8,24 +8,24 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'users_team'</comment>
         <sql>
-            CREATE TABLE application.users_team(
+            CREATE TABLE @schema@.users_team(
                 user_id bigint NOT NULL,
                 team_id bigint NOT NULL,
                 role_id bigint NOT NULL,
                 CONSTRAINT ut_pk PRIMARY KEY (user_id, team_id),
                 CONSTRAINT ut_team_fk FOREIGN KEY (team_id)
-                    REFERENCES application.team (id) MATCH SIMPLE
+                    REFERENCES @schema@.team (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT ut_users_fk FOREIGN KEY (user_id)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT ut_team_role_fk FOREIGN KEY (role_id)
-                    REFERENCES application.roles_team (id) MATCH SIMPLE
+                    REFERENCES @schema@.roles_team (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.users_team
+            DROP TABLE @schema@.users_team
         </rollback>
     </changeSet>
 

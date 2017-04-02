@@ -8,7 +8,7 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'plot_iteration'</comment>
         <sql>
-            CREATE TABLE application.plot_iteration(
+            CREATE TABLE @schema@.plot_iteration(
                 id bigserial NOT NULL,
                 iteration_id bigint NOT NULL,
                 story_id bigint NOT NULL,
@@ -17,15 +17,15 @@
 
                 CONSTRAINT plot_iter_pk PRIMARY KEY (id),
                 CONSTRAINT pi_iteration_fk FOREIGN KEY (iteration_id)
-                    REFERENCES application.iteration (id) MATCH SIMPLE
+                    REFERENCES @schema@.iteration (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT pi_story_fk FOREIGN KEY (story_id)
-                    REFERENCES application.story (id) MATCH SIMPLE
+                    REFERENCES @schema@.story (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.plot_iteration
+            DROP TABLE @schema@.plot_iteration
         </rollback>
     </changeSet>
 

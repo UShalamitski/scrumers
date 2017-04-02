@@ -30,12 +30,12 @@
     </resultMap>
 
     <select id="selectId" resultType="java.lang.Long">
-        SELECT nextval('task_id_seq')
+        SELECT nextval('${schema}.task_id_seq')
     </select>
 
     <insert id="create">
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
-            SELECT nextval('task_id_seq')
+            SELECT nextval('${schema}.task_id_seq')
         </selectKey>
         INSERT INTO ${schema}.task (id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added)
             VALUES (#{id}, #{taskId}, #{summary}, #{estimatePre}, #{estimateReal}, #{assignee}, #{statusId}, #{idCreator}, now())

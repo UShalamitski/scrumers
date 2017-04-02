@@ -8,7 +8,7 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'task'</comment>
         <sql>
-            CREATE TABLE application.task(
+            CREATE TABLE @schema@.task(
                 id bigserial NOT NULL,
                 task_id bigserial NOT NULL,
                 summary character varying,          -- описание
@@ -25,18 +25,18 @@
 
                 CONSTRAINT task_pk PRIMARY KEY (id),
                 CONSTRAINT task_user_fk FOREIGN KEY (user_id)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT task_user_fk2 FOREIGN KEY (assignee)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT task_status_fk FOREIGN KEY (status_id)
-                    REFERENCES application.status (id) MATCH SIMPLE
+                    REFERENCES @schema@.status (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.task
+            DROP TABLE @schema@.task
         </rollback>
     </changeSet>
 

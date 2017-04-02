@@ -35,12 +35,12 @@
     </resultMap>
 
     <select id="selectId" resultType="java.lang.Long">
-        SELECT nextval('story_id_seq')
+        SELECT nextval('${schema}.story_id_seq')
     </select>
 
     <insert id="create">
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
-            SELECT nextval('story_id_seq')
+            SELECT nextval('${schema}.story_id_seq')
         </selectKey>
         INSERT INTO ${schema}.story (id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified)
             VALUES (#{id}, #{storyId}, #{name}, #{descr}, #{storyPoints}, #{estimate}, #{assignee}, #{howToDemo}, #{track}, #{statusId}, #{idCreator}, now(), now())

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.ImmutableMap;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.scrumers.api.dao.OrganizationDao;
@@ -64,34 +65,17 @@ public class OrganizationDaoImpl extends SqlSessionDaoSupport implements
 
     @Override
     public void addTeamToAnOrganization(Long oid, Long tid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("oid", oid);
-        map.put("tid", tid);
-        getSqlSession().insert("Organization.addTeamToAnOrganization", map);
-    }
-
-    @Override
-    public void addProductToAnOrganization(Long oid, Long pid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("oid", oid);
-        map.put("pid", pid);
-        getSqlSession().insert("Organization.addProductToAnOrganization", map);
+        getSqlSession().insert("Organization.addTeamToAnOrganization", ImmutableMap.of("oid", oid, "tid", tid));
     }
 
     @Override
     public void updateActual(Long uid, Long oid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("oid", oid);
-        map.put("uid", uid);
-        getSqlSession().update("Organization.updateActual", map);
+        getSqlSession().update("Organization.updateActual", ImmutableMap.of("oid", oid, "uid", uid));
     }
 
     @Override
     public List<Long> readIdsByUserAndOrg(Long uid, Long oid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("oid", oid);
-        map.put("uid", uid);
-        return getSqlSession().selectList("Organization.readIds_UID_OID", map);
+        return getSqlSession().selectList("Organization.readIds_UID_OID", ImmutableMap.of("oid", oid, "uid", uid));
     }
 
 }

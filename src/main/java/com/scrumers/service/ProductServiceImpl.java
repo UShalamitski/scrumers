@@ -3,7 +3,6 @@ package com.scrumers.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import com.scrumers.api.dao.OrganizationDao;
 import com.scrumers.api.dao.ProductDao;
 import com.scrumers.api.dao.TeamDao;
@@ -43,19 +42,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveProduct(Product p, Long oid, Long uid) {
-        if (p.getId() == null) {
-            Long pid = productDao.selectId();
-            p.setId(pid);
-            productDao.createWithUserId(p);
-            // productDao.addUserToAProduct(uid, pid);
-            organizationDao.addProductToAnOrganization(oid, pid);
-        } else {
-            productDao.update(p);
-        }
-    }
-
-    @Override
     public void deleteProduct(Long id) {
         if (id != null) {
             productDao.delete(id);
@@ -64,17 +50,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProductByOwner(Long[] id) {
-        if (id != null)
-            for (Long pid : id) {
-                /*
-                 * productDao.deleteFromProductStoryByProductId(pid);
-                 * productDao.deleteFromProductIterationByProductId(pid);
-                 * productDao.deleteFromUsersProductByProductId(pid);
-                 * organizationDao
-                 * .deleteFromOrganizationProductByProductId(pid);
-                 */
-                productDao.delete(pid);
-            }
+        for (Long pid : id) {
+            productDao.delete(pid);
+        }
     }
 
     @Override
@@ -146,7 +124,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductView> getProductsViewByUserIdAndOrganizationId(Long uid,
-            Long oid) {
+                                                                      Long oid) {
         return productDao.readViewByUserIdAndOrganizationId(uid, oid);
     }
 

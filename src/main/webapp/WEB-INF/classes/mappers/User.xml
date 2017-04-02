@@ -45,7 +45,7 @@
 
     <insert id="create">
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
-            SELECT nextval('users_id_seq')
+            SELECT nextval('${schema}.users_id_seq')
         </selectKey>
         INSERT INTO ${schema}.users (id, login, passwd, fname, sname, avatar, email, phone, actual_organization, actual_product, actual_iteration, user_id, added) VALUES (#{id}, #{login}, md5(#{passwd}), #{fname}, #{sname}, #{avatar}, #{email}, #{phone}, #{actualOrganization}, #{actualProduct}, #{actualIteration}, #{idCreator}, now())
     </insert>

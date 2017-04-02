@@ -9,32 +9,32 @@
         <comment>Creates table 'types_configs'</comment>
 
         <sql>
-            INSERT INTO application.configs (key, value, id_type) VALUES ('userNamePattern','^[Р-пр-џA-Za-z0-9_-]{3,15}$',2);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('userPasswdPattern','^[Р-пр-џA-Za-z0-9_-]{3,15}$',2);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('userEmail','^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',2);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('crontab','10 10 * * * *',1);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('poolSize','30',3);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('countStreams','5',3);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('s','64',3);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('m','128',3);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('l','256',3);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('xl','512',3);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('imageFormate','jpg',4);
-            INSERT INTO application.configs (key, value, id_type) VALUES ('imageSize','l',4);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('userNamePattern','^[Р-пр-џA-Za-z0-9_-]{3,15}$',2);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('userPasswdPattern','^[Р-пр-џA-Za-z0-9_-]{3,15}$',2);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('userEmail','^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',2);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('crontab','10 10 * * * *',1);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('poolSize','30',3);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('countStreams','5',3);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('s','64',3);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('m','128',3);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('l','256',3);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('xl','512',3);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('imageFormate','jpg',4);
+            INSERT INTO @schema@.configs (key, value, id_type) VALUES ('imageSize','l',4);
         </sql>
         <rollback>
-            DELETE FROM application.configs WHERE key = 'userNamePattern';
-            DELETE FROM application.configs WHERE key = 'userPasswdPattern';
-            DELETE FROM application.configs WHERE key = 'userEmail';
-            DELETE FROM application.configs WHERE key = 'crontab';
-            DELETE FROM application.configs WHERE key = 'poolSize';
-            DELETE FROM application.configs WHERE key = 'countStreams';
-            DELETE FROM application.configs WHERE key = 's';
-            DELETE FROM application.configs WHERE key = 'm';
-            DELETE FROM application.configs WHERE key = 'l';
-            DELETE FROM application.configs WHERE key = 'xl';
-            DELETE FROM application.configs WHERE key = 'imageFormate';
-            DELETE FROM application.configs WHERE key = 'imageSize';
+            DELETE FROM @schema@.configs WHERE key = 'userNamePattern';
+            DELETE FROM @schema@.configs WHERE key = 'userPasswdPattern';
+            DELETE FROM @schema@.configs WHERE key = 'userEmail';
+            DELETE FROM @schema@.configs WHERE key = 'crontab';
+            DELETE FROM @schema@.configs WHERE key = 'poolSize';
+            DELETE FROM @schema@.configs WHERE key = 'countStreams';
+            DELETE FROM @schema@.configs WHERE key = 's';
+            DELETE FROM @schema@.configs WHERE key = 'm';
+            DELETE FROM @schema@.configs WHERE key = 'l';
+            DELETE FROM @schema@.configs WHERE key = 'xl';
+            DELETE FROM @schema@.configs WHERE key = 'imageFormate';
+            DELETE FROM @schema@.configs WHERE key = 'imageSize';
         </rollback>
 
     </changeSet>

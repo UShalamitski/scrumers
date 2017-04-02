@@ -16,8 +16,6 @@ public interface ProductService {
 
     void updatePriorityInPS(Long[] ids);
 
-    void saveProduct(Product p, Long oid, Long uid);
-
     void deleteProduct(Long id);
 
     void deleteProductByOwner(Long[] id);

@@ -8,7 +8,7 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'storys_users_comments'</comment>
         <sql>
-            CREATE TABLE application.storys_users_comments(
+            CREATE TABLE @schema@.storys_users_comments(
                 id bigserial NOT NULL,
                 user_id bigint NOT NULL,
                 story_id  bigint NOT NULL,
@@ -17,15 +17,15 @@
                 del boolean NOT NULL default false,
 
                 CONSTRAINT storys_users_comments_story_fk FOREIGN KEY (story_id)
-                    REFERENCES application.story (id) MATCH SIMPLE
+                    REFERENCES @schema@.story (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT storys_users_comments_user_fk FOREIGN KEY (user_id)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.storys_users_comments
+            DROP TABLE @schema@.storys_users_comments
         </rollback>
     </changeSet>
 

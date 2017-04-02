@@ -8,7 +8,7 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'iteration'</comment>
         <sql>
-            CREATE TABLE application.iteration(
+            CREATE TABLE @schema@.iteration(
                 id bigserial NOT NULL,
                 name character varying NOT NULL,
                 descr character varying NULL,
@@ -24,25 +24,25 @@
 
                 CONSTRAINT iteration_pk PRIMARY KEY (id),
                 CONSTRAINT iteration_user_fk FOREIGN KEY (user_id)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.iteration
+            DROP TABLE @schema@.iteration
         </rollback>
     </changeSet>
 
     <changeSet id="2017-04-01" author="ushalamitski">
         <comment>Adds field 'product_id'</comment>
         <sql>
-            ALTER TABLE application.iteration ADD COLUMN product_id bigint;
-            ALTER TABLE application.iteration ADD CONSTRAINT iteration_product_fk FOREIGN KEY (product_id)
-                REFERENCES application.product (id) MATCH SIMPLE
+            ALTER TABLE @schema@.iteration ADD COLUMN product_id bigint;
+            ALTER TABLE @schema@.iteration ADD CONSTRAINT iteration_product_fk FOREIGN KEY (product_id)
+                REFERENCES @schema@.product (id) MATCH SIMPLE
                 ON UPDATE NO ACTION ON DELETE NO ACTION
         </sql>
         <rollback>
-            ALTER TABLE application.iteration DROP COLUMN product_id;
+            ALTER TABLE @schema@.iteration DROP COLUMN product_id;
         </rollback>
     </changeSet>
 

@@ -6,23 +6,25 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="2017-02-03-01" author="ushalamitski">
-        <comment>Creates table 'organization_product'</comment>
+        <comment>Creates table 'organization'</comment>
         <sql>
-            CREATE TABLE application.organization_product(
-                organization_id bigint NOT NULL,
-                product_id bigint NOT NULL,
+            CREATE TABLE @schema@.organization(
+                id bigserial NOT NULL,
+                name character varying NOT NULL,
 
-                CONSTRAINT op_pk PRIMARY KEY (organization_id, product_id),
-                CONSTRAINT op_organization_fk FOREIGN KEY (organization_id)
-                    REFERENCES application.organization (id) MATCH SIMPLE
-                    ON UPDATE NO ACTION ON DELETE NO ACTION,
-                CONSTRAINT op_product_fk FOREIGN KEY (product_id)
-                    REFERENCES application.product (id) MATCH SIMPLE
+                user_id bigint NOT NULL,
+                added timestamp NULL,
+                modified timestamp NULL,
+                del boolean default false,
+
+                CONSTRAINT organization_pk PRIMARY KEY (id),
+                CONSTRAINT p_user_fk FOREIGN KEY (user_id)
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.organization_product
+            DROP TABLE @schema@.organization
         </rollback>
     </changeSet>
 

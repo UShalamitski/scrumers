@@ -9,12 +9,12 @@
         <comment>Inserts data into table 'organization'</comment>
 
         <sql>
-            INSERT INTO application.organization (name, user_id, added) VALUES ('organization1', 0, now ());
-            INSERT INTO application.organization (name, user_id, added) VALUES ('organization2', 0, now ());
-            INSERT INTO application.organization (name, user_id, added) VALUES ('organization3', 0, now ());
+            INSERT INTO @schema@.organization (name, user_id, added) VALUES ('organization1', 0, now ());
+            INSERT INTO @schema@.organization (name, user_id, added) VALUES ('organization2', 0, now ());
+            INSERT INTO @schema@.organization (name, user_id, added) VALUES ('organization3', 0, now ());
         </sql>
         <rollback>
-            DELETE FROM application.organization
+            DELETE FROM @schema@.organization
         </rollback>
 
     </changeSet>

@@ -1,26 +1,18 @@
 package com.scrumers.storage.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-
+import com.google.common.collect.ImmutableMap;
 import com.scrumers.api.dao.ProductDao;
 import com.scrumers.model.PlotData;
 import com.scrumers.model.Product;
 import com.scrumers.model.ProductView;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 public class ProductDaoImpl extends SqlSessionDaoSupport implements ProductDao {
 
     @Override
     public void create(Product p) {
         getSqlSession().insert("Product.create", p);
-    }
-
-    @Override
-    public void createWithUserId(Product p) {
-        getSqlSession().insert("Product.createWithUserId", p);
     }
 
     @Override
@@ -70,21 +62,12 @@ public class ProductDaoImpl extends SqlSessionDaoSupport implements ProductDao {
 
     @Override
     public List<Product> readByUserIdAndOrganizationId(Long uid, Long oid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("uid", uid);
-        map.put("oid", oid);
-        return getSqlSession().selectList(
-                "Product.readByUserIdAndOrganizationId", map);
+        return getSqlSession().selectList("Product.readByUserIdAndOrgaId", ImmutableMap.of("uid", uid, "oid", oid));
     }
 
     @Override
-    public List<ProductView> readViewByUserIdAndOrganizationId(Long uid,
-            Long oid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("uid", uid);
-        map.put("oid", oid);
-        return getSqlSession().selectList(
-                "Product.readViewByUserIdAndOrganizationId", map);
+    public List<ProductView> readViewByUserIdAndOrganizationId(Long uid, Long oid) {
+        return getSqlSession().selectList("Product.readViewByUserIdAndOrgId", ImmutableMap.of("uid", uid, "oid", oid));
     }
 
     @Override
@@ -99,10 +82,7 @@ public class ProductDaoImpl extends SqlSessionDaoSupport implements ProductDao {
 
     @Override
     public void addStoryToAProduct(Long pid, Long sid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("pid", pid);
-        map.put("sid", sid);
-        getSqlSession().insert("Product.addStoryToAProduct", map);
+        getSqlSession().insert("Product.addStoryToAProduct", ImmutableMap.of("pid", pid, "sid", sid));
     }
 
     @Override
@@ -112,42 +92,32 @@ public class ProductDaoImpl extends SqlSessionDaoSupport implements ProductDao {
 
     @Override
     public void updatePriorityInPS(Long sid, Long prid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("sid", sid);
-        map.put("prid", prid);
-        getSqlSession().update("Product.updatePriorityInPS", map);
+        getSqlSession().update("Product.updatePriorityInPS", ImmutableMap.of("sid", sid, "prid", prid));
     }
 
     @Override
     public void addedProductOwner(Long pid, Long uid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("pid", pid);
-        map.put("uid", uid);
-        getSqlSession().update("Product.addedProductOwner", map);
+        getSqlSession().update("Product.addedProductOwner", ImmutableMap.of("pid", pid, "uid", uid));
     }
 
     @Override
     public List<PlotData> readProductDiadgramData1(Long pid) {
-        return getSqlSession().selectList("Product.readProductDiadgramData1",
-                pid);
+        return getSqlSession().selectList("Product.readProductDiadgramData1", pid);
     }
 
     @Override
     public List<PlotData> readProductDiadgramData2(Long pid) {
-        return getSqlSession().selectList("Product.readProductDiadgramData2",
-                pid);
+        return getSqlSession().selectList("Product.readProductDiadgramData2", pid);
     }
 
     @Override
     public Long readAllDelHoursForToday(Long pid) {
-        return getSqlSession()
-                .selectOne("Product.readAllDelHoursForToday", pid);
+        return getSqlSession().selectOne("Product.readAllDelHoursForToday", pid);
     }
 
     @Override
     public List<PlotData> readIterationDoneHours(Long pid) {
-        return getSqlSession()
-                .selectList("Product.readIterationDoneHours", pid);
+        return getSqlSession().selectList("Product.readIterationDoneHours", pid);
     }
 
 }

@@ -8,7 +8,7 @@
     <changeSet id="2017-02-03-01" author="ushalamitski">
         <comment>Creates table 'product'</comment>
         <sql>
-            CREATE TABLE application.product(
+            CREATE TABLE @schema@.product(
                 id bigserial NOT NULL,
                 name character varying NOT NULL,
                 descr character varying,
@@ -22,15 +22,28 @@
 
                 CONSTRAINT product_pk PRIMARY KEY (id),
                 CONSTRAINT p_user_fk FOREIGN KEY (user_id)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
                 CONSTRAINT p_owner_fk FOREIGN KEY (owner)
-                    REFERENCES application.users (id) MATCH SIMPLE
+                    REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION
             )
         </sql>
         <rollback>
-            DROP TABLE application.product
+            DROP TABLE @schema@.product
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2017-04-02" author="ushalamitski">
+        <comment>Adds field 'organization_id'</comment>
+        <sql>
+            ALTER TABLE @schema@.product ADD COLUMN organization_id bigint;
+            ALTER TABLE @schema@.product ADD CONSTRAINT product_organization_fk
+                FOREIGN KEY (organization_id) REFERENCES @schema@.organization (id) MATCH SIMPLE
+                ON UPDATE NO ACTION ON DELETE NO ACTION
+        </sql>
+        <rollback>
+            ALTER TABLE @schema@.product DROP COLUMN organization_id;
         </rollback>
     </changeSet>
 

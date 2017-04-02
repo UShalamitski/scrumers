@@ -9,16 +9,16 @@
         <comment>Inserts data into table 'team'</comment>
 
         <sql>
-            INSERT INTO application.team (name, user_id, added, modified, del) VALUES ('Dream Team', 2, now(), null, false);
-            INSERT INTO application.team (name, user_id, added, modified, del) VALUES ('Red team', 0, now(), null, false);
-            INSERT INTO application.team (name, user_id, added, modified, del) VALUES ('Red Sox', 0, now(), null, false);
-            INSERT INTO application.team (name, user_id, added, modified, del) VALUES ('Spyrse', 0, now(), null, false);
-            INSERT INTO application.team (name, user_id, added, modified, del) VALUES ('Chicago Bulls', 0, now(), null, false);
-            INSERT INTO application.team (name, user_id, added, modified, del) VALUES ('Manchester', 0, now(), null, false);
-            INSERT INTO application.team (name, user_id, added, modified, del) VALUES ('Liverpool', 0, now(), null, false);
+            INSERT INTO @schema@.team (name, user_id, added, modified, del) VALUES ('Dream Team', 2, now(), null, false);
+            INSERT INTO @schema@.team (name, user_id, added, modified, del) VALUES ('Red team', 0, now(), null, false);
+            INSERT INTO @schema@.team (name, user_id, added, modified, del) VALUES ('Red Sox', 0, now(), null, false);
+            INSERT INTO @schema@.team (name, user_id, added, modified, del) VALUES ('Spyrse', 0, now(), null, false);
+            INSERT INTO @schema@.team (name, user_id, added, modified, del) VALUES ('Chicago Bulls', 0, now(), null, false);
+            INSERT INTO @schema@.team (name, user_id, added, modified, del) VALUES ('Manchester', 0, now(), null, false);
+            INSERT INTO @schema@.team (name, user_id, added, modified, del) VALUES ('Liverpool', 0, now(), null, false);
         </sql>
         <rollback>
-            DELETE FROM application.team
+            DELETE FROM @schema@.team
         </rollback>
 
     </changeSet>

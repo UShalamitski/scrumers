@@ -12,8 +12,6 @@ public interface ProductDao extends GenericDao<Long, Product> {
 
     List<Product> readAll();
 
-    void createWithUserId(Product p);
-
     void updatePriorityInPS(Long sid, Long prid);
 
     Long readAllDelHoursForToday(Long pid);

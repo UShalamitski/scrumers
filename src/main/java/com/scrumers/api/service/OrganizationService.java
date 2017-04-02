@@ -26,8 +26,6 @@ public interface OrganizationService {
 
     void addTeamToAnOrganization(Long oid, Long tid);
 
-    void addProductToAnOrganization(Long oid, Long pid);
-
     void updateActual(Long uid, Long oid);
 
 }

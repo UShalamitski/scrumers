@@ -1,9 +1,9 @@
 package com.scrumers
 
+import groovy.sql.Sql
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import groovy.sql.Sql
 import org.gradle.api.tasks.Copy
 
 class DataBasePlugin implements Plugin<Project> {
@@ -80,8 +80,9 @@ class DataBasePlugin implements Plugin<Project> {
                     }
                 }
                 filter(ReplaceTokens, tokens: [
-                        path     : liquibaseDir,
-                        scrumersDbName: project.properties.scrumersDbName
+                        path            : liquibaseDir,
+                        scrumersDbName  : project.properties.scrumersDbName,
+                        schema: project.properties.scrumersDbSchema
                 ])
             }
             into(buildResourceDir)
