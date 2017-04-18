@@ -26,16 +26,16 @@
                         <ul id="sortable1" class="connectedSortable2">
                             <c:forEach items="${stories_b}" var="story" varStatus="status">
                                 <c:choose>
-                                    <c:when test="${story.statusId eq 1}">
+                                    <c:when test="${story.status eq 'TODO'}">
                                         <ui:element_s2  modalId="#myModal1" modalId2="#newStoryModal" story="${story}"  st="cl1" />
                                     </c:when>
-                                    <c:when test="${story.statusId eq 2}">
+                                    <c:when test="${story.status eq 'DOING'}">
                                         <ui:element_s2  modalId="#myModal1" modalId2="#newStoryModal" story="${story}"  st="cl2" />
                                     </c:when>
-                                    <c:when test="${story.statusId eq 3}">
+                                    <c:when test="${story.status eq 'REVIEWING'}">
                                         <ui:element_s2  modalId="#myModal1" modalId2="#newStoryModal" story="${story}"  st="cl3" />
                                     </c:when>
-                                    <c:when test="${story.statusId eq 4}">
+                                    <c:when test="${story.status eq 'DONE'}">
                                         <ui:element_s2  modalId="#myModal1" modalId2="#newStoryModal" story="${story}"  st="cl4" />
                                     </c:when>
                                 </c:choose>
@@ -46,16 +46,16 @@
                         <ul id="sortable2" class="connectedSortable2">
                             <c:forEach items="${stories_i}" var="story_i" varStatus="status">
                                 <c:choose>
-                                    <c:when test="${story_i.statusId eq 1}">
+                                    <c:when test="${story_i.status eq 'TODO'}">
                                         <ui:element_s2  modalId="#myModal2" modalId2="#newStoryModal" story="${story_i}"  st="cl1" />
                                     </c:when>
-                                    <c:when test="${story_i.statusId eq 2}">
+                                    <c:when test="${story_i.status eq 'DOING'}">
                                         <ui:element_s2  modalId="#myModal2" modalId2="#newStoryModal" story="${story_i}"  st="cl2" />
                                     </c:when>
-                                    <c:when test="${story_i.statusId eq 3}">
+                                    <c:when test="${story_i.status eq 'REVIEWING'}">
                                         <ui:element_s2  modalId="#myModal2" modalId2="#newStoryModal" story="${story_i}"  st="cl3" />
                                     </c:when>
-                                    <c:when test="${story_i.statusId eq 4}">
+                                    <c:when test="${story_i.status eq 'DONE'}">
                                         <ui:element_s2  modalId="#myModal2" modalId2="#newStoryModal" story="${story_i}"  st="cl4" />
                                     </c:when>
                                 </c:choose>

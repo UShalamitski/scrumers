@@ -15,7 +15,7 @@
                 estimate_pre numeric,               -- предположительное время
                 estimate_real numeric NULL,         -- затраченное время
                 assignee bigint NULL,               -- кому поручена
-                status_id bigint NOT NULL default 1,
+                status varchar(16) NOT NULL DEFAULT 'TODO',
 
                 user_id bigint,
                 added timestamp NULL,
@@ -30,9 +30,7 @@
                 CONSTRAINT task_user_fk2 FOREIGN KEY (assignee)
                     REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
-                CONSTRAINT task_status_fk FOREIGN KEY (status_id)
-                    REFERENCES @schema@.status (id) MATCH SIMPLE
-                    ON UPDATE NO ACTION ON DELETE NO ACTION
+                CONSTRAINT task_status_check CHECK (status in ('TODO', 'DOING', 'REVIEWING', 'DONE'))
             )
         </sql>
         <rollback>

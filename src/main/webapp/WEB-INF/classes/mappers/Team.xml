@@ -56,7 +56,7 @@
         WHERE ut.user_id = #{uid} AND t.del = false
     </select>
 
-    <select id="readByUserIdAndOrganizationId" resultMap="teamMap">
+    <select id="readByUserIdAndOrgId" resultMap="teamMap">
         SELECT t.id, t.name, ut.role_id AS teamRole, (SELECT COUNT(*) FROM ${schema}.users_team WHERE team_id=ut.team_id) AS numOfUsers, t.user_id, t.added, t.modified, t.del,
             (SELECT us.fname||' '||us.sname FROM ${schema}.users us
                 INNER JOIN ${schema}.users_team utt ON us.id = utt.user_id
@@ -114,7 +114,7 @@
         DELETE FROM ${schema}.users_team WHERE user_id = #{uid} AND team_id=#{tid}
     </delete>
 
-    <delete id="deleteFromTeamProductByTeamIdAndProductId">
+    <delete id="deleteFromTeamProductByTeamAndProduct">
         DELETE FROM ${schema}.team_product WHERE team_id = #{tid} AND product_id = #{pid}
     </delete>
 

@@ -4,16 +4,17 @@ import java.util.List;
 
 import com.scrumers.model.Comment;
 import com.scrumers.model.Story;
+import com.scrumers.model.enums.StoryStatusEnum;
 
 public interface StoryService {
 
     Story getStory(Long id);
 
-    void updateStatus(Long id, Long stid);
+    void updateStatus(Long id, StoryStatusEnum status);
 
-    void updateStatus(Long sid, Long iid, Long stid);
+    void updateStatus(Long sid, Long iid, StoryStatusEnum status);
 
-    void updateStatusToDone(Long sid, Long iid, Long stid);
+    void updateStatusToDone(Long sid, Long iid, StoryStatusEnum status);
 
     boolean IterationStoryIsDone(Long iid, Long sid);
 
@@ -27,7 +28,7 @@ public interface StoryService {
 
     void deleteStoryFromIteration(Long id);
 
-    void updatePriorities(Long stat_id, Long iid, Long[] ids);
+    void updatePriorities(StoryStatusEnum status, Long iid, Long[] ids);
 
     void updatePrioritiesOfUnuserdStoriesFromBcklog(Long pid, Long[] ids);
 

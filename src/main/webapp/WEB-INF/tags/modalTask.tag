@@ -26,7 +26,7 @@
                 <form:form  action="${href}" metod="POST" modelAttribute="taskModel">
                     <form:hidden path="id"  id="t_id"/>
                     <form:hidden path="taskId" id="t_task_id"/>
-                    <form:hidden path="statusId" id="t_status"/>
+                    <form:hidden path="status" id="t_status"/>
                     <input type="hidden" id="t_sid" name="sid" >
                     <input type="hidden" id="t_story_id" name="storyId" >
                     <ui:textarea2 path="summary" id="t_summary" label="task.summary" labeWidth="3"  place="task.summary" title="task.summary"/>

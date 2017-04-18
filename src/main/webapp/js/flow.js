@@ -60,7 +60,7 @@ function storyModal(e) {
     if (el.hasClass("link")) {
         $("#s_id").attr("value", el.attr("s_id"));
         $("#s_storyId").attr("value", el.attr("storyId"));
-        $("#s_status").attr("value", el.attr("statusId"));
+        $("#s_status").attr("value", el.attr("status"));
         $("#s_name").val(el.attr("s_name"));
         $("#s_descr").val(el.attr("s_descr"));
         $("#s_points").val(el.attr("s_points"));
@@ -87,7 +87,7 @@ function taskModal(e) {
     if (el.hasClass("link")) {
         $("#hidden_param").attr("value", el.attr("id"));
         $("#hidden_param2").attr("value", el.attr("taskId"));
-        $("#hidden_param3").attr("value", el.attr("statusId"));
+        $("#hidden_param3").attr("value", el.attr("status"));
         $("#hidden_param4").attr("value", el.attr("story_id"));
         $("#hidden_param5").attr("value", el.attr("storyId"));
         $("#t_summary").val(el.attr("t_summary"));
@@ -246,21 +246,24 @@ function func1() {
 
             $.ajax({
                 method : 'POST',
-                url : "sb_it_recieve_1.html?sid=" + el,
+                url : "story/" + el + "/update/status/TODO.html",
                 async : false,
                 timeout : 500,
                 error : function() {
-                    // alert("Error!");
+                    alert("Error!");
                 }
             });
         },
         update : function(event, ui) {
             scrumBoardCalculatingsForFooter1();
-            var ids = $("#sortable1").sortable("serialize");
-            $.ajax({
-                method : 'POST',
-                url : "board1_upd.html?" + ids
-            });
+            if (this == ui.item.parent()[0]) {
+                var ids = $("#sortable1").sortable("serialize");
+                $.ajax({
+                    method : 'POST',
+                    data : ids,
+                    url : "story/update/priorities/status/TODO.html"
+                });
+            }
         }
     }).disableSelection();
 
@@ -282,21 +285,24 @@ function func1() {
 
             $.ajax({
                 method : 'POST',
-                url : "sb_it_recieve_2.html?sid=" + el,
+                url : "story/" + el + "/update/status/DOING.html",
                 async : false,
                 timeout : 500,
                 error : function() {
-                    // alert("Error!");
+                     //alert("Error!");
                 }
             });
         },
         update : function(event, ui) {
             scrumBoardCalculatingsForFooter2();
-            var ids = $("#sortable2").sortable("serialize");
-            $.ajax({
-                method : 'POST',
-                url : "board2_upd.html?" + ids
-            });
+            if (this == ui.item.parent()[0]) {
+                var ids = $("#sortable2").sortable("serialize");
+                $.ajax({
+                    method : 'POST',
+                    data : ids,
+                    url : "story/update/priorities/status/DOING.html"
+                });
+            }
         }
     }).disableSelection();
 
@@ -317,21 +323,24 @@ function func1() {
 
             $.ajax({
                 method : 'POST',
-                url : "sb_it_recieve_3.html?sid=" + el,
+                url : "story/" + el + "/update/status/REVIEWING.html",
                 async : false,
                 timeout : 500,
                 error : function() {
-                    // alert("Error!");
+                     //alert("Error!");
                 }
             });
         },
         update : function(event, ui) {
-            var ids = $("#sortable3").sortable("serialize");
             scrumBoardCalculatingsForFooter3();
-            $.ajax({
-                method : 'POST',
-                url : "board3_upd.html?" + ids
-            });
+            if (this == ui.item.parent()[0]) {
+                var ids = $("#sortable3").sortable("serialize");
+                $.ajax({
+                    method : 'POST',
+                    data : ids,
+                    url : "story/update/priorities/status/REVIEWING.html"
+                });
+            }
         },
     }).disableSelection();
 
@@ -352,7 +361,7 @@ function func1() {
 
             $.ajax({
                 method : 'POST',
-                url : "sb_it_recieve_4.html?sid=" + el,
+                url : "story/" + el + "/update/status/DONE.html",
                 async : false,
                 timeout : 500,
                 error : function() {
@@ -361,12 +370,15 @@ function func1() {
             });
         },
         update : function(event, ui) {
-            var ids = $("#sortable4").sortable("serialize");
             scrumBoardCalculatingsForFooter4();
-            $.ajax({
-                method : 'POST',
-                url : "board4_upd.html?" + ids
-            });
+            if (this == ui.item.parent()[0]) {
+                var ids = $("#sortable4").sortable("serialize");
+                $.ajax({
+                    method : 'POST',
+                    data : ids,
+                    url : "story/update/priorities/status/DONE.html"
+                });
+            }
         },
     }).disableSelection();
 
@@ -511,6 +523,9 @@ function func3() {
 
 }
 
+/**
+ * Function for a task board
+**/
 function func4() {
 
     taskBoardCalculatingsForFooter1();
@@ -532,22 +547,25 @@ function func4() {
 
             $.ajax({
                 method : 'POST',
-                url : "task_board_recieve_1.html?tid=" + el,
+                url : "tasks/task/" + el + "/update/status/TODO.html",
                 async : false,
-                timeout : 500,
+                timeout : 1000,
                 error : function() {
-                    // alert("Error!");
+                    alert("Oops! Something went wrong!");
                 }
             });
         },
         update : function(event, ui) {
             taskBoardCalculatingsForFooter1();
-            var ids = $("#sortable1").sortable("serialize");
-            var sid = $("#" + ui.item.context.id).attr("sid");
-            $.ajax({
-                method : 'POST',
-                url : "task_board_upd1.html?sid=" + sid + "&" + ids
-            });
+            if (this == ui.item.parent()[0]) {
+                var ids = $("#sortable1").sortable("serialize");
+                var sid = $("#" + ui.item.context.id).attr("sid");
+                $.ajax({
+                    method : 'POST',
+                    data : ids,
+                    url : "tasks/update/priorities/story/"+ sid + "/status/TODO.html"
+                });
+            }
         }
     }).disableSelection();
 
@@ -567,22 +585,25 @@ function func4() {
 
             $.ajax({
                 method : 'POST',
-                url : "task_board_recieve_2.html?tid=" + el,
+                url : "tasks/task/" + el + "/update/status/DOING.html",
                 async : false,
-                timeout : 500,
+                timeout : 1000,
                 error : function() {
-                    // alert("Error!");
+                    alert("Oops! Something went wrong!");
                 }
             });
         },
         update : function(event, ui) {
             taskBoardCalculatingsForFooter2();
-            var ids = $("#sortable2").sortable("serialize");
-            var sid = $("#" + ui.item.context.id).attr("sid");
-            $.ajax({
-                method : 'POST',
-                url : "task_board_upd2.html?sid=" + sid + "&" + ids
-            });
+            if (this == ui.item.parent()[0]) {
+                var ids = $("#sortable2").sortable("serialize");
+                var sid = $("#" + ui.item.context.id).attr("sid");
+                $.ajax({
+                    method : 'POST',
+                    data : ids,
+                    url : "tasks/update/priorities/story/"+ sid + "/status/DOING.html"
+                });
+            }
         }
     }).disableSelection();
 
@@ -601,22 +622,25 @@ function func4() {
 
             $.ajax({
                 method : 'POST',
-                url : "task_board_recieve_3.html?tid=" + el,
+                url : "tasks/task/" + el + "/update/status/DONE.html",
                 async : false,
-                timeout : 500,
+                timeout : 1000,
                 error : function() {
-                    // alert("Error!");
+                    alert("Oops! Something went wrong!");
                 }
             });
         },
         update : function(event, ui) {
             taskBoardCalculatingsForFooter3();
-            var ids = $("#sortable3").sortable("serialize");
-            var sid = $("#" + ui.item.context.id).attr("sid");
-            $.ajax({
-                method : 'POST',
-                url : "task_board_upd3.html?sid=" + sid + "&" + ids
-            });
+            if (this == ui.item.parent()[0]) {
+                var ids = $("#sortable3").sortable("serialize");
+                var sid = $("#" + ui.item.context.id).attr("sid");
+                $.ajax({
+                    method : 'POST',
+                    data : ids,
+                    url : "tasks/update/priorities/story/"+ sid + "/status/DONE.html"
+                });
+            }
         },
     }).disableSelection();
 };

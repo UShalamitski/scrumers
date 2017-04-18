@@ -1,5 +1,6 @@
 package com.scrumers.model;
 
+import com.scrumers.model.enums.StoryStatusEnum;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,19 +11,12 @@ public class Task extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     private long taskId;
-
     private String summary;
-
     private int estimatePre;
-
     private int estimateReal;
-
     private long assignee;
-
-    private Long statusId;
-
+    private StoryStatusEnum status;
     private boolean isDone;
-
     private String devName;
 
     public long getTaskId() {
@@ -73,12 +67,12 @@ public class Task extends AbstractEntity {
         this.isDone = isDone;
     }
 
-    public Long getStatusId() {
-        return statusId;
+    public StoryStatusEnum getStatus() {
+        return status;
     }
 
-    public void setStatusId(Long statusId) {
-        this.statusId = statusId;
+    public void setStatus(StoryStatusEnum status) {
+        this.status = status;
     }
 
     public String getDevName() {
@@ -97,7 +91,7 @@ public class Task extends AbstractEntity {
                 .append("estimatePre", estimatePre)
                 .append("estimateReal", estimateReal)
                 .append("assignee", assignee)
-                .append("statusId", statusId)
+                .append("status", status)
                 .append("isDone", isDone)
                 .append("devName", devName)
                 .toString();
@@ -122,7 +116,7 @@ public class Task extends AbstractEntity {
                 .append(assignee, task.assignee)
                 .append(isDone, task.isDone)
                 .append(summary, task.summary)
-                .append(statusId, task.statusId)
+                .append(status, task.status)
                 .append(devName, task.devName)
                 .isEquals();
     }
@@ -135,7 +129,7 @@ public class Task extends AbstractEntity {
                 .append(estimatePre)
                 .append(estimateReal)
                 .append(assignee)
-                .append(statusId)
+                .append(status)
                 .append(isDone)
                 .append(devName)
                 .toHashCode();

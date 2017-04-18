@@ -22,7 +22,7 @@
                 <a name="id" value="${task.id}" value2="${sid}" value3="${storyId}" data-toggle="modal" data-target="${modalId}" >
                     <i class="del fa fa-trash-o fa-fw pull-right"></i>
                 </a>
-                <a data-toggle="modal" data-target="${modalId2}" class="link" param_t_sid="${sid}" param_t_story_id="${storyId}" param_t_id="${task.id}" param_t_task_id="${task.taskId}" param_t_status="${task.statusId}" param_t_summary="${task.summary}" param_t_estimate="${task.estimatePre}"  param_t_assignee="${task.assignee}" >
+                <a data-toggle="modal" data-target="${modalId2}" class="link" param_t_sid="${sid}" param_t_story_id="${storyId}" param_t_id="${task.id}" param_t_task_id="${task.taskId}" param_t_status="${task.status}" param_t_summary="${task.summary}" param_t_estimate="${task.estimatePre}"  param_t_assignee="${task.assignee}" >
                     <i class="edit fa fa-pencil fa-fw pull-right"></i>
                 </a> 
                 <c:url value="/${actionComment}?tid=${task.id}" var="href"/>

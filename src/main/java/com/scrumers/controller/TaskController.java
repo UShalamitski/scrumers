@@ -2,10 +2,18 @@ package com.scrumers.controller;
 
 import java.security.Principal;
 import java.util.List;
-
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import com.scrumers.api.service.StoryService;
+import com.scrumers.api.service.TaskService;
+import com.scrumers.api.service.UserService;
+import com.scrumers.model.Comment;
+import com.scrumers.model.Story;
+import com.scrumers.model.Task;
+import com.scrumers.model.User;
+import com.scrumers.model.enums.StoryStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,17 +21,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.scrumers.model.Comment;
-import com.scrumers.model.Story;
-import com.scrumers.model.Task;
-import com.scrumers.model.User;
-import com.scrumers.api.service.StoryService;
-import com.scrumers.api.service.TaskService;
-import com.scrumers.api.service.UserService;
 
 @Controller
 public class TaskController {
@@ -55,7 +56,7 @@ public class TaskController {
         model.addAttribute("url_new", "addCommentTaskBoard.html");
         model.addAttribute("url_del", "delCommentTaskBoard.html");
         if (story != null)
-            model.addAttribute("url_back", "task_board.html?sid=" + story.getId() + "&storyId="+ story.getStoryId());
+            model.addAttribute("url_back", "task_board.html?sid=" + story.getId() + "&storyId=" + story.getStoryId());
         else
             model.addAttribute("url_back", "commentTaskBoard.html?tid=" + tid);
         return "comments/commentsTask";
@@ -99,19 +100,17 @@ public class TaskController {
     }
 
     @RequestMapping("/task_board_save")
-    public String saveTask(final Principal p,
-            @ModelAttribute("task") final Task task,
-            final BindingResult result, final Model model,
-            @RequestParam(value = "sid", required = true) final Long sid,
-            @RequestParam(value = "storyId", required = true) final Long storyId) {
+    public String saveTask(final Principal p, @ModelAttribute("task") final Task task,
+                           final BindingResult result, final Model model,
+                           @RequestParam(value = "sid", required = true) final Long sid,
+                           @RequestParam(value = "storyId", required = true) final Long storyId) {
         User u = userSrv.getUser(p.getName());
         task.setIdCreator(u.getId());
 
         validator.validate(task, result);
 
         if (result.hasErrors()) {
-            List<User> users = null;
-            users = userSrv.readUsersByProductId(u.getActualProduct());
+            List<User> users = userSrv.readUsersByProductId(u.getActualProduct());
             model.addAttribute("users", users);
             model.addAttribute("assignee", task.getAssignee());
             model.addAttribute("task", task);
@@ -125,57 +124,26 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/task_delete", method = RequestMethod.POST)
-    public String taskBoardDelete(
-            @RequestParam(value = "id", required = false) final Long tid,
-            @RequestParam(value = "id2", required = false) final Long sid,
-            @RequestParam(value = "id3", required = false) final Long storyId) {
+    public String taskBoardDelete(@RequestParam(value = "id", required = false) final Long tid,
+                                  @RequestParam(value = "id2", required = false) final Long sid,
+                                  @RequestParam(value = "id3", required = false) final Long storyId) {
         taskSrv.deleteTask(tid);
         return "redirect:task_board.html?sid=" + sid + "&storyId=" + storyId;
     }
 
-    @RequestMapping(value = "/task_board_upd1", method = RequestMethod.POST)
-    public String tsdkBoardUpdate1(HttpSession session,
-            @RequestParam(value = "item[]", required = true) final Long[] ids,
-            @RequestParam(value = "sid", required = true) final Long sid) {
-        taskSrv.updatePriorities(1l, sid, ids);
-        return "";
+    @RequestMapping(value = "/tasks/update/priorities/story/{storyId}/status/{status}", method = RequestMethod.POST)
+    public void updatePriorities(@RequestParam(value = "item[]") final Long[] ids,
+                                 @PathVariable("status") StoryStatusEnum status,
+                                 @PathVariable("storyId") long storyId, HttpServletResponse resp) {
+        taskSrv.updatePriorities(status, storyId, ids);
+        resp.setStatus(HttpStatus.OK.value());
     }
 
-    @RequestMapping(value = "/task_board_upd2", method = RequestMethod.POST)
-    public String tsdkBoardUpdate2(HttpSession session,
-            @RequestParam(value = "item[]", required = true) final Long[] ids,
-            @RequestParam(value = "sid", required = true) final Long sid) {
-        taskSrv.updatePriorities(2l, sid, ids);
-        return "";
-    }
-
-    @RequestMapping(value = "/task_board_upd3", method = RequestMethod.POST)
-    public String tsdkBoardUpdate3(HttpSession session,
-            @RequestParam(value = "item[]", required = true) final Long[] ids,
-            @RequestParam(value = "sid", required = true) final Long sid) {
-        taskSrv.updatePriorities(4l, sid, ids);
-        return "";
-    }
-
-    @RequestMapping(value = "/task_board_recieve_1", method = RequestMethod.POST)
-    public String taskBoardRecieve1(
-            @RequestParam(value = "tid", required = true) final Long tid) {
-        taskSrv.updateStatus(tid, 1L);
-        return "";
-    }
-
-    @RequestMapping(value = "/task_board_recieve_2", method = RequestMethod.POST)
-    public String taskBoardRecieve2(
-            @RequestParam(value = "tid", required = true) final Long tid) {
-        taskSrv.updateStatus(tid, 2L);
-        return "";
-    }
-
-    @RequestMapping(value = "/task_board_recieve_3", method = RequestMethod.POST)
-    public String taskBoardRecieve3(
-            @RequestParam(value = "tid", required = true) final Long tid) {
-        taskSrv.updateStatus(tid, 4L);
-        return "";
+    @RequestMapping(value = "/tasks/task/{taskId}/update/status/{status}", method = RequestMethod.POST)
+    public void updateStatus(@PathVariable(value = "taskId") final Long taskId,
+                             @PathVariable(value = "status") final StoryStatusEnum status, HttpServletResponse resp) {
+        taskSrv.updateStatus(taskId, status);
+        resp.setStatus(HttpStatus.OK.value());
     }
 
     public static class TaskValidator implements Validator {
@@ -193,14 +161,12 @@ public class TaskController {
                 if (task.getEstimatePre() < 0) {
                     errors.rejectValue("estimatePre", "story.estimate.negaive");
                 }
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors,
-                        "estimatePre", "story.estimate.empty");
+                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "estimatePre", "story.estimate.empty");
             } catch (NumberFormatException nfe) {
                 errors.rejectValue("estimatePre", "story.estimate.nfe");
             }
 
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "summary",
-                    "story.name.empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "summary", "story.name.empty");
         }
     }
 

@@ -17,8 +17,8 @@
                 estimate numeric,                   -- продолжительность
                 how_to_demo character varying,      -- как продемонстрировать
                 track character varying NULL,       -- категория
-                status_id bigint NOT NULL default 1,
                 assignee bigint NULL,
+                status varchar(16) NOT NULL DEFAULT 'TODO',
 
                 user_id bigint,
                 added timestamp NULL,
@@ -30,9 +30,7 @@
                 CONSTRAINT story_user_fk FOREIGN KEY (user_id)
                     REFERENCES @schema@.users (id) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION,
-                CONSTRAINT story_status_fk FOREIGN KEY (status_id)
-                    REFERENCES @schema@.status (id) MATCH SIMPLE
-                    ON UPDATE NO ACTION ON DELETE NO ACTION
+                CONSTRAINT story_status_check CHECK (status in ('TODO', 'DOING', 'REVIEWING', 'DONE'))
             )
         </sql>
         <rollback>

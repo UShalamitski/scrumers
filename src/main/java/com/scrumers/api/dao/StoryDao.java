@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.scrumers.model.Comment;
 import com.scrumers.model.Story;
+import com.scrumers.model.enums.StoryStatusEnum;
 
 public interface StoryDao extends GenericDao<Long, Story> {
 
     Long selectId();
 
-    void updateStatus(Long id, Long stid);
+    void updateStatus(Long id, StoryStatusEnum status);
 
     void createWithId(Story s, Long pid);
 
@@ -23,7 +24,7 @@ public interface StoryDao extends GenericDao<Long, Story> {
 
     List<Story> readByIterationId(Long iid);
 
-    List<Long> readPriorities(Long iid, Long stat_id);
+    List<Long> readPriorities(Long iid, StoryStatusEnum status);
 
     List<Long> readPrioritiesOfUnusedStoriesFromBacklog(Long pid);
 

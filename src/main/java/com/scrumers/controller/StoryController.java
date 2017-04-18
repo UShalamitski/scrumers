@@ -2,10 +2,18 @@ package com.scrumers.controller;
 
 import java.security.Principal;
 import java.util.List;
-
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import com.scrumers.api.service.ProductService;
+import com.scrumers.api.service.StoryService;
+import com.scrumers.api.service.UserService;
+import com.scrumers.model.Comment;
+import com.scrumers.model.Product;
+import com.scrumers.model.Story;
+import com.scrumers.model.User;
+import com.scrumers.model.enums.StoryStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,17 +21,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.scrumers.model.Comment;
-import com.scrumers.model.Product;
-import com.scrumers.model.Story;
-import com.scrumers.model.User;
-import com.scrumers.api.service.ProductService;
-import com.scrumers.api.service.StoryService;
-import com.scrumers.api.service.UserService;
 
 @Controller
 public class StoryController {
@@ -43,7 +44,7 @@ public class StoryController {
 
     @RequestMapping("/story_backlog")
     public String Backlog(final Principal p, final Model model,
-            HttpSession session) {
+                          HttpSession session) {
 
         List<Story> stories;
         Product product = prodSrv.getProduct(userSrv.getUser(p.getName()).getActualProduct());
@@ -236,7 +237,7 @@ public class StoryController {
 
     @RequestMapping("/story_new")
     public String newStory(final Principal p, final Model model,
-            HttpSession session) {
+                           HttpSession session) {
         model.addAttribute("story", new Story());
         model.addAttribute("url", "story_backlog_save.html");
         session = utils.checkSessionAttr(session, userSrv.getUser(p.getName()),
@@ -253,8 +254,8 @@ public class StoryController {
 
     @RequestMapping("/story_backlog_save")
     public String story_backlog_save(final Principal p,
-            @ModelAttribute("storyModel") final Story story,
-            final BindingResult result, final Model model) {
+                                     @ModelAttribute("storyModel") final Story story,
+                                     final BindingResult result, final Model model) {
         User u = userSrv.getUser(p.getName());
         story.setIdCreator(u.getId());
 
@@ -276,7 +277,7 @@ public class StoryController {
 
     @RequestMapping("/scrum_board")
     public String scrumBoard(final Principal p, final Model model,
-            HttpSession session) {
+                             HttpSession session) {
 
         User u = userSrv.getUser(p.getName());
         List<User> users = userSrv.readUsersByProductId(u.getActualProduct());
@@ -293,8 +294,8 @@ public class StoryController {
 
     @RequestMapping("/story_scrum_board_save")
     public String storyScrumBoardSave(final Principal p, final Model model,
-            @ModelAttribute("storyModel") final Story story,
-            final BindingResult result) {
+                                      @ModelAttribute("storyModel") final Story story,
+                                      final BindingResult result) {
 
         User u = userSrv.getUser(p.getName());
         story.setIdCreator(u.getId());
@@ -316,8 +317,8 @@ public class StoryController {
 
     @RequestMapping(value = "/board_del", method = RequestMethod.POST)
     public String boardDel(Principal p,
-            @RequestParam(value = "id", required = true) final Long sid,
-            HttpSession session) {
+                           @RequestParam(value = "id", required = true) final Long sid,
+                           HttpSession session) {
 
         storySrv.deleteStoryFromIteration(sid);
         return "redirect:scrum_board.html";
@@ -343,102 +344,19 @@ public class StoryController {
         return "redirect:story_backlog.html";
     }
 
-    @RequestMapping(value = "/board1_upd", method = RequestMethod.POST)
-    public String board1Upd(HttpSession session,
-            @RequestParam(value = "item[]", required = false) final Long[] ids) {
-
-        try {
-            if (ids != null)
-                storySrv.updatePriorities(1l,
-                        (Long) session.getAttribute("iter_id"), ids);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "";
+    @RequestMapping(value = "/story/update/priorities/status/{status}", method = RequestMethod.POST)
+    public void updatePriorities(HttpSession session, @PathVariable("status") StoryStatusEnum status,
+                                 @RequestParam(value = "item[]") final Long[] ids, HttpServletResponse resp) {
+        storySrv.updatePriorities(StoryStatusEnum.TODO, (Long) session.getAttribute("iter_id"), ids);
+        resp.setStatus(HttpStatus.OK.value());
     }
 
-    @RequestMapping(value = "/board2_upd", method = RequestMethod.POST)
-    public String board2_upd(HttpSession session,
-            @RequestParam(value = "item[]", required = false) final Long[] ids) {
-
-        try {
-            if (ids != null)
-                storySrv.updatePriorities(2l,
-                        (Long) session.getAttribute("iter_id"), ids);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
-    @RequestMapping(value = "/board3_upd", method = RequestMethod.POST)
-    public String board3_upd(HttpSession session,
-            @RequestParam(value = "item[]", required = false) final Long[] ids) {
-
-        try {
-            if (ids != null)
-                storySrv.updatePriorities(3l,
-                        (Long) session.getAttribute("iter_id"), ids);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
-    @RequestMapping(value = "/board4_upd", method = RequestMethod.POST)
-    public String board4_upd(HttpSession session,
-            @RequestParam(value = "item[]", required = false) final Long[] ids) {
-
-        try {
-            if (ids != null)
-                storySrv.updatePriorities(4l,
-                        (Long) session.getAttribute("iter_id"), ids);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
-    @RequestMapping(value = "/sb_it_recieve_1", method = RequestMethod.POST)
-    public String sb_it_recieve_1(Principal p,
-            @RequestParam(value = "sid", required = true) final Long sid) {
-        Long iid = userSrv.getUser(p.getName()).getActualIteration();
-        storySrv.updateStatus(sid, iid, 1L);
-        return "";
-    }
-
-    @RequestMapping(value = "/sb_it_recieve_2", method = RequestMethod.POST)
-    public String sb_it_recieve_2(Principal p,
-            @RequestParam(value = "sid", required = true) final Long sid) {
-        Long iid = userSrv.getUser(p.getName()).getActualIteration();
-        storySrv.updateStatus(sid, iid, 2L);
-        return "";
-    }
-
-    @RequestMapping(value = "/sb_it_recieve_3", method = RequestMethod.POST)
-    public String sb_it_recieve_3(Principal p,
-            @RequestParam(value = "sid", required = true) final Long sid) {
-
-        try {
-            Long iid = userSrv.getUser(p.getName()).getActualIteration();
-            storySrv.updateStatus(sid, iid, 3L);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-
-    }
-
-    @RequestMapping(value = "/sb_it_recieve_4", method = RequestMethod.POST)
-    public String sb_it_recieve_4(Principal p,
-            @RequestParam(value = "sid", required = true) final Long sid) {
-        Long iid = userSrv.getUser(p.getName()).getActualIteration();
-        storySrv.updateStatusToDone(sid, iid, 4L);
-        return "";
+    @RequestMapping(value = "/story/{storyId}/update/status/{status}", method = RequestMethod.POST)
+    public void updateStatus(Principal p, @PathVariable(value = "storyId") final Long storyId,
+                             @PathVariable(value = "status") final StoryStatusEnum status, HttpServletResponse resp) {
+        long iterationId = userSrv.getUser(p.getName()).getActualIteration();
+            storySrv.updateStatus(storyId, iterationId, status);
+        resp.setStatus(HttpStatus.OK.value());
     }
 
     public void comment(final Long sid, Principal p, String comment) {
@@ -490,8 +408,7 @@ public class StoryController {
                 if (story.getEstimate() < 0) {
                     errors.rejectValue("estimate", "story.estimate.negaive");
                 }
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "estimate",
-                        "story.estimate.empty");
+                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "estimate", "story.estimate.empty");
             } catch (NumberFormatException nfe) {
                 errors.rejectValue("estimate", "story.estimate.nfe");
             }

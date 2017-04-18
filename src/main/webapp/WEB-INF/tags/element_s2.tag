@@ -22,7 +22,7 @@
                 <a name="id" value="${story.id}" data-toggle="modal" data-target="${modalId}" >
                     <i class="del fa fa-trash-o fa-fw pull-right"></i>
                 </a>
-                <a id="${story.id}" data-toggle="modal" data-target="${modalId2}" class="link" param_s_id="${story.id}" param_s_story_id="${story.storyId}" param_s_status="${story.statusId}" param_s_assignee="${story.assignee}" param_s_name="${story.name}" param_s_descr="${story.descr}" param_s_points="${story.storyPoints}" param_s_estimate="${story.estimate}" param_s_track="${story.track}" param_s_demo="${story.howToDemo}">
+                <a id="${story.id}" data-toggle="modal" data-target="${modalId2}" class="link" param_s_id="${story.id}" param_s_story_id="${story.storyId}" param_s_status="${story.status}" param_s_assignee="${story.assignee}" param_s_name="${story.name}" param_s_descr="${story.descr}" param_s_points="${story.storyPoints}" param_s_estimate="${story.estimate}" param_s_track="${story.track}" param_s_demo="${story.howToDemo}">
                     <i class="edit fa fa-pencil fa-fw pull-right"></i>
                 </a> 
                 <c:url value="/${actionComment}?sid=${story.id}" var="href"/>

@@ -16,7 +16,7 @@
         <form:form  action="${href}" metod="POST" modelAttribute="storyModel">
             <form:hidden path="id" name="id" id="s_id"/>
             <form:hidden path="storyId" name="storyId" id="s_storyId"/>
-            <form:hidden path="statusId" name="statusId" id="s_status"/>
+            <form:hidden path="status" name="statusId" id="s_statusId"/>
             <div class="row">
                 <div class="pan_head  col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 ">
                     <span class="pan-head-title"><fmt:message key="story.new"/></span>

@@ -2,9 +2,19 @@ package com.scrumers.controller;
 
 import java.security.Principal;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
+import com.scrumers.api.service.IterationService;
+import com.scrumers.api.service.ProductService;
+import com.scrumers.api.service.StoryService;
+import com.scrumers.api.service.TeamService;
+import com.scrumers.api.service.UserService;
+import com.scrumers.model.Product;
+import com.scrumers.model.ProductView;
+import com.scrumers.model.Role;
+import com.scrumers.model.Story;
+import com.scrumers.model.Team;
+import com.scrumers.model.User;
+import com.scrumers.model.enums.StoryStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,18 +25,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.scrumers.model.Product;
-import com.scrumers.model.ProductView;
-import com.scrumers.model.Role;
-import com.scrumers.model.Story;
-import com.scrumers.model.Team;
-import com.scrumers.model.User;
-import com.scrumers.api.service.IterationService;
-import com.scrumers.api.service.ProductService;
-import com.scrumers.api.service.StoryService;
-import com.scrumers.api.service.TeamService;
-import com.scrumers.api.service.UserService;
 
 @Controller
 public class ProductController {
@@ -52,7 +50,7 @@ public class ProductController {
 
     @RequestMapping(value = "/productDiagram")
     public String burndownDiagram(final Principal p, final Model model,
-            HttpSession session) {
+                                  HttpSession session) {
         Long pid = userSrv.getUser(p.getName()).getActualProduct();
         Product product = productSrv.getProduct(pid);
         List<Story> stories = storySrv.getStoriesByProductId(pid);
@@ -63,13 +61,13 @@ public class ProductController {
         int st4 = 0;
 
         for (Story s : stories) {
-            if (s.getStatusId() == 1)
+            if (s.getStatus() == StoryStatusEnum.TODO)
                 st1++;
-            else if (s.getStatusId() == 2)
+            else if (s.getStatus() == StoryStatusEnum.DOING)
                 st2++;
-            else if (s.getStatusId() == 3)
+            else if (s.getStatus() == StoryStatusEnum.REVIEWING)
                 st3++;
-            else if (s.getStatusId() == 4)
+            else if (s.getStatus() == StoryStatusEnum.DONE)
                 st4++;
         }
 
@@ -79,18 +77,14 @@ public class ProductController {
         model.addAttribute("st4", st4);
         model.addAttribute("name", product.getName());
 
-        session = utils.checkSessionAttr(session, userSrv.getUser(p.getName()),
-                userSrv);
+        session = utils.checkSessionAttr(session, userSrv.getUser(p.getName()), userSrv);
         return "main/diagramProduct";
     }
 
     @RequestMapping("/product_my")
-    public String myProducts(
-            final Principal p,
-            final Model model,
-            @RequestParam(value = "pid", required = false) final Long pid,
-            @RequestParam(value = "table", required = false) final boolean table,
-            HttpSession session) {
+    public String myProducts(final Principal p, final Model model, HttpSession session,
+                             @RequestParam(value = "pid", required = false) final Long pid,
+                             @RequestParam(value = "table", required = false) final boolean table) {
 
         List<ProductView> products = null;
         User u = userSrv.getUser(p.getName());
@@ -134,16 +128,11 @@ public class ProductController {
     }
 
     @RequestMapping("/product_all")
-    public String products(
-            final Principal p,
-            final Model model,
-            @RequestParam(value = "pid", required = false) final Long pid,
-            @RequestParam(value = "table", required = false) final boolean table,
-            HttpSession session) {
-
-        List<ProductView> products = null;
+    public String products(final Principal p, final Model model, HttpSession session,
+                           @RequestParam(value = "pid", required = false) final Long pid,
+                           @RequestParam(value = "table", required = false) final boolean table) {
         User u = userSrv.getUser(p.getName());
-        products = productSrv.getProductsView();
+        List<ProductView> products =  productSrv.getProductsView();
         session = utils.checkSessionAttr(session, u, userSrv);
         session.setAttribute("mode", "all");
 
@@ -226,8 +215,8 @@ public class ProductController {
 
     @RequestMapping("/product_saveTeam")
     public String saveTeam(final Principal p,
-            @RequestParam(value = "pid", required = true) final Long pid,
-            @ModelAttribute("team") final Team team, HttpSession session) {
+                           @RequestParam(value = "pid", required = true) final Long pid,
+                           @ModelAttribute("team") final Team team, HttpSession session) {
         User u = userSrv.getUser(p.getName());
         team.setIdCreator(u.getId());
 
@@ -240,9 +229,9 @@ public class ProductController {
 
     @RequestMapping("/product_save")
     public String saveProduct(final Principal p, HttpSession session,
-            @ModelAttribute("product") final Product product,
-            final BindingResult result, Model model,
-            @RequestParam(value = "table", required = false) final boolean table) {
+                              @ModelAttribute("product") final Product product,
+                              final BindingResult result, Model model,
+                              @RequestParam(value = "table", required = false) final boolean table) {
 
         User u = userSrv.getUser(p.getName());
         product.setIdCreator(u.getId());
@@ -333,7 +322,7 @@ public class ProductController {
             if (flag) {
                 productSrv.deleteProduct(id);
             } else {
-                Long[] idd = { id };
+                Long[] idd = {id};
                 productSrv.deleteProductByOwner(idd);
             }
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.scrumers.model.Comment;
 import com.scrumers.model.Task;
+import com.scrumers.model.enums.StoryStatusEnum;
 
 public interface TaskService {
 
@@ -11,9 +12,9 @@ public interface TaskService {
 
     void saveTask(Task t, Long sid);
 
-    void updateStatus(Long id, Long stid);
+    void updateStatus(Long id, StoryStatusEnum status);
 
-    void updatePriorities(Long stat_id, Long sid, Long[] ids);
+    void updatePriorities(StoryStatusEnum status, Long sid, Long[] ids);
 
     void saveTask(Task t);
 

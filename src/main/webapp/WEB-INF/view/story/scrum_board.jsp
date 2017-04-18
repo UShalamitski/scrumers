@@ -16,25 +16,25 @@
                 <tr>
                     <td class="cl1 ">
                         <fmt:message key="scrum.todo"/>
-                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="1" param_s_story_id="0" param_s_estimate="0" >
+                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="TODO" param_s_story_id="0" param_s_estimate="0" >
                             <i class="title_table_icon fa fa-plus fa-fw pull-right"></i>
                         </a>
                     </td>
                     <td class="cl2">
                         <fmt:message key="scrum.doing"/>
-                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="2" param_s_story_id="0" param_s_estimate="0">
+                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="DOING" param_s_story_id="0" param_s_estimate="0">
                             <i class="title_table_icon fa fa-plus fa-fw pull-right"></i>
                         </a>
                     </td>
                     <td class=" cl3">
                         <fmt:message key="scrum.reviewing"/>
-                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="3" param_s_story_id="0" param_s_estimate="0">
+                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="REVIEWING" param_s_story_id="0" param_s_estimate="0">
                             <i class="title_table_icon fa fa-plus fa-fw pull-right"></i>
                         </a>
                     </td>
                     <td class=" cl4">
                         <fmt:message key="scrum.done"/>
-                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="4" param_s_story_id="0" param_s_estimate="0">
+                        <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_status="DONE" param_s_story_id="0" param_s_estimate="0">
                             <i class="title_table_icon fa fa-plus fa-fw pull-right"></i>
                         </a>
                     </td>
@@ -44,28 +44,28 @@
         <div class="table_column">
             <table class="table table1_4col">
             <tr>
-                <td class=" column">
+                <td class="column">
                     <ul id="sortable1" class="connectedSortable4">
                         <c:forEach items="${stories}" var="story" varStatus="status">
-                            <c:if test="${story.statusId eq 1}">
+                            <c:if test="${story.status eq 'TODO'}">
                                 <ui:element_s2  modalId="#myModal" modalId2="#newStoryModal" story="${story}"  st="cl1" />
                             </c:if>
                         </c:forEach>
                     </ul>
                 </td>
-                <td class=" column">
+                <td class="column">
                     <ul id="sortable2" class="connectedSortable4">
                         <c:forEach items="${stories}" var="story" varStatus="status">
-                            <c:if test="${story.statusId eq 2}">
+                            <c:if test="${story.status eq 'DOING'}">
                                 <ui:element_s2  modalId="#myModal" modalId2="#newStoryModal" story="${story}"  st="cl2" />
                             </c:if>
                         </c:forEach>
                     </ul>
                 </td>
-                <td class=" column">
+                <td class="column">
                     <ul id="sortable3" class="connectedSortable4">
                         <c:forEach items="${stories}" var="story" varStatus="status">
-                            <c:if test="${story.statusId eq 3}">
+                            <c:if test="${story.status eq 'REVIEWING'}">
                                 <ui:element_s2  modalId="#myModal" modalId2="#newStoryModal" story="${story}"  st="cl3" />
                             </c:if>
                         </c:forEach>
@@ -74,7 +74,7 @@
                 <td class="column">
                     <ul id="sortable4" class="connectedSortable4">
                         <c:forEach items="${stories}" var="story" varStatus="status">
-                            <c:if test="${story.statusId eq 4}">
+                            <c:if test="${story.status eq 'DONE'}">
                                 <ui:element_s2  modalId="#myModal" modalId2="#newStoryModal" story="${story}"  st="cl4" />
                             </c:if>
                         </c:forEach>

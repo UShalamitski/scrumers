@@ -11,7 +11,7 @@
         <result property="estimatePre" column="estimate_pre"/>
         <result property="estimateReal" column="estimate_real"/>
         <result property="assignee" column="assignee"/>
-        <result property="statusId" column="status_id"/>
+        <result property="status" column="status"/>
         <result property="idCreator" column="user_id"/>
         <result property="added" column="added"/>
         <result property="modified" column="modified"/>
@@ -37,18 +37,18 @@
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
             SELECT nextval('${schema}.task_id_seq')
         </selectKey>
-        INSERT INTO ${schema}.task (id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added)
-            VALUES (#{id}, #{taskId}, #{summary}, #{estimatePre}, #{estimateReal}, #{assignee}, #{statusId}, #{idCreator}, now())
+        INSERT INTO ${schema}.task (id, task_id, summary, estimate_pre, estimate_real, assignee, status, user_id, added)
+            VALUES (#{id}, #{taskId}, #{summary}, #{estimatePre}, #{estimateReal}, #{assignee}, #{status}, #{idCreator}, now())
     </insert>
 
     <insert id="createWithId">
-        INSERT INTO ${schema}.task (id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added)
-            VALUES (#{id}, (select count(*) from story_tasks where story_id=#{sid}) + 1,
-                      #{summary}, #{estimatePre}, #{estimateReal}, #{assignee}, #{statusId}, #{idCreator}, now())
+        INSERT INTO ${schema}.task (id, task_id, summary, estimate_pre, estimate_real, assignee, status, user_id, added)
+            VALUES (#{id}, (select count(*) from ${schema}.story_tasks where story_id=#{sid}) + 1,
+                      #{summary}, #{estimatePre}, #{estimateReal}, #{assignee}, #{status}, #{idCreator}, now())
     </insert>
 
     <select id="read" resultMap="taskMap">
-        SELECT id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added, modified, del, done 
+        SELECT id, task_id, summary, estimate_pre, estimate_real, assignee, status, user_id, added, modified, del, done
         FROM ${schema}.task
         WHERE id = #{id}
     </select>
@@ -57,17 +57,17 @@
         SELECT st.priority 
         FROM ${schema}.task t
             INNER JOIN ${schema}.story_tasks st ON t.id = st.task_id
-        WHERE st.story_id = #{sid} AND t.del=false AND t.status_id=#{stat_id}
+        WHERE st.story_id = #{sid} AND t.del=false AND t.status=#{stat_id}
         ORDER BY st.priority
     </select>
 
     <select id="readAll" resultMap="taskMap">
-        SELECT id, task_id, summary, estimate_pre, estimate_real, assignee, status_id, user_id, added, modified, del, done  
+        SELECT id, task_id, summary, estimate_pre, estimate_real, assignee, status, user_id, added, modified, del, done
         FROM ${schema}.task
     </select>
 
     <select id="readByStoryId" resultMap="taskMap">
-        SELECT t.id, t.task_id, t.summary, t.estimate_pre, t.estimate_real, t.assignee, t.status_id, t.user_id, t.added,
+        SELECT t.id, t.task_id, t.summary, t.estimate_pre, t.estimate_real, t.assignee, t.status, t.user_id, t.added,
                t.modified, t.del, t.done, u.fname || ' ' || u.sname as devName
         FROM ${schema}.task t
             INNER JOIN ${schema}.story_tasks st ON t.id = st.task_id
@@ -100,13 +100,13 @@
 
     <update id="updateStatus">
         UPDATE ${schema}.task
-        SET status_id=#{stid}
+        SET status=#{status}
         WHERE id = #{id}
     </update>
 
     <update id="update">
         UPDATE ${schema}.task
-        SET task_id = #{taskId}, summary = #{summary}, estimate_pre = #{estimatePre}, estimate_real = #{estimateReal}, assignee = #{assignee}, status_id=#{statusId}, user_id = #{idCreator}, modified = now(), del = #{del}, done = #{isDone}
+        SET task_id = #{taskId}, summary = #{summary}, estimate_pre = #{estimatePre}, estimate_real = #{estimateReal}, assignee = #{assignee}, status=#{status}, user_id = #{idCreator}, modified = now(), del = #{del}, done = #{isDone}
         WHERE id = #{id}
     </update>
 

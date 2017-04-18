@@ -7,6 +7,7 @@ import com.scrumers.api.dao.TaskDao;
 import com.scrumers.api.service.TaskService;
 import com.scrumers.model.Comment;
 import com.scrumers.model.Task;
+import com.scrumers.model.enums.StoryStatusEnum;
 
 public class TaskServiceImpl implements TaskService {
 
@@ -45,14 +46,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateStatus(Long id, Long stid) {
-        taskDao.updateStatus(id, stid);
+    public void updateStatus(Long id, StoryStatusEnum status) {
+        taskDao.updateStatus(id, status);
     }
 
     @Override
-    public void updatePriorities(Long stat_id, Long sid, Long[] ids) {
+    public void updatePriorities(StoryStatusEnum status, Long sid, Long[] ids) {
         if (ids != null) {
-            List<Long> idd = taskDao.readPriorities(sid, stat_id);
+            List<Long> idd = taskDao.readPriorities(sid, status);
             if (ids.length == idd.size()) {
                 for (int i = 0; i < ids.length; i++) {
                     taskDao.updatePriorityInST(ids[i], idd.get(i));

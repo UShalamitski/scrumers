@@ -14,7 +14,7 @@
         <result property="assignee" column="assignee"/>
         <result property="howToDemo" column="how_to_demo"/>
         <result property="track" column="track"/>
-        <result property="statusId" column="status_id"/>
+        <result property="status" column="status"/>
         <result property="idCreator" column="user_id"/>
         <result property="added" column="added"/>
         <result property="modified" column="modified"/>
@@ -42,29 +42,29 @@
         <selectKey order="BEFORE" keyProperty="id" resultType="long" statementType="PREPARED">
             SELECT nextval('${schema}.story_id_seq')
         </selectKey>
-        INSERT INTO ${schema}.story (id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified)
-            VALUES (#{id}, #{storyId}, #{name}, #{descr}, #{storyPoints}, #{estimate}, #{assignee}, #{howToDemo}, #{track}, #{statusId}, #{idCreator}, now(), now())
+        INSERT INTO ${schema}.story (id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status, user_id, added, modified)
+            VALUES (#{id}, #{storyId}, #{name}, #{descr}, #{storyPoints}, #{estimate}, #{assignee}, #{howToDemo}, #{track}, #{status}, #{idCreator}, now(), now())
     </insert>
 
     <insert id="createWithId">
-        INSERT INTO ${schema}.story (id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified)
-            VALUES (#{id}, (select count(*) from product_story where product_id=#{pid}) + 1,
-                     #{name}, #{descr}, #{storyPoints}, #{estimate}, #{assignee}, #{howToDemo}, #{track}, #{statusId}, #{idCreator}, now(), now())
+        INSERT INTO ${schema}.story (id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status, user_id, added, modified)
+            VALUES (#{id}, (select count(*) from ${schema}.product_story where product_id=#{pid}) + 1,
+                     #{name}, #{descr}, #{storyPoints}, #{estimate}, #{assignee}, #{howToDemo}, #{track}, #{status}, #{idCreator}, now(), now())
     </insert>
 
     <select id="read" resultMap="storyMap">
-        SELECT id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified, del, done 
+        SELECT id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status, user_id, added, modified, del, done
         FROM ${schema}.story
         WHERE id = #{id}
     </select>
 
     <select id="readAll" resultMap="storyMap">
-        SELECT id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status_id, user_id, added, modified, del, done 
+        SELECT id, story_id, name, descr, story_points, estimate, assignee, how_to_demo, track, status, user_id, added, modified, del, done
         FROM ${schema}.story
     </select>
 
     <select id="readByTaskId" resultMap="storyMap">
-        SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo, s.track, s.status_id, s.user_id, s.added, s.modified, s.del, s.done
+        SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo, s.track, s.status, s.user_id, s.added, s.modified, s.del, s.done
         FROM ${schema}.story s
             INNER JOIN ${schema}.story_tasks st ON s.id = st.story_id
         WHERE st.task_id = #{tid} AND s.del=false
@@ -72,7 +72,7 @@
 
     <select id="readByProductId" resultMap="storyMap">
         SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo, s.track,
-               s.status_id, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
+               s.status, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
 
                (SELECT COUNT(*)
                 FROM ${schema}.story_tasks st
@@ -83,7 +83,7 @@
                 FROM ${schema}.story_tasks st
                     INNER JOIN ${schema}.story ss ON s.id = st.story_id
                     INNER JOIN ${schema}.task t ON t.id = st.task_id
-                WHERE s.id = ss.id AND s.del = false AND t.status_id = 4) as doneTasks
+                WHERE s.id = ss.id AND s.del = false AND t.status = 'DONE') as doneTasks
 
         FROM ${schema}.story s
             INNER JOIN ${schema}.product_story pt ON s.id = pt.story_id
@@ -94,7 +94,7 @@
 
     <select id="readByIterationId" resultMap="storyMap">
         SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo,s.track, 
-               s.status_id, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
+               s.status, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
 
                (SELECT COUNT(*) FROM ${schema}.story_tasks st
                     INNER JOIN ${schema}.story ss ON ss.id = st.story_id
@@ -103,7 +103,7 @@
                 (SELECT COUNT(*) FROM ${schema}.story_tasks st
                     INNER JOIN ${schema}.story ss ON s.id = st.story_id
                     INNER JOIN ${schema}.task t ON t.id = st.task_id
-                WHERE s.id = ss.id AND s.del = false AND t.status_id = 4) as doneTasks
+                WHERE s.id = ss.id AND s.del = false AND t.status = 'DONE') as doneTasks
 
         FROM ${schema}.story s
             INNER JOIN ${schema}.iteration_story its ON s.id = its.story_id
@@ -114,7 +114,7 @@
 
     <select id="readUnusedStoriesFromBacklog" resultMap="storyMap">
         SELECT s.id, s.story_id, s.name, s.descr, s.story_points, s.estimate, s.assignee, s.how_to_demo, s.track,
-               s.status_id, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
+               s.status, s.user_id, s.added, s.modified, s.del, s.done, u.fname || ' ' || u.sname as devName,
 
                (SELECT COUNT(*) FROM ${schema}.story_tasks st
                     INNER JOIN ${schema}.story ss ON ss.id = st.story_id
@@ -123,7 +123,7 @@
                (SELECT COUNT(*) FROM ${schema}.story_tasks st
                     INNER JOIN ${schema}.story ss ON s.id = st.story_id
                     INNER JOIN ${schema}.task t ON t.id = st.task_id
-                WHERE s.id = ss.id AND s.del = false AND t.status_id = 4) as doneTasks
+                WHERE s.id = ss.id AND s.del = false AND t.status = 'DONE') as doneTasks
 
         FROM ${schema}.story s
             INNER JOIN ${schema}.product_story ps ON s.id = ps.story_id
@@ -139,7 +139,7 @@
 
     <select id="readPrioritiesOfUnusedStoriesFromBacklog" resultType="java.lang.Long">
         SELECT ps.priority 
-        FROM story s INNER JOIN product_story ps ON s.id = ps.story_id
+        FROM ${schema}.story s INNER JOIN ${schema}.product_story ps ON s.id = ps.story_id
         WHERE s.del=false AND ps.product_id = #{pid} AND s.id not in
             (SELECT s.id FROM ${schema}.story s
                 INNER JOIN ${schema}.iteration_story its ON s.id = its.story_id
@@ -152,7 +152,7 @@
         SELECT its.priority 
         FROM ${schema}.story s
             INNER JOIN ${schema}.iteration_story its ON s.id = its.story_id
-        WHERE its.iteration_id = #{iid} AND s.del=false AND s.status_id = #{stat_id}
+        WHERE its.iteration_id = #{iid} AND s.del=false AND s.status = #{status}
         ORDER BY its.priority 
     </select>
 
@@ -168,13 +168,13 @@
 
     <update id="update">
         UPDATE ${schema}.story
-        SET story_id = #{storyId}, name = #{name}, descr = #{descr}, story_points = #{storyPoints}, estimate = #{estimate}, assignee=#{assignee}, how_to_demo = #{howToDemo}, track = #{track}, status_id=#{statusId}, user_id = #{idCreator},  del = #{del}, done = #{isDone}
+        SET story_id = #{storyId}, name = #{name}, descr = #{descr}, story_points = #{storyPoints}, estimate = #{estimate}, assignee=#{assignee}, how_to_demo = #{howToDemo}, track = #{track}, status=#{status}, user_id = #{idCreator},  del = #{del}, done = #{isDone}
         WHERE id = #{id}
     </update>
 
     <update id="updateStatus">
         UPDATE ${schema}.story
-        SET status_id=#{stid}
+        SET status=#{status}
         WHERE id = #{id}
     </update>
 
@@ -185,12 +185,12 @@
     </delete>
 
     <delete id="deleteFromIterationStory">
-        DELETE FROM iteration_story WHERE story_id = #{id}
+        DELETE FROM ${schema}.iteration_story WHERE story_id = #{id}
     </delete>
 
     <insert id="addTaskToAStory">
         INSERT INTO ${schema}.story_tasks (story_id, task_id, priority) VALUES (#{sid}, #{tid},
-        (SELECT COUNT(*) FROM story_tasks WHERE story_id = #{sid}) + 1)
+        (SELECT COUNT(*) FROM ${schema}.story_tasks WHERE story_id = #{sid}) + 1)
     </insert>
 
     <insert id="addUserToAStory">

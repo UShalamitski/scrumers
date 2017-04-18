@@ -15,7 +15,7 @@
     <div class="container-fluid padding_top9"> 
         <form:form  action="${href}" metod="POST" modelAttribute="task">
             <form:hidden path="id" id="t_id"/>
-            <form:hidden path="statusId" id="t_statusId"/>
+            <form:hidden path="status" id="t_statusId"/>
 
             <input type="hidden" name="storyId" value="${storyId}"/>
             <input type="hidden" name="sid" value="${sid}"/>

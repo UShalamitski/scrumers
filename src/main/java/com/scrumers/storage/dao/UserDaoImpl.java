@@ -1,13 +1,11 @@
 package com.scrumers.storage.dao;
 
 import java.util.List;
-
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-
 import com.scrumers.api.dao.UserDao;
 import com.scrumers.model.Role;
 import com.scrumers.model.TeamMember;
 import com.scrumers.model.User;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 
@@ -64,7 +62,6 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
     @Override
     public void updateInfo(User user) {
         getSqlSession().update("User.updateInfo", user);
-
     }
 
     @Override

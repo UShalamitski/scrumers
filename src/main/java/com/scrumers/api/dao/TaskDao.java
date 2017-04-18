@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.scrumers.model.Comment;
 import com.scrumers.model.Task;
+import com.scrumers.model.enums.StoryStatusEnum;
 
 public interface TaskDao extends GenericDao<Long, Task> {
 
@@ -15,7 +16,7 @@ public interface TaskDao extends GenericDao<Long, Task> {
 
     void createWithId(Task s, Long sid);
 
-    void updateStatus(Long id, Long stid);
+    void updateStatus(Long id, StoryStatusEnum status);
 
     void updatePriorityInST(Long tid, Long priority);
 
@@ -23,7 +24,7 @@ public interface TaskDao extends GenericDao<Long, Task> {
 
     void deleteComment(Long cid);
 
-    List<Long> readPriorities(Long sid, Long stat_id);
+    List<Long> readPriorities(Long sid, StoryStatusEnum status);
 
     List<Comment> readCommentsByTaskId(Long tid);
 }

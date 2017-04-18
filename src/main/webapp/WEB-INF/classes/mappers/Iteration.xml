@@ -84,7 +84,7 @@
 
     <insert id="addStoryToAnIteration">
         INSERT INTO ${schema}.iteration_story (iteration_id, story_id, priority) VALUES (#{iid}, #{sid},
-            (SELECT COUNT(*) FROM iteration_story WHERE iteration_id = #{iid}) + 1)
+            (SELECT COUNT(*) FROM ${schema}.iteration_story WHERE iteration_id = #{iid}) + 1)
     </insert>
 
     <insert id="addStoryToADone">

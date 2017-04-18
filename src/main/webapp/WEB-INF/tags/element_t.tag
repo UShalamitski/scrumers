@@ -20,7 +20,7 @@
             <a name="id" value="${task.id}" value2="${sid}" value3="${storyId}" data-toggle="modal" data-target="${modalId}" >
                 <i class="del fa fa-trash-o fa-fw pull-right"></i>
             </a>
-            <a data-toggle="modal" data-target="${modalId2}" class="link" story_id="${sid}" storyId="${storyId}" id="${task.id}" taskId="${task.taskId}" statusId="${task.statusId}" t_summary="${task.summary}" t_estimatePre="${task.estimatePre}" t_estimateReal="${task.estimateReal}" t_assignee="${task.assignee}" >
+            <a data-toggle="modal" data-target="${modalId2}" class="link" story_id="${sid}" storyId="${storyId}" id="${task.id}" taskId="${task.taskId}" statusId="${task.status}" t_summary="${task.summary}" t_estimatePre="${task.estimatePre}" t_estimateReal="${task.estimateReal}" t_assignee="${task.assignee}" >
                 <i class="edit fa fa-pencil fa-fw pull-right"></i>
             </a> 
         </span>  

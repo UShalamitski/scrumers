@@ -1,13 +1,10 @@
 package com.scrumers.storage.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-
+import com.google.common.collect.ImmutableMap;
 import com.scrumers.api.dao.TeamDao;
 import com.scrumers.model.Team;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 public class TeamDaoImpl extends SqlSessionDaoSupport implements TeamDao {
 
@@ -53,19 +50,12 @@ public class TeamDaoImpl extends SqlSessionDaoSupport implements TeamDao {
 
     @Override
     public List<Team> readByUserIdAndOrganizationId(Long uid, Long oid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("uid", uid);
-        map.put("oid", oid);
-        return getSqlSession().selectList("Team.readByUserIdAndOrganizationId",
-                map);
+        return getSqlSession().selectList("Team.readByUserIdAndOrgId", ImmutableMap.of("uid", uid, "oid", oid));
     }
 
     @Override
     public void deleteFromUsersTeam(Long uid, Long tid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("uid", uid);
-        map.put("tid", tid);
-        getSqlSession().delete("Team.deleteFromUsersTeam", map);
+        getSqlSession().delete("Team.deleteFromUsersTeam", ImmutableMap.of("uid", uid, "tid", tid));
     }
 
     @Override
@@ -75,44 +65,27 @@ public class TeamDaoImpl extends SqlSessionDaoSupport implements TeamDao {
 
     @Override
     public void addUserToATeam(Long uid, Long tid, Long rid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("uid", uid);
-        map.put("tid", tid);
-        map.put("rid", rid);
-        getSqlSession().insert("Team.addUserToATeam", map);
+        getSqlSession().insert("Team.addUserToATeam", ImmutableMap.of("uid", uid, "tid", tid, "rid", rid));
     }
 
     @Override
     public String readTeamRole(Long uid, Long tid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("uid", uid);
-        map.put("tid", tid);
-        return getSqlSession().selectOne("Team.readTeamRole", map);
+        return getSqlSession().selectOne("Team.readTeamRole", ImmutableMap.of("uid", uid, "tid", tid));
     }
 
     @Override
     public void addProductToATeam(Long tid, Long pid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("pid", pid);
-        map.put("tid", tid);
-        getSqlSession().insert("Team.addProductToATeam", map);
+        getSqlSession().insert("Team.addProductToATeam", ImmutableMap.of("pid", pid, "tid", tid));
     }
 
     @Override
     public void deleteMemberFromTeam(Long uid, Long tid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("tid", tid);
-        map.put("uid", uid);
-        getSqlSession().delete("Team.deleteMemberFromTeam", map);
+        getSqlSession().delete("Team.deleteMemberFromTeam", ImmutableMap.of("tid", tid, "uid", uid));
     }
 
     @Override
     public void updateMemberRole(Long uid, Long tid, Long rid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("tid", tid);
-        map.put("uid", uid);
-        map.put("rid", rid);
-        getSqlSession().update("Team.updateMemberRole", map);
+        getSqlSession().update("Team.updateMemberRole", ImmutableMap.of("uid", uid, "tid", tid, "rid", rid));
     }
 
     @Override
@@ -122,11 +95,7 @@ public class TeamDaoImpl extends SqlSessionDaoSupport implements TeamDao {
 
     @Override
     public void deleteFromTeamProductByTeamIdAndProductId(Long tid, Long pid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("tid", tid);
-        map.put("pid", pid);
-        getSqlSession().delete(
-                "Team.deleteFromTeamProductByTeamIdAndProductId", map);
+        getSqlSession().delete("Team.deleteFromTeamProductByTeamAndProduct", ImmutableMap.of("pid", pid, "tid", tid));
     }
 
 }

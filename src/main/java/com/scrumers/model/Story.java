@@ -1,5 +1,6 @@
 package com.scrumers.model;
 
+import com.scrumers.model.enums.StoryStatusEnum;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,29 +11,17 @@ public class Story extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     private long storyId;
-
     private String name;
-
     private String descr;
-
     private String storyPoints;
-
     private int estimate;
-
     private long assignee;
-
     private String howToDemo;
-
     private String track;
-
-    private Long statusId;
-
+    private StoryStatusEnum status;
     private boolean isDone;
-
     private String devName;
-
     private Long allTasks;
-
     private Long doneTasks;
 
     public Long getAllTasks() {
@@ -123,20 +112,20 @@ public class Story extends AbstractEntity {
         this.storyPoints = storyPoints;
     }
 
-    public Long getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(Long statusId) {
-        this.statusId = statusId;
-    }
-
     public long getAssignee() {
         return assignee;
     }
 
     public void setAssignee(long assignee) {
         this.assignee = assignee;
+    }
+
+    public StoryStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StoryStatusEnum status) {
+        this.status = status;
     }
 
     @Override
@@ -150,11 +139,11 @@ public class Story extends AbstractEntity {
                 .append("assignee", assignee)
                 .append("howToDemo", howToDemo)
                 .append("track", track)
-                .append("statusId", statusId)
                 .append("isDone", isDone)
                 .append("devName", devName)
                 .append("allTasks", allTasks)
                 .append("doneTasks", doneTasks)
+                .append("status", status)
                 .toString();
     }
 
@@ -180,10 +169,10 @@ public class Story extends AbstractEntity {
                 .append(storyPoints, story.storyPoints)
                 .append(howToDemo, story.howToDemo)
                 .append(track, story.track)
-                .append(statusId, story.statusId)
                 .append(devName, story.devName)
                 .append(allTasks, story.allTasks)
                 .append(doneTasks, story.doneTasks)
+                .append(status, story.status)
                 .isEquals();
     }
 
@@ -198,11 +187,11 @@ public class Story extends AbstractEntity {
                 .append(assignee)
                 .append(howToDemo)
                 .append(track)
-                .append(statusId)
                 .append(isDone)
                 .append(devName)
                 .append(allTasks)
                 .append(doneTasks)
+                .append(status)
                 .toHashCode();
     }
 }

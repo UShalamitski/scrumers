@@ -16,19 +16,19 @@
             <tr>
                 <td class="cl1 ">
                     <fmt:message key="scrum.todo"/>
-                    <a data-toggle="modal" data-target="#newTaskModal" class="float_r not" param_t_estimate="0" param_t_status="1" param_t_task_id="0" param_t_story_id="${storyId}" param_t_sid="${sid}"  >
+                    <a data-toggle="modal" data-target="#newTaskModal" class="float_r not" param_t_estimate="0" param_t_status="TODO" param_t_task_id="0" param_t_story_id="${storyId}" param_t_sid="${sid}"  >
                         <i class="title_table_icon fa fa-plus fa-fw pull-right"></i>
                     </a>
                 </td>
                 <td class="cl2">
                     <fmt:message key="scrum.doing"/>
-                    <a data-toggle="modal" data-target="#newTaskModal" class="float_r not" param_t_estimate="0" param_t_status="2" param_t_task_id="0" param_t_story_id="${storyId}" param_t_sid="${sid}" >
+                    <a data-toggle="modal" data-target="#newTaskModal" class="float_r not" param_t_estimate="0" param_t_status="DOING" param_t_task_id="0" param_t_story_id="${storyId}" param_t_sid="${sid}" >
                         <i class="title_table_icon fa fa-plus fa-fw pull-right"></i>
                     </a>
                 </td>
-                <td class=" cl4">
+                <td class="cl4">
                     <fmt:message key="scrum.done"/>
-                    <a data-toggle="modal" data-target="#newTaskModal" class="float_r not" param_t_estimate="0" param_t_status="4" param_t_task_id="0" param_t_story_id="${storyId}" param_t_sid="${sid}"  >
+                    <a data-toggle="modal" data-target="#newTaskModal" class="float_r not" param_t_estimate="0" param_t_status="DONE" param_t_task_id="0" param_t_story_id="${storyId}" param_t_sid="${sid}"  >
                         <i class="title_table_icon fa fa-plus fa-fw pull-right"></i>
                     </a>
                 </td>
@@ -41,7 +41,7 @@
             <td class=" column">
                 <ul id="sortable1" class="connectedSortable3">
                     <c:forEach items="${tasks}" var="task" varStatus="status">
-                        <c:if test="${task.statusId eq 1}">
+                        <c:if test="${task.status eq 'TODO'}">
                             <ui:element_t2  modalId="#myModal" modalId2="#newTaskModal" task="${task}" sid="${sid}" storyId="${storyId}" st="cl1" />
                         </c:if>
                     </c:forEach>
@@ -50,7 +50,7 @@
             <td class=" column">
                 <ul id="sortable2" class="connectedSortable3">
                     <c:forEach items="${tasks}" var="task" varStatus="status">
-                        <c:if test="${task.statusId eq 2}">
+                        <c:if test="${task.status eq 'DOING'}">
                             <ui:element_t2  modalId="#myModal" modalId2="#newTaskModal" task="${task}" sid="${sid}" storyId="${storyId}" st="cl2" />
                         </c:if>
                     </c:forEach>
@@ -59,7 +59,7 @@
             <td class=" column">
                 <ul id="sortable3" class="connectedSortable3">
                     <c:forEach items="${tasks}" var="task" varStatus="status">
-                        <c:if test="${task.statusId eq 4}">
+                        <c:if test="${task.status eq 'DONE'}">
                             <ui:element_t2  modalId="#myModal" modalId2="#newTaskModal" task="${task}" sid="${sid}" storyId="${storyId}" st="cl4" />
                         </c:if>
                     </c:forEach>
@@ -93,7 +93,6 @@
     <ui:modalDelete id="myModal" hidden="param1" hidden2="param11" hidden3="param12" action="/task_delete.html"/>
     <fmt:message key="story" var="title"/>
     <ui:modalTask id="newTaskModal"  action="task_board_save.html" title="${title}" />
-
 
     <script>
         window.onload = func4;

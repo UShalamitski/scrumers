@@ -3,12 +3,12 @@ package com.scrumers.storage.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-
+import com.google.common.collect.ImmutableMap;
 import com.scrumers.api.dao.StoryDao;
 import com.scrumers.model.Comment;
 import com.scrumers.model.Story;
+import com.scrumers.model.enums.StoryStatusEnum;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 public class StoryDaoImpl extends SqlSessionDaoSupport implements StoryDao {
 
@@ -28,7 +28,7 @@ public class StoryDaoImpl extends SqlSessionDaoSupport implements StoryDao {
         map.put("estimate", s.getEstimate());
         map.put("howToDemo", s.getHowToDemo());
         map.put("track", s.getTrack());
-        map.put("statusId", s.getStatusId());
+        map.put("status", s.getStatus());
         map.put("idCreator", s.getIdCreator());
         map.put("assignee", s.getAssignee());
         map.put("pid", pid);
@@ -82,34 +82,22 @@ public class StoryDaoImpl extends SqlSessionDaoSupport implements StoryDao {
 
     @Override
     public void addTaskToAStory(Long sid, Long tid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("sid", sid);
-        map.put("tid", tid);
-        getSqlSession().insert("Story.addTaskToAStory", map);
+        getSqlSession().insert("Story.addTaskToAStory", ImmutableMap.of("sid", sid, "tid", tid));
     }
 
     @Override
     public void addUserToAStory(Long sid, Long uid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("sid", sid);
-        map.put("uid", uid);
-        getSqlSession().insert("Story.addUserToAStory", map);
+        getSqlSession().insert("Story.addUserToAStory", ImmutableMap.of("sid", sid, "uid", uid));
     }
 
     @Override
-    public void updateStatus(Long id, Long stid) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("id", id);
-        map.put("stid", stid);
-        getSqlSession().update("Story.updateStatus", map);
+    public void updateStatus(Long id, StoryStatusEnum status) {
+        getSqlSession().update("Story.updateStatus", ImmutableMap.of("id", id, "status", status));
     }
 
     @Override
-    public List<Long> readPriorities(Long iid, Long stat_id) {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("iid", iid);
-        map.put("stat_id", stat_id);
-        return getSqlSession().selectList("Story.readPriorities", map);
+    public List<Long> readPriorities(Long iid, StoryStatusEnum status) {
+        return getSqlSession().selectList("Story.readPriorities", ImmutableMap.of("iid", iid, "status", status));
     }
 
     @Override
@@ -124,11 +112,7 @@ public class StoryDaoImpl extends SqlSessionDaoSupport implements StoryDao {
 
     @Override
     public void comment(Long uid, Long sid, String comment) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("uid", uid);
-        map.put("sid", sid);
-        map.put("comment", comment);
-        getSqlSession().insert("Story.commentStory", map);
+        getSqlSession().insert("Story.commentStory", ImmutableMap.of("uid", uid, "sid", sid, "comment", comment));
     }
 
     @Override
@@ -138,14 +122,12 @@ public class StoryDaoImpl extends SqlSessionDaoSupport implements StoryDao {
 
     @Override
     public void deleteComment(Long cid, Long uid) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("cid", cid);
-        map.put("uid", uid);
-        getSqlSession().insert("Story.deleteComment", map);
+        getSqlSession().insert("Story.deleteComment", ImmutableMap.of("cid", cid, "uid", uid));
     }
 
     @Override
     public List<Comment> readCommentsByStoryId(Long sid) {
         return getSqlSession().selectList("Story.readCommentsByStoryId", sid);
     }
+
 }

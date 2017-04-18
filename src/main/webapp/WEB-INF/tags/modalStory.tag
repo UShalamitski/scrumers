@@ -33,7 +33,7 @@
                 <form:form  action="${href}" metod="POST" modelAttribute="storyModel">
                     <form:hidden path="id" name="id" id="s_id"/>
                     <form:hidden path="storyId" id="s_story_id"/>
-                    <form:hidden path="statusId" id="s_status"/>
+                    <form:hidden path="status" id="s_status"/>
 
                     <ui:input4 path="name" id="${name_id}" label="story.name" labeWidth="3"  place="story.name" title="story.name.title"/>
                     <ui:textarea2 path="descr" id="${descr_id}" label="story.descr" labeWidth="3"  place="story.descr" title="story.descr.title"/>

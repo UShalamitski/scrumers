@@ -8,6 +8,7 @@ import com.scrumers.api.dao.StoryDao;
 import com.scrumers.api.service.StoryService;
 import com.scrumers.model.Comment;
 import com.scrumers.model.Story;
+import com.scrumers.model.enums.StoryStatusEnum;
 
 public class StoryServiceImpl implements StoryService {
 
@@ -34,14 +35,15 @@ public class StoryServiceImpl implements StoryService {
         if (s.getId() == null) {
             Long sid = storyDao.selectId();
             s.setId(sid);
-            if (s.getStatusId() == null || s.getStatusId() == 0)
-                s.setStatusId(1L);
+            if (s.getStatus() == null ){
+                s.setStatus(StoryStatusEnum.TODO);
+            }
             storyDao.createWithId(s, pid);
             if (pid != null)
                 productDao.addStoryToAProduct(pid, sid);
             if (iid != null)
                 iterationDao.addStoryToAnIteration(iid, sid);
-            if (s.getStatusId() == 4L)
+            if (s.getStatus() == StoryStatusEnum.DONE)
                 iterationDao.addStoryToADone(iid, sid);
         } else {
             storyDao.update(s);
@@ -115,13 +117,13 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void updateStatus(Long id, Long stid) {
-        storyDao.updateStatus(id, stid);
+    public void updateStatus(Long id, StoryStatusEnum status) {
+        storyDao.updateStatus(id, status);
     }
 
     @Override
-    public void updateStatus(Long sid, Long iid, Long stid) {
-        storyDao.updateStatus(sid, stid);
+    public void updateStatus(Long sid, Long iid, StoryStatusEnum status) {
+        storyDao.updateStatus(sid, status);
         if (iterationDao.readIterationStoryIsDone(iid, sid)) {
             iterationDao.deleteFromPlotIteration(iid, sid);
         } else {
@@ -131,8 +133,8 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void updateStatusToDone(Long sid, Long iid, Long stid) {
-        storyDao.updateStatus(sid, stid);
+    public void updateStatusToDone(Long sid, Long iid, StoryStatusEnum status) {
+        storyDao.updateStatus(sid, status);
         if (!iterationDao.readIterationStoryIsDone(iid, sid)) {
             if (!iterationDao.readStoryHoursForToday(iid, sid)) {
                 iterationDao.addStoryToADone(iid, sid);
@@ -143,8 +145,8 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void updatePriorities(Long stat_id, Long iid, Long[] ids) {
-        List<Long> idd = storyDao.readPriorities(iid, stat_id);
+    public void updatePriorities(StoryStatusEnum status, Long iid, Long[] ids) {
+        List<Long> idd = storyDao.readPriorities(iid, status);
 
         if (ids.length == idd.size()) {
             for (int i = 0; i < ids.length; i++) {
