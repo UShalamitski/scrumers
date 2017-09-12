@@ -142,6 +142,6 @@
     <aop:aspectj-autoproxy />
 
     <bean class="com.scrumers.util.ImageUtils" id="imageUtil">
-        <property name="conf" ref="config"></property>
+        <property name="conf" ref="config"/>
     </bean>
 </beans>

@@ -9,12 +9,24 @@ package com.scrumers.model.enums;
  */
 public enum StoryStatusEnum {
 
+    /**
+     * Planned stories to do.
+     */
     TODO,
 
+    /**
+     * Stories in progress.
+     */
     DOING,
 
+    /**
+     * Stories under review.
+     */
     REVIEWING,
 
+    /**
+     * Finished stories.
+     */
     DONE
 
 }
