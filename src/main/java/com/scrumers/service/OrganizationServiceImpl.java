@@ -1,7 +1,5 @@
 package com.scrumers.service;
 
-import java.util.List;
-
 import com.scrumers.api.dao.OrganizationDao;
 import com.scrumers.api.dao.TeamDao;
 import com.scrumers.api.dao.UserDao;
@@ -9,26 +7,18 @@ import com.scrumers.api.service.OrganizationService;
 import com.scrumers.model.Organization;
 import com.scrumers.model.Team;
 import com.scrumers.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public class OrganizationServiceImpl implements OrganizationService {
 
+    @Autowired
     private OrganizationDao organizationDao;
-
+    @Autowired
     private UserDao userDao;
-
+    @Autowired
     private TeamDao teamDao;
-
-    public void setOrganizationDao(OrganizationDao organizationDao) {
-        this.organizationDao = organizationDao;
-    }
-
-    public void setTeamDao(TeamDao teamDao) {
-        this.teamDao = teamDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     @Override
     public void saveOrganization(Organization o) {

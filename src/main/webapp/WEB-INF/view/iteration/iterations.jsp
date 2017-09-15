@@ -103,7 +103,7 @@
                         <a data-toggle="modal" data-target="#newStoryModal" class="float_r not" param_s_id="" param_s_story_id="0" param_s_status="1" param_s_assignee="" param_s_name="" param_s_descr="" param_s_points="" param_s_estimate="0" param_s_track="" param_s_demo="">
                             <i class="icon-title fa fa-plus fa-fw pull-right"></i>
                         </a>
-                        <c:url value="/scrum_board.html" var="href"/>
+                        <c:url value="/product/board.html" var="href"/>
                         <a href="${href}" class="float_r" >
                             <i class="simple-icon-title fa fa-table fa-fw pull-right"></i>
                         </a>

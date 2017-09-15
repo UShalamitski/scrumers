@@ -1,7 +1,5 @@
 package com.scrumers.service;
 
-import java.util.List;
-
 import com.scrumers.api.dao.IterationDao;
 import com.scrumers.api.dao.ProductDao;
 import com.scrumers.api.dao.StoryDao;
@@ -9,33 +7,25 @@ import com.scrumers.api.service.StoryService;
 import com.scrumers.model.Comment;
 import com.scrumers.model.Story;
 import com.scrumers.model.enums.StoryStatusEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public class StoryServiceImpl implements StoryService {
 
+    @Autowired
     private StoryDao storyDao;
-
+    @Autowired
     private ProductDao productDao;
-
+    @Autowired
     private IterationDao iterationDao;
-
-    public void setStoryDao(StoryDao storyDao) {
-        this.storyDao = storyDao;
-    }
-
-    public void setProductDao(ProductDao productDao) {
-        this.productDao = productDao;
-    }
-
-    public void setIterationDao(IterationDao iterationDao) {
-        this.iterationDao = iterationDao;
-    }
 
     @Override
     public void saveStory(Story s, Long pid, Long iid) {
         if (s.getId() == null) {
             Long sid = storyDao.selectId();
             s.setId(sid);
-            if (s.getStatus() == null ){
+            if (s.getStatus() == null) {
                 s.setStatus(StoryStatusEnum.TODO);
             }
             storyDao.createWithId(s, pid);

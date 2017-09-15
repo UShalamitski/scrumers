@@ -1,27 +1,21 @@
 package com.scrumers.service;
 
-import java.util.List;
-
 import com.scrumers.api.dao.StoryDao;
 import com.scrumers.api.dao.TaskDao;
 import com.scrumers.api.service.TaskService;
 import com.scrumers.model.Comment;
 import com.scrumers.model.Task;
 import com.scrumers.model.enums.StoryStatusEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public class TaskServiceImpl implements TaskService {
 
+    @Autowired
     private TaskDao taskDao;
-
+    @Autowired
     private StoryDao storyDao;
-
-    public void setTaskDao(TaskDao taskDao) {
-        this.taskDao = taskDao;
-    }
-
-    public void setStoryDao(StoryDao storyDao) {
-        this.storyDao = storyDao;
-    }
 
     @Override
     public void saveTask(Task t) {

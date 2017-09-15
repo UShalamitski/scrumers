@@ -11,26 +11,16 @@ import com.scrumers.model.PlotData;
 import com.scrumers.model.Product;
 import com.scrumers.model.ProductView;
 import com.scrumers.model.Team;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ProductServiceImpl implements ProductService {
 
+    @Autowired
     private ProductDao productDao;
-
+    @Autowired
     private OrganizationDao organizationDao;
-
+    @Autowired
     private TeamDao teamDao;
-
-    public void setTeamDao(TeamDao teamDao) {
-        this.teamDao = teamDao;
-    }
-
-    public void setProductDao(ProductDao productDao) {
-        this.productDao = productDao;
-    }
-
-    public void setOrganizationDao(OrganizationDao organizationDao) {
-        this.organizationDao = organizationDao;
-    }
 
     @Override
     public void saveProduct(Product p) {

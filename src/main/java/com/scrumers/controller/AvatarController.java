@@ -29,20 +29,16 @@ import com.scrumers.util.GsonUtils;
 public class AvatarController {
 
     @Autowired
-    private UserService srv;
-
+    private UserService userService;
     @Autowired
-    private IterationService iterSrv;
-
+    private IterationService iterationService;
     @Autowired
-    private ProductService prodSrv;
-    
+    private ProductService productService;
     @Autowired
-    private Configuration conf;
+    private Configuration configuration;
 
     private InputStream getNotImage(final HttpServletRequest req) {
         InputStream is = null;
-
         String name = req.getServletContext().getRealPath("/images/user.png");
 
         try {
@@ -54,22 +50,19 @@ public class AvatarController {
     }
 
     @RequestMapping("/avatar")
-    public void image(final Long id, final HttpServletRequest req,
-            final HttpServletResponse res) {
-
-        InputStream is = srv.getImage(id);
+    public void image(final Long id, final HttpServletRequest request, final HttpServletResponse response) {
+        InputStream is = userService.getImage(id);
 
         if (is == null) {
-            is = getNotImage(req);
+            is = getNotImage(request);
         }
 
         if (is == null) {
-            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } else {
             try {
-                res.addHeader("Content-Type",
-                        "image/" + conf.getString("imageFormate"));
-                OutputStream os = res.getOutputStream();
+                response.setContentType("image/" + configuration.getString("imageFormate"));
+                OutputStream os = response.getOutputStream();
                 IOUtils.copy(is, os);
                 os.flush();
             } catch (IOException e) {
@@ -83,16 +76,14 @@ public class AvatarController {
     }
 
     @RequestMapping("/plot")
-    public void func1(
-            final HttpServletRequest req, final HttpServletResponse res, Principal p) {
+    public void func1(final HttpServletRequest request, final HttpServletResponse response, Principal principal) {
         try {
-            Long iid = srv.getUser(p.getName()).getActualIteration();
-            res.addHeader("Content-Type", "application/json");
-            List<PlotData> list = iterSrv.getIterationPlotData(iid);
+            Long actualIterationId = userService.getUser(principal.getName()).getActualIteration();
+            response.setContentType("application/json");
+            List<PlotData> list = iterationService.getIterationPlotData(actualIterationId);
             PlotData[] pd = list.toArray(new PlotData[list.size()]);
             Gson gson = GsonUtils.createGson();
-            OutputStreamWriter osw = new OutputStreamWriter(
-                    res.getOutputStream());
+            OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
             gson.toJson(pd, osw);
             osw.flush();
         } catch (IOException e) {
@@ -100,20 +91,17 @@ public class AvatarController {
         }
     }
 
-    
     @RequestMapping("/plot2")
-    public void func(
-            final HttpServletRequest req, final HttpServletResponse res, Principal p) {
+    public void func(final HttpServletRequest request, final HttpServletResponse response, Principal principal) {
         try {
-            res.addHeader("Content-Type", "application/json");
+            response.setContentType("application/json");
             
-            Long pid = srv.getUser(p.getName()).getActualProduct();
-            List<PlotData> list2 = prodSrv.getProductPlotData1(pid);
+            Long actualProductId = userService.getUser(principal.getName()).getActualProduct();
+            List<PlotData> list2 = productService.getProductPlotData1(actualProductId);
             
             PlotData[] pd = list2.toArray(new PlotData[list2.size()]);
             Gson gson = GsonUtils.createGson();
-            OutputStreamWriter osw = new OutputStreamWriter(
-                    res.getOutputStream());
+            OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
             gson.toJson(pd, osw);
             osw.flush();
         } catch (IOException e) {
@@ -122,18 +110,16 @@ public class AvatarController {
     }
     
     @RequestMapping("/plot3")
-    public void func3(
-            final HttpServletRequest req, final HttpServletResponse res, Principal p) {
+    public void func3(final HttpServletRequest request, final HttpServletResponse response, Principal principal) {
         try {
-            res.addHeader("Content-Type", "application/json");
+            response.setContentType("application/json");
             
-            Long pid = srv.getUser(p.getName()).getActualProduct();
-            List<PlotData> list2 = prodSrv.getProductPlotData2(pid);
+            Long actualProductId = userService.getUser(principal.getName()).getActualProduct();
+            List<PlotData> list2 = productService.getProductPlotData2(actualProductId);
             
             PlotData[] pd = list2.toArray(new PlotData[list2.size()]);
             Gson gson = GsonUtils.createGson();
-            OutputStreamWriter osw = new OutputStreamWriter(
-                    res.getOutputStream());
+            OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
             gson.toJson(pd, osw);
             osw.flush();
         } catch (IOException e) {

@@ -1,33 +1,23 @@
 package com.scrumers.service;
 
-import java.util.List;
-
 import com.scrumers.api.dao.OrganizationDao;
 import com.scrumers.api.dao.TeamDao;
 import com.scrumers.api.dao.UserDao;
 import com.scrumers.api.service.TeamService;
 import com.scrumers.model.Team;
 import com.scrumers.model.TeamMember;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public class TeamServiceImpl implements TeamService {
 
+    @Autowired
     private TeamDao teamDao;
-
+    @Autowired
     private UserDao userDao;
-
+    @Autowired
     private OrganizationDao organizationDao;
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setTeamDao(TeamDao teamDao) {
-        this.teamDao = teamDao;
-    }
-
-    public void setOrganizationDao(OrganizationDao organizationDao) {
-        this.organizationDao = organizationDao;
-    }
 
     @Override
     public void saveTeam(Team t, Long oid, Long rid) {
@@ -44,10 +34,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void deleteTeamByOwner(Long[] id) {
-        if (id != null)
-            for (Long i : id) {
-                teamDao.delete(i);
-            }
+        for (Long i : id) {
+            teamDao.delete(i);
+        }
     }
 
     @Override

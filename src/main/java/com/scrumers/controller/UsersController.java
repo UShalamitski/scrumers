@@ -36,18 +36,12 @@ public class UsersController {
     @Autowired
     @Qualifier("userValidator")
     private Validator userValidator;
-
     @Autowired
     private UserService srv;
-
     @Autowired
     private UserQuickSearchState state;
 
     private ControllerUtils utils = new ControllerUtils();
-
-    public void setState(UserQuickSearchState state) {
-        this.state = state;
-    }
 
     @RequestMapping("/users")
     public String users(final Model model) {
@@ -65,15 +59,12 @@ public class UsersController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String user(final Model model) {
         model.addAttribute("user", new User());
-        List<Role> roles = srv.getRoles();
-        model.addAttribute("roles", roles);
+        model.addAttribute("roles", srv.getRoles());
         return "user";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET, params = {"id"})
-    public String user(
-            @RequestParam(value = "id", required = true) final Long id,
-            final Model model) {
+    public String user(@RequestParam(value = "id", required = true) final Long id, final Model model) {
         User user = srv.getUser(id);
         if (user != null) {
             model.addAttribute("user", user);
@@ -233,7 +224,6 @@ public class UsersController {
 
         @Autowired
         private UserService srv;
-
         @Autowired
         private Configuration conf;
 

@@ -13,9 +13,9 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:annotation-config/>
+    <aop:aspectj-autoproxy />
 
-    <bean id="messageSource"
-          class="org.springframework.context.support.ResourceBundleMessageSource">
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="messages" />
     </bean>
 
@@ -95,53 +95,12 @@
     <bean id="organizationDao" class="com.scrumers.storage.dao.OrganizationDaoImpl" parent="dao" />
     <bean id="storyDao" class="com.scrumers.storage.dao.StoryDaoImpl" parent="dao" />
 
-    <bean id="userService" class="com.scrumers.service.UserServiceImpl">
-        <property name="iterationDao" ref="iterationDao" />
-        <property name="userDao" ref="userDao" />
-        <property name="roleDao" ref="roleDao" />
-        <property name="productDao" ref="productDao" />
-        <property name="organizationDao" ref="organizationDao" />
-        <property name="prefixAvatar" value="${prefixAvatars}" />
-        <property name="conf" ref="config" />
-    </bean>
-
-    <bean id="productService" class="com.scrumers.service.ProductServiceImpl">
-        <property name="teamDao" ref="teamDao" />
-        <property name="productDao" ref="productDao" />
-        <property name="organizationDao" ref="organizationDao" />
-    </bean>
-
-    <bean id="iterationService" class="com.scrumers.service.IterationServiceImpl">
-        <property name="iterationDao" ref="iterationDao" />
-        <property name="productDao" ref="productDao" />
-    </bean>
-
-    <bean id="organizationService" class="com.scrumers.service.OrganizationServiceImpl">
-        <property name="organizationDao" ref="organizationDao" />
-        <property name="teamDao" ref="teamDao" />
-        <property name="userDao" ref="userDao" />
-    </bean>
-
-    <bean id="storyService" class="com.scrumers.service.StoryServiceImpl">
-        <property name="productDao" ref="productDao" />
-        <property name="iterationDao" ref="iterationDao" />
-        <property name="storyDao" ref="storyDao" />
-    </bean>
-
-    <bean id="teamService" class="com.scrumers.service.TeamServiceImpl">
-        <property name="teamDao" ref="teamDao" />
-        <property name="userDao" ref="userDao" />
-        <property name="organizationDao" ref="organizationDao" />
-    </bean>
-
-    <bean id="taskService" class="com.scrumers.service.TaskServiceImpl">
-        <property name="taskDao" ref="taskDao" />
-        <property name="storyDao" ref="storyDao" />
-    </bean>
-
-    <aop:aspectj-autoproxy />
-
-    <bean class="com.scrumers.util.ImageUtils" id="imageUtil">
-        <property name="conf" ref="config"/>
-    </bean>
+    <bean id="productService" class="com.scrumers.service.ProductServiceImpl"/>
+    <bean id="iterationService" class="com.scrumers.service.IterationServiceImpl"/>
+    <bean id="organizationService" class="com.scrumers.service.OrganizationServiceImpl"/>
+    <bean id="storyService" class="com.scrumers.service.StoryServiceImpl"/>
+    <bean id="teamService" class="com.scrumers.service.TeamServiceImpl"/>
+    <bean id="taskService" class="com.scrumers.service.TaskServiceImpl"/>
+    <bean id="imageUtil" class="com.scrumers.util.ImageUtils"/>
+    <bean id="userService" class="com.scrumers.service.UserServiceImpl"/>
 </beans>

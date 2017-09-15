@@ -5,6 +5,7 @@ import com.scrumers.api.dao.ProductDao;
 import com.scrumers.api.service.IterationService;
 import com.scrumers.model.Iteration;
 import com.scrumers.model.PlotData;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,17 +14,10 @@ import java.util.List;
 
 public class IterationServiceImpl implements IterationService {
 
+    @Autowired
     private IterationDao iterationDao;
-
+    @Autowired
     private ProductDao prouctDao;
-
-    public void setIterationDao(IterationDao iteartionDao) {
-        this.iterationDao = iteartionDao;
-    }
-
-    public void setProductDao(ProductDao prouctDao) {
-        this.prouctDao = prouctDao;
-    }
 
     @Override
     public void saveIteration(Iteration i) {

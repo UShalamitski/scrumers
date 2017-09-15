@@ -29,7 +29,7 @@
                     <i class="icon-add fa fa-plus fa-fw pull-right"></i>
                 </a>
                 <c:if test="${active eq 'storyList'}">
-                    <c:url value="/scrum_board.html" var="href"/>
+                    <c:url value="/product/board.html" var="href"/>
                     <a href="${href}" class="float_r" >
                         <i class="icon-board fa fa-table fa-fw pull-right"></i>
                     </a>

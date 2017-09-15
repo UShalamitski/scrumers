@@ -46,7 +46,7 @@
                         <li class="dropdown${active eq 'flows' ? ' active' : ''}">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> ${sessionScope['prod']} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li class="${active eq 'backlog' ? 'active' : ''}"><c:url value="/story_backlog.html" var="href"/><a href="${href}"><fmt:message key="product.backlog"/></a></li>
+                                <li class="${active eq 'backlog' ? 'active' : ''}"><c:url value="/product/backlog.html" var="href"/><a href="${href}"><fmt:message key="product.backlog"/></a></li>
                                 <li class="${active eq 'iterations' ? 'active' : ''}"><c:url value="/iterations.html" var="href"/><a href="${href}"><fmt:message key="iterations"/></a></li>
 <%--                                     <li class="${active eq 'p_diagram' ? 'active' : ''}"><c:url value="/productDiagram.html" var="href"/><a href="${href}"><fmt:message key="product.diagram"/></a></li> --%>
                             </ul>
@@ -58,7 +58,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="${active eq 'storyList' ? 'active' : ''}"><c:url value="/iteration_storyList.html" var="href"/><a href="${href}"><fmt:message key="iteration.storyList"/></a></li>
                                     <li class="${active eq 'planing' ? 'active' : ''}"><c:url value="/iteration_planing.html" var="href"/><a href="${href}"><fmt:message key="iteration.planing"/></a></li>
-                                    <li class="${active eq 'board' ? 'active' : ''}"><c:url value="/scrum_board.html" var="href"/><a href="${href}"><fmt:message key="iteration.board"/></a></li>
+                                    <li class="${active eq 'board' ? 'active' : ''}"><c:url value="/product/board.html" var="href"/><a href="${href}"><fmt:message key="iteration.board"/></a></li>
                                     <li class="${active eq 'burndown' ? 'active' : ''}"><c:url value="/iteration_Burndown.html" var="href"/><a href="${href}"><fmt:message key="diagram.burndown"/></a></li>
                                 </ul>
                             </li>
